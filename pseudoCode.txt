@@ -1,0 +1,25 @@
+BASES DU PROJET :
+
+Nommer les tables et ce qu'elles contiendrons 
+Création du schéma de base de donnée et attendre la validation
+Créer les jointures entre les différentes tables
+Créer dossier config pour relier la bdd au reste du code (ref MySQL/Blog)
+Créer le routeur avec les différentes routes:
+    home / connexion / créateurs et ou catégories à voir
+    Si connexion de l'admin possibilité de modifier son contenu et d'ajouter un créateurs // impossible pour un créateur 
+    Si connexion d'un créateur, possibilité d'update son contenu uniquement // impossible pour un user
+    Si connexion d'un utilisateur seule possibilité d'ajouter des articles aux paniers et achat
+
+
+CREATION DU HEADER: 
+
+Creation du DOCTYPE
+Link du fichier CSS 
+Mettre en place le favicon 
+Creation de la navbar : 
+    Home / Créateurs ou catégories / Inscription / Logo pour le panier 
+
+CREATION DE LA HOME PAGE : 
+
+
+
