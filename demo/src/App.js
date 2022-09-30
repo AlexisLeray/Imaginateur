@@ -1,28 +1,20 @@
 //import logo from './logo.svg';
 import './App.css';
-import {ReducerContext} from "./components/reducer/reducer.jsx"
-import { useEffect, useContext } from 'react';
-import BASE_URL from "./config.js"
+//  import {ReducerContext} from "./components/reducer/reducer.jsx"
+// import { useContext } from 'react';
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import Nav from './components/Nav'
+import Routeur from './components/Router'
+// import BASE_URL from "./config.js"
+
 
 function App() {
-    const [state, dispatch] = useContext(ReducerContext)
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/courses`)
-      .then(response => response.json())
-      .then(res => {
-          dispatch({type:"test",payload:res})
-      })
-
-  },[])
-
-
-  return (
-    <ul>
-    {state.todo.map((l, i) => <li key={i}>{l}</li>)}
-    </ul>
-  );
-
-}
+  
+  return(
+        <BrowserRouter>
+            <Nav />
+            <Routeur />
+        </BrowserRouter>
+)}
 
 export default App;
