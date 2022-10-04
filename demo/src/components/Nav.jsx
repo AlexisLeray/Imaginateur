@@ -4,37 +4,36 @@ import {ReducerContext} from './reducer/reducer.jsx'
 
 const Nav = (props) => {
     const [state, dispatch] = useContext(ReducerContext)
-    console.log(state.login)
     return(
         <nav>
             <ul>
                 <li>
                     <NavLink to="/">
-                        Acceuil
+                        Accueil
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="">
+                    <NavLink to="/workshop">
                         Atelier
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="">
+                    <NavLink to="/galery">
                         Galerie
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="">
+                    <NavLink to="/shop">
                         Boutique
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="">
+                    <NavLink to="/contact">
                         Contact
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="">
+                    <NavLink to="/About">
                         A propos
                     </NavLink>
                 </li>
@@ -43,13 +42,15 @@ const Nav = (props) => {
                         Inscription
                     </NavLink>
                 </li>
+               {state.logged === false &&
                 <li>
                     <NavLink to="/connexion">
                         Mon compte
                     </NavLink>
                 </li>
+               }
                 <li>
-                    <NavLink to="">
+                    <NavLink to="/shoppingCart">
                         Panier
                     </NavLink>
                 </li>
@@ -66,7 +67,7 @@ const Nav = (props) => {
                 <Fragment> 
                     <li> 
                         <NavLink to="/creator">
-                        Créateurs
+                        Espace créateur
                         </NavLink>
                     </li>
                 </Fragment>

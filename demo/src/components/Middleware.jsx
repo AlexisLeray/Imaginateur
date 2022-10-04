@@ -11,27 +11,29 @@ const Middleware = ({children}) => {
     const currentPath = location.pathname
 
     useEffect(() => {
-        console.log(state)
-        if(state.logged=== true){    //pas sur
-        if(userPath.includes(currentPath)){
-            if(!state.user){
-                navigate('/')
+        
+         if (state.logged === false) {   // Si l'utilisateur n'est pas connecté 
+            console.log('connecté')
+        
+            if(userPath.includes(currentPath)){
+                if(!state.logged){
+                    navigate('/')
+                }
             }
-        }
-        if(userPath.includes(currentPath)){
-            if(!state.creator){
-                navigate('/')
+            if(userPath.includes(currentPath)){
+                if(!state.creator){
+                    navigate('/')
+                }
             }
-        }
-
-        if(adminPath.includes(currentPath)){
-            if(!state.admin){
-                navigate('/')
+    
+            if(adminPath.includes(currentPath)){
+                if(!state.admin){
+                    navigate('/')
+                }
             }
+        } else {
+            console.log("vous êtes déjà connecté")
         }
-        }else {   //pas sur
-            console.log("vous êtes déjà connecté")  //pas sur
-        }  //pas sur
     }, [currentPath]);
 
     return(

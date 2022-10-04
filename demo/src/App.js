@@ -1,5 +1,5 @@
 //import logo from './logo.svg';
-import './App.css';
+import './css/app.css';
 //  import {ReducerContext} from "./components/reducer/reducer.jsx"
 // import { useContext } from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom"

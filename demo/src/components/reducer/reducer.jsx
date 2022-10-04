@@ -5,6 +5,8 @@ export const initialState = {
     logged:false,
     admin:false,
     creator:false,
+    name: null,
+    first_name: null
 }
 
 export const reducer = (state, action) => {
@@ -13,7 +15,8 @@ export const reducer = (state, action) => {
             return {...state, todo:[...action.payload]}
         }
         case 'connexion': {
-            return {...state, logged:true}
+            return {...state, logged:true, name:action.name, first_name:action.fname,
+            }
         }
         case 'admin': {
             return {...state, admin:true}
@@ -22,7 +25,7 @@ export const reducer = (state, action) => {
             return {...state, creator:true}
         }
         case 'logout': {
-            return {...state, logged:false, admin:false, creator:false}
+            return {...state, logged:false, admin:false, creator:false, name:null, first_name:null}
         }
         default: return state 
     }

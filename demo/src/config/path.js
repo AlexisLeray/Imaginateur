@@ -11,6 +11,9 @@ import Creator from '../components/Creator'
 import Admin from '../components/Admin'
 import Profil from '../components/Profil'
 import Logout from '../components/Deconnexion'
+import Messagerie from '../components/AdminMessage'
+import NewPiece from '../components/NewPiece'
+
 
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
@@ -26,7 +29,9 @@ export const routes = [
         {path: '/creator', element:<Creator />},
         {path: '/admin', element:<Admin />},
         {path: '/profil', element:<Profil />},
-        {path: '/logout', element: <Logout />}
+        {path: '/logout', element: <Logout />},
+        {path: '/messagerie', element: <Messagerie />},
+        {path: '/newPiece', element:  <NewPiece />}
                 
     ]
 // route reservée aux personnes connectées
@@ -39,5 +44,5 @@ export const creatorsPath= [
     ]
     // route reservée aux admin connectées
 export const adminPath= [
-        '/admin'
+        '/admin', '/messagerie'
     ]
