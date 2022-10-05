@@ -2,3 +2,11 @@ body {
     max-width: 1170px;
     margin: auto;
 }
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+}
+table {
+    width: 100%;
+}

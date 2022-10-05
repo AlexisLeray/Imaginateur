@@ -6,13 +6,32 @@ import Connexion from './Connexion.jsx'
 
 const Contact =() => {
     const [state, dispatch] = useContext(ReducerContext)
+    const [title, setTitle] = React.useState("")
+    const [content, setContent] = React.useState("")
+    const [successMsg, setSuccessMsg] = React.useState("")
     
+    const submit = () => {
+        
+        const {id} = state 
+        axios.post(`${BASE_URL}/contact`, {
+            id,
+            title, 
+            content,
+        })
+        .then((res) => {
+            if(res.data.response) {
+                setSuccessMsg(res.data.msg)
+                setTitle('')
+                setContent('')
+            }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+            
+    }
     
-    
-    
-    
-    let content;
-    console.log(state.name)
+    console.log(state)
     return(
         <Fragment>
             {state.logged === false ?
@@ -21,17 +40,18 @@ const Contact =() => {
                     <Connexion />
                 </Fragment>    
             :
-                <form action ="" type="post">
+                <form action ="" type="post" onSubmit={submit}>
+                {successMsg !== "" && <p>{successMsg}</p>}
                     Nom:
                     <p>{state.name}</p>
                     Prénom: 
                     <p>{state.first_name}</p>
                     <label>Adresse mail </label>
-                        <input type="mail"  maxLength="255" />
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="255" />
                     
                     <label>T'AS QUOI A DIRE LA ?!!!!!! </label>
-                        <textarea value={content}></textarea>
-                    
+                        <textarea value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                    <button type="submit">jensairien</button>
                 </form>
             }    
         </Fragment>

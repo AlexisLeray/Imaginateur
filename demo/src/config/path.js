@@ -30,7 +30,7 @@ export const routes = [
         {path: '/admin', element:<Admin />},
         {path: '/profil', element:<Profil />},
         {path: '/logout', element: <Logout />},
-        {path: '/messagerie', element: <Messagerie />},
+        {path: '/getMessage', element: <Messagerie />},
         {path: '/newPiece', element:  <NewPiece />}
                 
     ]
@@ -44,5 +44,5 @@ export const creatorsPath= [
     ]
     // route reservée aux admin connectées
 export const adminPath= [
-        '/admin', '/messagerie'
+        '/admin', '/getMessage'
     ]

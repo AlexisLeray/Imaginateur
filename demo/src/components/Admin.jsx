@@ -14,12 +14,12 @@ const About =() => {
         <Fragment>
             <ul>
                 <li>
-                    <NavLink to="/messagerie">
+                    <NavLink to="/getMessage">
                         T'as des messages ? 
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/messagerie">
+                    <NavLink to="/getMessage">
                         Nouvelle oeuvre 
                     </NavLink>
                 </li>

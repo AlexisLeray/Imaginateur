@@ -23,8 +23,9 @@ const connexion = (req, res) => {
                             const creator = check[0].role_id === 2
                             const name = check[0].name
                             const first_name = check[0].first_name
-                            
-                            res.json({response: true, admin, creator, name, first_name})
+                            const id = check[0].id
+                          
+                            res.json({response: true, admin, creator, name, first_name, id})
                         }else{
                             console.log("pas connecté ")
                             res.json({response:false})
@@ -32,7 +33,7 @@ const connexion = (req, res) => {
                     })
                 }else {
                     console.log("autre erreur")
-                    res.json({response : false, msg:'Email ou mot de passe inconnus '})
+                    res.json({response : false, msg:'Email ou mot de passe inconnu '})
                 }
             })
         }else {

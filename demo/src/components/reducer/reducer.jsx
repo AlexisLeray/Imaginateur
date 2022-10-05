@@ -6,7 +6,8 @@ export const initialState = {
     admin:false,
     creator:false,
     name: null,
-    first_name: null
+    first_name: null,
+    id: null
 }
 
 export const reducer = (state, action) => {
@@ -15,7 +16,7 @@ export const reducer = (state, action) => {
             return {...state, todo:[...action.payload]}
         }
         case 'connexion': {
-            return {...state, logged:true, name:action.name, first_name:action.fname,
+            return {...state, logged:true, name:action.name, first_name:action.fname, id:action.id
             }
         }
         case 'admin': {

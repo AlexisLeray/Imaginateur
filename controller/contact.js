@@ -6,10 +6,14 @@ import bcrypt from 'bcrypt';
 import {inputLength} from '../components/checkLength.js'
 
 
+
 const sendMessage = (req, res) => {
-    let newMessage = 'INSERT into ? (?,?,?,?) VALUES (?,?,?,?)'
-        pool.query(newMessage, [req.body.mail, req.body.content, req.body.content], (err, newMsg) => {
+    
+    let newMessage = 'INSERT INTO contact (contact.user_id, contact.title, contact.content, contact.date) VALUES (?,?,?,?)'
+    
+        pool.query(newMessage, [req.body.id, req.body.title, req.body.content, new Date()], (err, newMsg) => {
             if (err) throw err
+            res.json({response:true, msg: 'Votre message a bien etait pris en compte'})
         })
 }
 
