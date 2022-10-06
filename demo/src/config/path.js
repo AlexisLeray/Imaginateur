@@ -13,6 +13,7 @@ import Profil from '../components/Profil'
 import Logout from '../components/Deconnexion'
 import Messagerie from '../components/AdminMessage'
 import NewPiece from '../components/NewPiece'
+import NewCreator from '../components/NewCreator'
 
 
 // definition des différentes routes avec appel du composant correspondant 
@@ -30,8 +31,9 @@ export const routes = [
         {path: '/admin', element:<Admin />},
         {path: '/profil', element:<Profil />},
         {path: '/logout', element: <Logout />},
-        {path: '/getMessage', element: <Messagerie />},
-        {path: '/newPiece', element:  <NewPiece />}
+        {path: '/admin/getMessage', element: <Messagerie />},
+        {path: '/newPiece', element:  <NewPiece />},
+        {path: '/admin/newCreator', element: <NewCreator /> }
                 
     ]
 // route reservée aux personnes connectées
@@ -44,5 +46,5 @@ export const creatorsPath= [
     ]
     // route reservée aux admin connectées
 export const adminPath= [
-        '/admin', '/getMessage'
+        '/admin', '/getMessage', '/admin/newCreator'
     ]

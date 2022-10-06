@@ -42,27 +42,16 @@ const Nav = (props) => {
                         Inscription
                     </NavLink>
                 </li>
-               {state.logged === false &&
                 <li>
                     <NavLink to="/connexion">
                         Mon compte
                     </NavLink>
                 </li>
-               }
                 <li>
                     <NavLink to="/shoppingCart">
                         Panier
                     </NavLink>
                 </li>
-                {state.logged && 
-                <Fragment> 
-                    <li> 
-                        <NavLink to="/profil">
-                        Profil
-                        </NavLink>
-                    </li>
-                </Fragment>
-                }
                 {state.creator && 
                 <Fragment> 
                     <li> 

@@ -10,8 +10,8 @@ const Contact =() => {
     const [content, setContent] = React.useState("")
     const [successMsg, setSuccessMsg] = React.useState("")
     
-    const submit = () => {
-        
+    const submit = (e) => {
+        e.preventDefault()
         const {id} = state 
         axios.post(`${BASE_URL}/contact`, {
             id,
@@ -20,6 +20,7 @@ const Contact =() => {
         })
         .then((res) => {
             if(res.data.response) {
+                
                 setSuccessMsg(res.data.msg)
                 setTitle('')
                 setContent('')

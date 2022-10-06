@@ -10,9 +10,11 @@ const getMessage = (req, res) => {
     let commentArray = []
         pool.query(comment, [], (error, comment) => {
         if(comment){
+            
             if (error) throw error
+            
             commentArray= comment
-            console.log(commentArray)
+            // console.log("C'est la date : ", commentArray[0].date.toLocaleDateString()) c'est pas ça 
             res.json({response:true, commentArray})
         
         }else {

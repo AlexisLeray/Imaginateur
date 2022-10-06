@@ -19,12 +19,18 @@ const About =() => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/getMessage">
-                        Nouvelle oeuvre 
+                    <NavLink to="/newPiece">
+                        Mes oeuvres
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/newCreator">
+                    <NavLink to="/newPiece">
+                        Nouvelle oeuvre 
+                    </NavLink>
+                </li>
+                
+                <li>
+                    <NavLink to="/admin/newCreator">
                         Nouveau Créateur
                     </NavLink>
                 </li>

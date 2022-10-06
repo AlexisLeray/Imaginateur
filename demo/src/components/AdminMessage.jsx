@@ -9,13 +9,15 @@ const Messagerie = () => {
     const [state, dispatch] = useContext(ReducerContext)
     const [allComment, setAllComment] = useState([])
     
+    
     useEffect(() => {
-    axios.get(`${BASE_URL}/getMessage`)
-    .then((res) => {
-        console.log(res)
-        setAllComment(res.data.commentArray)
-        // setTitle(res.data.title)
-        console.log('ok')
+     axios.get(`${BASE_URL}/admin/getMessage`)
+            .then((res) => {
+                console.log(res)
+                setAllComment(res.data.commentArray)
+        
+                // setTitle(res.data.title)
+                console.log('ok')
     })
     .catch((err) => {
         console.log(err)
