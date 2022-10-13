@@ -52,7 +52,7 @@ const Nav = (props) => {
                         Panier
                     </NavLink>
                 </li>
-                {state.creator && 
+                {state.creator &&  
                 <Fragment> 
                     <li> 
                         <NavLink to="/creator">

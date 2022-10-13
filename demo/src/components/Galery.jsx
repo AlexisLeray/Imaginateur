@@ -5,7 +5,7 @@ import BASE_URL from "../config.js"
 
 const Galery =() => {
     return(
-        <h2>C'est la page galerie </h2>
+        <h2>C'est la page galerie globale</h2>
         )
 }
 export default Galery

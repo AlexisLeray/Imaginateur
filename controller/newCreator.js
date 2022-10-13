@@ -9,6 +9,7 @@ import {inputLength} from '../components/checkLength.js'
 const newCreator = (req, res) => {
     let allUsers = 'SELECT users.name, users.first_name, users.mail, users.id FROM users WHERE role_id= 3'
     let usersTable = []
+    
     pool.query(allUsers, [], (err, users) => {
         if (err) throw err
         if(users){

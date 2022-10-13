@@ -1,25 +1,22 @@
-import React,{useContext, useEffect, Fragment} from "react"
- import {ReducerContext} from "./reducer/reducer.jsx"
-import axios from 'axios'
-import BASE_URL from "../config.js"
-import {inputLength} from '../utils/utils.js'
-import Messagerie from './AdminMessage.jsx'
+import React,{Fragment} from "react"
 import {NavLink} from "react-router-dom"
 
 
 
 
-const About =() => {
+const Admin =() => {
+    
+    
     return(
         <Fragment>
             <ul>
                 <li>
-                    <NavLink to="/getMessage">
+                    <NavLink to="/admin/getMessage">
                         T'as des messages ? 
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/newPiece">
+                    <NavLink to="/NewPiece">
                         Mes oeuvres
                     </NavLink>
                 </li>
@@ -39,4 +36,4 @@ const About =() => {
         </Fragment>    
             )
 }
-export default About
+export default Admin

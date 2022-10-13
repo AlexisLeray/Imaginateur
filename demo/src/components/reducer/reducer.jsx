@@ -7,7 +7,8 @@ export const initialState = {
     creator:false,
     name: null,
     first_name: null,
-    id: null
+    id: null,
+    creatorId: null
 }
 
 export const reducer = (state, action) => {
@@ -20,10 +21,12 @@ export const reducer = (state, action) => {
             }
         }
         case 'admin': {
-            return {...state, admin:true}
+            
+            return {...state, admin:true, creator:true, name:action.name, first_name:action.fname, creatorId:action.creatorId}
+            
         }
-        case 'creator': {
-            return {...state, creator:true}
+        case 'creator': {   
+            return {...state, creator:true, name:action.name, first_name:action.fname, creatorId:action.creatorId}
         }
         case 'logout': {
             return {...state, logged:false, admin:false, creator:false, name:null, first_name:null}

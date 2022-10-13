@@ -3,6 +3,7 @@ import React,{useContext, Fragment} from "react"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 import Connexion from './Connexion.jsx'
+import {NavLink} from "react-router-dom"
 
 
 const Galery =() => {
@@ -17,7 +18,16 @@ const [state, dispatch] = useContext(ReducerContext);
                     <Connexion />
                 </Fragment>
             : 
+            <Fragment>
                 <h2>Bienvenue</h2>
+                <ul>
+                    <li>
+                        <NavLink to="/NewPiece">
+                            Ma galerie
+                        </NavLink>    
+                    </li>
+                </ul>
+            </Fragment>    
             }
             </Fragment>
         )

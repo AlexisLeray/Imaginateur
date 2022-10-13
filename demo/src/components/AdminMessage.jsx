@@ -2,7 +2,7 @@ import {useContext, useEffect, Fragment, useState} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import {inputLength} from '../utils/utils.js'
+
 
 
 const Messagerie = () => {
@@ -13,11 +13,7 @@ const Messagerie = () => {
     useEffect(() => {
      axios.get(`${BASE_URL}/admin/getMessage`)
             .then((res) => {
-                console.log(res)
                 setAllComment(res.data.commentArray)
-        
-                // setTitle(res.data.title)
-                console.log('ok')
     })
     .catch((err) => {
         console.log(err)
@@ -42,10 +38,10 @@ const Messagerie = () => {
             {allComment.map((e,i) => {
                 return(
         
-                <tr>
+                <tr key={i}>
                     <td>{e.title}</td>
                     <td>{e.content}</td>
-                    <td>{e.date}</td>
+                    <td>{new Date (e.date).toLocaleDateString('fr')}</td>
                     <td>{e.name}</td>
                     <td>{e.first_name}</td>
                     <td>{e.mail}</td>

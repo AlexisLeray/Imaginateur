@@ -8,13 +8,12 @@ import {inputLength} from '../components/checkLength.js'
 const getMessage = (req, res) => {
     let comment = 'SELECT contact.title, contact.content, contact.date, users.name, users.first_name, users.mail  FROM contact JOIN users ON contact.user_id = users.id '
     let commentArray = []
-        pool.query(comment, [], (error, comment) => {
+        pool.query(comment, [req.params.id], (error, comment) => {
         if(comment){
             
             if (error) throw error
             
             commentArray= comment
-            // console.log("C'est la date : ", commentArray[0].date.toLocaleDateString()) c'est pas ça 
             res.json({response:true, commentArray})
         
         }else {
