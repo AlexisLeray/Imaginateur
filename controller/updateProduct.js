@@ -16,55 +16,65 @@ const checkAcceptedExtensions = (file) => {
 	}
 	return false
 }
-
+// ============================================= AFFICHAGE DE L'ARTICLE EN FRONT ================================================
 const showToUpdate = (req, res) => {
- 
     let getProduct = 'SELECT *, images.url, images.description FROM products JOIN images ON images.id = products.image_id WHERE products.id= ?'
 
      pool.query(getProduct, [req.params.id], (err, selectedProduct) => {
       if (err) throw err
-      console.log("mqlsdjfmlqdkjsf", selectedProduct)
       res.json({response: true, selectedProduct})
       
      })
 }
-
+// ============================================= UPDATE DU PRODUIT ================================================
  const update = (req,res) => {
+
  const form = formidable({keepExtensions: true});
     let updateProduct = 'UPDATE products SET title=?, price=?, content=? WHERE id=?'
-    let updatePicture = 'UPDATE images SET description=?, url=?'
+    let updatePicture = 'UPDATE images SET description=?, url=? WHERE images.id= (SELECT * FROM (SELECT images.id FROM images INNER JOIN products ON products.image_id = images.id WHERE products.id= ?)sub GROUP BY id)'
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
-            let newFilename = files.files.newFilename;
-            let oldPath = files.files.filepath;
-    console.log(oldPath)
-            let newPath = `public/img/${newFilename}`;
-            
-            const file = files.files
-             if(files.originalFilename !== ''){
-                 if(checkAcceptedExtensions(file)){
-                    fs.copyFile(oldPath, newPath, (err) => {
+           
+            if(files.files){    //Si le nom du fichier n'est pas vide 
+                let newFilename = files.files.newFilename;  
+                let oldPath = files.files.filepath;  //fichier stocké dans le dossier temp 
+                let newPath = `public/img/${newFilename}`; //nouveau lieu du fichier stocké 
+                const file = files.files
+                 if(checkAcceptedExtensions(file)){   //Si le fichier fait partie des fichier acceptés 
+                    fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
                         if (err) throw err;
-                        // poolquery
-                 pool.query(updatePicture, [fields.imgDescription,newFilename], (err, added) => {
-                    if (err) throw err
-                        if (added){
-                             res.json({response: true})
-                        }else{
-                            res.json({response:false})
-                        }
-                    })
-                    pool.query(updateProduct, [fields.title, fields.price, fields.productDescription], (err, addProduct) => {
-                    if (err) throw err
-                      if(addProduct) {
-                        res.json({response: true})
-                        }else{
-                            res.json({response:false})
-                        }
-                    })
-                }) 
-            }
-         }
+                        console.log("FIELDS", fields)
+                          fs.unlink('public/img/'+fields.imgUrl, (err) => {
+                             if (err) throw err
+                                    })            
+                        //On lance la pool.query pour l'envoi de l'url en bdd
+                         pool.query(updatePicture, [fields.imgDescription,newFilename, req.params.id], (err, added) => {  
+                            if (err) throw err
+                   console.log("FILE", files)
+                                if (added){
+                                  pool.query(updateProduct, [fields.title, fields.price, fields.productDescription, req.params.id], (err, addProduct) => {
+                                    if (err) throw err
+                                    if(addProduct) {
+                                         res.json({response: true})   //l'url du fichier est bien transféré
+                                    }else{
+                                        res.json({response:false})  //il y a eu un soucis, l'url n'est pas envoyée// 
+                                    }
+                               }) 
+                            }   
+                        })    
+                    }) 
+                }
+            } else {
+    //pool.query pour la modif en bdd de l'article 
+            pool.query(updateProduct, [fields.title, fields.price, fields.productDescription, req.params.id], (err, addProduct) => { 
+                if (err) throw err
+                if(addProduct) {
+                    res.json({response: true})
+                }else{
+                    res.json({response:false})
+                }
+            })
+        }
     })
  }
 

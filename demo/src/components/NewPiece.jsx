@@ -19,7 +19,7 @@ const NewPiece = () => {
     
     const submit = (e) => {
         e.preventDefault()
-        const dataFile = new FormData();
+        const dataFile = new FormData();  //crer un nouvel objet vide appelé dataFile
         const files = {...e.target.avatar.files};
         
         // ajouter d'autre input au formulaire
