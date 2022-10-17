@@ -1,6 +1,6 @@
 // FORMULAIRE D'AJOUT D'UNE NOUVELLE PIECE A DISSOCIER DU RESTE POUR L'APPELER UNIQUEMENT SI BESOIN
 
-import React,{useContext, Fragment} from "react"
+import React,{useContext, Fragment, useEffect} from "react"
  import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
@@ -15,7 +15,20 @@ const NewPiece = () => {
     const [productDescription, setProductDescription] = React.useState("")
     const [title, setTitle] = React.useState("")
     const [update, setUpdate] = React.useState(false)
+    const [category, setCategory] = React.useState()
+    const [categoryArray, setCategoryArray] = React.useState([])
     
+    useEffect(() =>{
+            axios.get(`${BASE_URL}/newPiece`)
+            .then ((res) => {
+                console.log(2)
+                setCategoryArray(res.data.allCategory)
+            })
+            .catch((err) => {
+                console.log(3)
+                console.log(err)
+            })
+    }, [])
     
     const submit = (e) => {
         e.preventDefault()
@@ -28,6 +41,7 @@ const NewPiece = () => {
         dataFile.append('productDescription', productDescription )
         dataFile.append('creatorId', state.creatorId)
         dataFile.append('title', title)
+        dataFile.append('category', category)
         
         
         
@@ -62,6 +76,16 @@ const NewPiece = () => {
                     <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
                 <label>Description de l'article</label>
                     <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
+                <label>Catégorie</label>
+                    <select name="category" onChange={(e) => setCategory(e.target.value)}>
+                        {categoryArray.map((e,i) => {
+                            return(
+                                <option key={i} value={e.id}>
+                                    {e.category}
+                                </option>
+                            )
+                        })}
+                    </select>
                     <input type='submit' value='Submit'/>
                 </label>
             </form>

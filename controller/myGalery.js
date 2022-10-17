@@ -6,7 +6,7 @@
  
  const myGalery = (req, res) => {
 
-    let myProducts = 'SELECT products.id, products.title, products.price, products.content, image_id, images.url, images.description FROM products JOIN images ON images.id = products.image_id WHERE creator_id = ?'
+    let myProducts = 'SELECT products.id, products.title, products.price, products.content, image_id, images.url, images.description, categories.category FROM products JOIN images ON images.id = products.image_id JOIN categories ON categories.id = products.categorie_id WHERE creator_id =?'
     let productArray = []
     
     
@@ -18,7 +18,6 @@
             if (error) throw error
             
             productArray= products
-            console.log(productArray)
             res.json({response:true, productArray})
         
         }else {

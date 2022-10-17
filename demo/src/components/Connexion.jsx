@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 
-    const Connexion = () => {
+const Connexion = () => {
     const [mail, setMail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [errorBack, setErrorBack] = React.useState("")

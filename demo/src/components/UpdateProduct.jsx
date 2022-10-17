@@ -5,24 +5,6 @@ import BASE_URL from "../config.js"
 import { useParams } from "react-router-dom";
 
 const UpdateProduct = () => {
-    
-   
-   
-    // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
-    const {id} = useParams()
-         useEffect(() => {
-             axios.get(`${BASE_URL}/updateProduct/${id}`)
-                .then((res) => {
-                    setImgDescription(res.data.selectedProduct[0].description)
-                    setPrice(res.data.selectedProduct[0].price)
-                    setProductDescription(res.data.selectedProduct[0].content)
-                    setTitle(res.data.selectedProduct[0].title)
-                    setImgUrl(res.data.selectedProduct[0].url)
-                })
-                .catch((err)=> {
-                    console.log(err)
-                })
-         }, [])
      
    
    
@@ -36,20 +18,54 @@ const UpdateProduct = () => {
     const [update, setUpdate] = React.useState(false)
     const [product_id, setProduct_id] = React.useState()
     const [imgUrl, setImgUrl] = React.useState("")
+    const [category, setCategory] = React.useState("")
+    const [category_id, setCategory_id]= React.useState("")
+    const [categoryArray, setCategoryArray] = React.useState([])
     
+    
+        // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
+    const {id} = useParams()
+         useEffect(() => {
+             axios.get(`${BASE_URL}/updateProduct/${id}`)
+                .then((res) => {
+                    setImgDescription(res.data.selectedProduct[0].description)
+                    setPrice(res.data.selectedProduct[0].price)
+                    setProductDescription(res.data.selectedProduct[0].content)
+                    setTitle(res.data.selectedProduct[0].title)
+                    setImgUrl(res.data.selectedProduct[0].url)
+                    setCategory(res.data.selectedProduct[0].category)
+                    setCategory_id(res.data.selectedProduct[0].categorie_id)
+                    
+                })
+                .catch((err)=> {
+                    console.log(err)
+                })
+         }, [])
+   
+    useEffect(() =>{
+            axios.get(`${BASE_URL}/newPiece`)
+            .then ((res) => {
+                console.log(2)
+                setCategoryArray(res.data.allCategory)
+            })
+            .catch((err) => {
+                console.log(3)
+                console.log(err)
+            })
+    }, [])
     
     const submit = (e) => {
         e.preventDefault()
-        const dataFile = new FormData(); //crer un nouvel objet vide appelé dataFile
+        const dataFile = new FormData();  //crer un nouvel objet vide appelé dataFile
         const files = {...e.target.picture.files};
         
-        // ajouter d'autre input au formulaire
         dataFile.append('imgDescription', imgDescription) //ajout de la clé, valeur dans l'objet dataFile
         dataFile.append('price', price)
         dataFile.append('productDescription', productDescription )
         dataFile.append('creatorId', state.creatorId)
         dataFile.append('title', title)
         dataFile.append('imgUrl', imgUrl)
+        dataFile.append('category_id', category_id)
         
         // L'image
         if(files[0]){                                                   
@@ -74,7 +90,7 @@ const UpdateProduct = () => {
      const test = (e) => {
          e.preventDefault()
             
-         console.log(update)
+         console.log("CATEGORIE ID", category_id, "CATEGORIE", category )
      }
     // ========================================================================================================= 
     return (
@@ -93,6 +109,15 @@ const UpdateProduct = () => {
                             <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
                         <label>Description de l'article</label>
                             <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
+                        <label>Catégorie</label>
+                        <select name="category"  value={category_id} onChange={(e) => setCategory_id(e.target.value)}>
+                            {categoryArray.map((e,i) => {
+                            console.log(category)
+                                return(
+                                    <option key={i} value={e.id} >{e.category}</option>
+                                )
+                            })}
+                        </select>
                             <input type='submit' value='Submit' />
                         </label>
                     </form>

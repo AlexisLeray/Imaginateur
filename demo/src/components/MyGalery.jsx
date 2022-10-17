@@ -50,30 +50,32 @@ const [state, dispatch] = useContext(ReducerContext)
                         <th>Image</th>
                         <th>Prix</th>
                         <th>Contenu</th>
+                        <th>Catégorie</th>
+                        <th>Action</th>
                     </tr>    
                 </thead>
             <tbody>
              {allProducts.map((e,i) => {
                  return(
         
-                 <tr key={i}>
+                <tr key={i}>
                     <td>{e.title}</td>
                     <td>
                         <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  alt={e.description}/>
                     </td>
                     <td>{e.price}</td>
                     <td>{e.content}</td>
+                    <td>{e.category}</td>
+                    
                     <td>
                         <NavLink to={`/update/${e.id}`}>
                             Modifier
                         </NavLink>
-                   </td>
-                    <td>
                         <button type="submit" onClick={(el) => deleteProduct(el,e)}> 
                             Supprimer
                         </button>
                     </td> 
-                     </tr>    
+                </tr>    
                  )
              })}
             </tbody>

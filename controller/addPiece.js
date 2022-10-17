@@ -7,8 +7,21 @@
  import {inputLength} from '../components/checkLength.js'
 
 
-// // ============================================================================================================
+// ============================================================================================================
 
+const getGategory = (req, res) => {
+    const category = 'SELECT * from categories'
+    pool.query(category, [], (err, allCategory) => {
+        if (err) throw err
+        if(allCategory) {
+            res.json({response: true, allCategory})
+        }else {
+            res.json({response:false})
+        }
+    })
+}
+
+// ============================================================================================================
 import formidable from 'formidable';
 import fs from 'fs';
 
@@ -22,12 +35,14 @@ const checkAcceptedExtensions = (file) => {
 	return false
 }
 
+
+
 const addPiece = (req, res) => {
     
     const form = formidable({keepExtensions: true});
     let newImg = 'INSERT INTO images (description, url) VALUES (?,?)'  
     let selectImg = 'SELECT id FROM images ORDER BY id DESC LIMIT 1'
-    let newPiece = 'INSERT INTO products (creator_id, image_id, title, price, content) VALUES (?,?,?,?,?)'
+    let newPiece = 'INSERT INTO products (creator_id, image_id, title, price, content, categorie_id) VALUES (?,?,?,?,?,?)'
     
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
@@ -47,7 +62,8 @@ const addPiece = (req, res) => {
                             pool.query(selectImg, [], (err, selected) => {
                                 if (err) throw err;
                                 if(selected){
-                                    pool.query(newPiece, [fields.creatorId, selected[0].id, fields.title, fields.price, fields.productDescription], (err, addProduct) => {
+                                    console.log("NEWPIECE", newPiece)
+                                    pool.query(newPiece, [fields.creatorId, selected[0].id, fields.title, fields.price, fields.productDescription, fields.category], (err, addProduct) => {
                                         if (err) throw err
                                         res.json({response: true})
                                     })
@@ -64,4 +80,4 @@ const addPiece = (req, res) => {
 }
 
 
-export default addPiece
+export  {addPiece, getGategory}

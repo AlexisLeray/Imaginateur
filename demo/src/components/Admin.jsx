@@ -1,5 +1,7 @@
 import React,{Fragment} from "react"
 import {NavLink} from "react-router-dom"
+import NewCategory from "./NewCategory"
+import ToApprouved from "./ToApprouved"
 
 
 
@@ -8,7 +10,9 @@ const Admin =() => {
     
     
     return(
+        
         <Fragment>
+            <NewCategory />
             <ul>
                 <li>
                     <NavLink to="/admin/getMessage">
@@ -33,7 +37,9 @@ const Admin =() => {
                 </li>
             </ul>
             <h2>C'est la page Admin</h2>
-        </Fragment>    
+        <ToApprouved />    
+        </Fragment> 
+        
             )
 }
 export default Admin

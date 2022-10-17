@@ -37,11 +37,13 @@ const Nav = (props) => {
                         A propos
                     </NavLink>
                 </li>
+                {!state.logged &&
                 <li>
                     <NavLink to="/register">
                         Inscription
                     </NavLink>
                 </li>
+                }
                 <li>
                     <NavLink to="/connexion">
                         Mon compte
