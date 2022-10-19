@@ -1,9 +1,11 @@
 import {NavLink} from "react-router-dom"
 import {useContext, Fragment} from 'react'
 import {ReducerContext} from './reducer/reducer.jsx'
-
+import { useParams } from "react-router-dom";
 const Nav = (props) => {
     const [state, dispatch] = useContext(ReducerContext)
+    const {id} = useParams()
+
     return(
         <nav>
             <ul>
@@ -57,7 +59,7 @@ const Nav = (props) => {
                 {state.creator &&  
                 <Fragment> 
                     <li> 
-                        <NavLink to="/creator">
+                        <NavLink to={`/creator/${state.creatorId}`}>
                         Espace créateur
                         </NavLink>
                     </li>

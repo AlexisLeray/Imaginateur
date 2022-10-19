@@ -26,9 +26,11 @@ const connexion = (req, res) => {
                         const first_name = check[0].first_name
                         const id = check[0].id
                             
-                        if(check[0].role_id === 2 || check[0].role_id === 1){    
+                        if(creator || admin){   
+                                console.log(check) 
                             pool.query(creatorConnexion, [check[0].id] ,(err, test) => {
                                 if (err) throw err
+                                console.log(test)
                                 const id_creator = test[0].id
                                 res.json({response: true, admin, creator, name, first_name, id, id_creator})
                             })

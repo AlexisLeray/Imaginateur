@@ -22,7 +22,6 @@ const showToUpdate = (req, res) => {
 
      pool.query(getProduct, [req.params.id], (err, selectedProduct) => {
       if (err) throw err
-      console.log("SELECTED PRODUCT", selectedProduct)
       res.json({response: true, selectedProduct})
       
      })
@@ -40,7 +39,7 @@ const getGategory = (req, res) => {
         }
     })
 }
-// ============================================= UPDATE DU PRODUIT ================================================
+// ============================================= UPDATE DU PRODUIT AVEC IMAGE================================================
  const update = (req,res) => {
 
  const form = formidable({keepExtensions: true});
@@ -48,7 +47,6 @@ const getGategory = (req, res) => {
     let updatePicture = 'UPDATE images SET description=?, url=? WHERE images.id= (SELECT * FROM (SELECT images.id FROM images INNER JOIN products ON products.image_id = images.id WHERE products.id= ?)sub GROUP BY id)'
         form.parse(req, (err, fields, files) => {
             if (err) throw err;
-           console.log(fields)
             if(files.files){    //Si le nom du fichier n'est pas vide 
                 let newFilename = files.files.newFilename;  
                 let oldPath = files.files.filepath;  //fichier stocké dans le dossier temp 
@@ -57,7 +55,6 @@ const getGategory = (req, res) => {
                  if(checkAcceptedExtensions(file)){   //Si le fichier fait partie des fichier acceptés 
                     fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
                         if (err) throw err;
-                        console.log("FIELDS", fields)
                           fs.unlink('public/img/'+fields.imgUrl, (err) => {  //Suppression de l'ancien fichier du dossier public 
                              if (err) throw err
                                     })            
@@ -78,7 +75,7 @@ const getGategory = (req, res) => {
                     }) 
                 }
             } else {
-    //pool.query pour la modif en bdd de l'article sans modification d'images 
+// ============================================= UPDATE DU PRODUIT SANS IMAGE================================================
             pool.query(updateProduct, [fields.title, fields.price, fields.productDescription, fields.category_id, req.params.id], (err, addProduct) => { 
                 if (err) throw err
                 if(addProduct) {

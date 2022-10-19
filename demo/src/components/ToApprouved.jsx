@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 
-const ToApprouved = () => {
+//================================= FONCTION POUR AFFICHAGE DES PRODUITS NON VALIDES PAR L'ADMIN ============================
+const ToApproved = () => {
     const [pendingPiece, setPendingPiece] = React.useState([])
     useEffect(() => {
-             axios.get(`${BASE_URL}/toApprouved`)
+             axios.get(`${BASE_URL}/toApproved`)
                 .then((res) => {
                   setPendingPiece(res.data.newProducts)
                     
@@ -16,16 +17,22 @@ const ToApprouved = () => {
                     console.log(err)
                 })
          }, [])
-//=================================BOUTON TEST============================
-    const test = (e) => {
-         e.preventDefault()
-            
-         console.log("PENDING", pendingPiece)
-     }
+//================================= VALIDATION DE L'ARTICLE PAR L'ADMIN ============================         
+    const validate = (e, id) => {
+        axios.post(`${BASE_URL}/toApproved`,  {
+         id: id
+     })
+     .then((res) => {
+         console.log("ARTICLE VALIDE : ", id)
+         })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
 //========================================================================
     return(
     <Fragment>
-    <button type="submit" onClick={test}>test</button>
         <table> 
             <thead>
                 <tr>
@@ -41,6 +48,7 @@ const ToApprouved = () => {
             </thead>
             <tbody>
                 {pendingPiece.map((e,i) => {
+                console.log(e)
                  return(
         
                 <tr key={i}>
@@ -54,7 +62,7 @@ const ToApprouved = () => {
                     <td>{e.content}</td>
                     <td>{e.price}</td>
                     <td>
-                         <button type="submit" > 
+                         <button type="submit" onClick={(el) => validate(el, e.id)} > 
                             Approuvé ! 
                         </button>
                     </td>
@@ -69,4 +77,4 @@ const ToApprouved = () => {
         )
         
 }
-export default ToApprouved
+export default ToApproved

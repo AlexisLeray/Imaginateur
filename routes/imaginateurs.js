@@ -13,15 +13,13 @@ import deleteProduct from '../controller/deleteProduct.js'
 import {showToUpdate, update} from '../controller/updateProduct.js'
 // import showToUpdate from '../controller/updateProduct.js'
 import newCategory from '../controller/newCategory.js'
-import toApprouved from '../controller/toApprouved.js'
+import {toApproved, validate} from '../controller/toApproved.js'
+import {showCreator, creatorInfo} from '../controller/creator.js'
 const host = "http://alexisleray.sites.3wa.io"
 const port = 9300
 const BASE_URL= `${host}:${port}`
 const router = express.Router()
 
-// router.get("/api/", homeController)
-
-// router.get("/api/register", addUser)
 
 router.post("/api/register", addUserSubmit)
 router.post("/api/connexion", connexion)
@@ -41,9 +39,12 @@ router.post("/api/deleteProduct", deleteProduct)
 router.get("/api/updateProduct/:id", showToUpdate)
 router.post("/api/updateProduct/:id", update)
 router.post("/api/newCategory" , newCategory)
-router.get("/api/toApprouved", toApprouved)
 
+router.get("/api/toApproved/", toApproved)
+router.post("/api/toApproved/", validate)
 
+router.get("/api/creator/:id", showCreator)
+router.post("/api/creator/:id", creatorInfo)
 
 
 export default router

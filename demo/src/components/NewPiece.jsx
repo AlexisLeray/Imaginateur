@@ -68,15 +68,20 @@ const NewPiece = () => {
             <form onSubmit={submit} encType="multipart/form-data">
                 <label name='avatar'>
                     <input type='file' name='avatar'/>
-                <label>Description de l'image</label>
+                </label>
+                <label>Description de l'image
                     <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} />
-                 <label>Titre de l'oeuvre</label>
+                </label>
+                 <label>Titre de l'oeuvre
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-                <label>Prix</label>
+                </label>    
+                <label>Prix
                     <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
-                <label>Description de l'article</label>
+                </label>    
+                <label>Description de l'article
                     <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
-                <label>Catégorie</label>
+                </label>    
+                <label>Catégorie
                     <select name="category" onChange={(e) => setCategory(e.target.value)}>
                         {categoryArray.map((e,i) => {
                             return(
@@ -86,8 +91,10 @@ const NewPiece = () => {
                             )
                         })}
                     </select>
-                    <input type='submit' value='Submit'/>
                 </label>
+                
+                    <input type='submit' value='Submit'/>
+                
             </form>
             <MyGalery update={update} />
         </Fragment>

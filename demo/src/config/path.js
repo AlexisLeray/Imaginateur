@@ -29,7 +29,7 @@ export const routes = [
         {path: '/register', element:<Register />},
         {path: '/connexion', element:<Connexion />},
         {path: '/shoppingCart', element:<ShoppingCart />},
-        {path: '/creator', element:<Creator />},
+        {path: '/creator/:id', element:<Creator />},
         {path: '/admin', element:<Admin />},
         {path: '/profil', element:<Profil />},
         {path: '/logout', element: <Logout />},
@@ -47,7 +47,7 @@ export const userPath= [
     ]
 // route reservée aux crétaeurs connectées
 export const creatorsPath= [
-        '/creator', '/myGalery'
+        '/creator/:id', '/myGalery'
     ]
     // route reservée aux admin connectées
 export const adminPath= [

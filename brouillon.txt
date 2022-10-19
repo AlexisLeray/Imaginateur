@@ -1,0 +1,8 @@
+//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    const test = (e) => {
+         e.preventDefault()
+        
+         console.log("CURRENT TARGET")
+     }
+//===============================================================================================
+     <button type="submit" onClick={test}>test</button>

@@ -21,11 +21,11 @@ const Connexion = () => {
       .then((res) => {
           res.data.msg && setErrorBack(res.data.msg)
           // si la connexion est ok
-          res.data.response && dispatch({type:'connexion', fname:res.data.first_name, name:res.data.name, id:res.data.id}); navigate('/')
+          res.data.response && dispatch({type:'connexion', fname:res.data.first_name, name:res.data.name, id:res.data.id}); navigate("/")
           // si l'user a le role admin
-          res.data.admin && dispatch({type:'admin', fname:res.data.first_name, name:res.data.name, id:res.data.id, creatorId:res.data.id_creator}); navigate('/admin')
+          res.data.admin && dispatch({type:'admin', fname:res.data.first_name, name:res.data.name, id:res.data.id, creatorId:res.data.id_creator});
           
-          res.data.creator && dispatch({type:'creator', creatorId: res.data.id_creator}); navigate('/Creator')
+          res.data.creator && dispatch({type:'creator', creatorId: res.data.id_creator}); 
         
           
       })
@@ -34,7 +34,7 @@ const Connexion = () => {
           
       })
   }
- 
+
     return( 
         <Fragment>
         {state.logged === false ?

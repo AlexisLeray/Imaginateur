@@ -15,3 +15,11 @@ img {
     width: 100%;
     height: auto;
 }
+td {
+    width: 100px;
+    height: 100px;
+}
+.img_lite {
+    width: 300px;
+    height: 250px;
+}
