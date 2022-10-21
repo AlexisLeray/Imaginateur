@@ -46,6 +46,7 @@ const NewPiece = () => {
         
         
         // L'image
+        if(files[0]){
         dataFile.append('files', files[0], files[0].name)
         axios.post(`${BASE_URL}/newPiece`, dataFile)
         .then((res)=> {
@@ -59,6 +60,9 @@ const NewPiece = () => {
             console.log(err)
             
         })
+        } else {
+            console.log("met ton image !!!! CONNARD")
+        }
      } 
      
     

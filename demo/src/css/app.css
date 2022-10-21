@@ -1,6 +1,8 @@
 body {
     max-width: 1170px;
     margin: auto;
+    box-sizing: border-box;
+
 }
 ul {
     display: flex;
@@ -22,4 +24,24 @@ td {
 .img_lite {
     width: 300px;
     height: 250px;
+}
+a {
+    text-decoration: none;
+}
+.cards_container {
+    border: 1px solid blue;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 1000px;
+    /*flex-wrap: wrap;*/
+}
+.cards{
+    border: 1px solid red;
+    width: 33%;
+    height: 300px;
+}
+.payment_table td{
+    border:1px solid black;
+    width: 100px;
 }

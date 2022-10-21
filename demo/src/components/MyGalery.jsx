@@ -39,10 +39,18 @@ const [state, dispatch] = useContext(ReducerContext)
         })
         console.log("ça marche aussi")
     }
+    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    const test = (e) => {
+         e.preventDefault()
+        
+         console.log("ALLPRODUCTS", allProducts)
+     }
+//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
    
      return(
         // APPELER LE COMPOSANT NEWPIECE
-        <Fragment>    
+        <Fragment>   
+        <button type="submit" onClick={test}>test</button>
           <table>
                 <thead>
                     <tr>

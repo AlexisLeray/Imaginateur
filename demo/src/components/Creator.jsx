@@ -6,7 +6,7 @@ import Connexion from './Connexion.jsx'
 import {NavLink} from "react-router-dom"
 import { useParams } from "react-router-dom";
 
-const Creator =() => {
+const Creator =({update}) => {
     
     const {id} = useParams()    
     const [state, dispatch] = useContext(ReducerContext);
@@ -32,7 +32,7 @@ const Creator =() => {
                 .catch((err) => {
                     console.log(err)
                 })
-        }, [])
+        }, [update])
         
         
         const submit = (e) => {

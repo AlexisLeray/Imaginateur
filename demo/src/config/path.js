@@ -2,7 +2,7 @@ import Home from '../components/Home'
 import Register from '../components/Register'
 import Connexion from '../components/Connexion'
 import Workshop from '../components/Workshop'
-import Galery from '../components/Galery'
+import Galery from '../components/Articles'
 import Shop from '../components/Shop'
 import Contact from '../components/Contact'
 import About from '../components/About'
@@ -17,6 +17,8 @@ import NewCreator from '../components/NewCreator'
 import MyGalery from '../components/MyGalery'
 import Product from '../components/Product'
 import UpdateProduct from '../components/UpdateProduct'
+import Payment from '../components/Payment'
+
 
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
@@ -28,7 +30,7 @@ export const routes = [
         {path: '/About', element:<About />},
         {path: '/register', element:<Register />},
         {path: '/connexion', element:<Connexion />},
-        {path: '/shoppingCart', element:<ShoppingCart />},
+        {path: '/panier/:id', element:<ShoppingCart />},
         {path: '/creator/:id', element:<Creator />},
         {path: '/admin', element:<Admin />},
         {path: '/profil', element:<Profil />},
@@ -38,7 +40,9 @@ export const routes = [
         {path: '/admin/newCreator', element: <NewCreator /> },
         {path: '/myGalery', element: <MyGalery />},
         {path: '/product', element: <Product />},
-        {path: '/update/:id', element: <UpdateProduct />}
+        {path: '/update/:id', element: <UpdateProduct />},
+        {path: '/payment/:id', element: <Payment />},
+        {path: '/galery', element: <Galery />}
                 
     ]
 // route reservée aux personnes connectées

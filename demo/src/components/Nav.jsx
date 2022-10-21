@@ -52,7 +52,7 @@ const Nav = (props) => {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/shoppingCart">
+                    <NavLink to={`/panier/${state.id}`}>
                         Panier
                     </NavLink>
                 </li>

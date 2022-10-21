@@ -5,7 +5,7 @@ import axios from 'axios'
 import BASE_URL from "../config.js"
 
 //================================= FONCTION POUR AFFICHAGE DES PRODUITS NON VALIDES PAR L'ADMIN ============================
-const ToApproved = () => {
+const ToApproved = ({update}) => {
     const [pendingPiece, setPendingPiece] = React.useState([])
     useEffect(() => {
              axios.get(`${BASE_URL}/toApproved`)
@@ -16,7 +16,7 @@ const ToApproved = () => {
                 .catch((err)=> {
                     console.log(err)
                 })
-         }, [])
+         }, [update])
 //================================= VALIDATION DE L'ARTICLE PAR L'ADMIN ============================         
     const validate = (e, id) => {
         axios.post(`${BASE_URL}/toApproved`,  {

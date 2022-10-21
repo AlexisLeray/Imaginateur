@@ -4,5 +4,7 @@
         
          console.log("CURRENT TARGET")
      }
-//===============================================================================================
+//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
      <button type="submit" onClick={test}>test</button>
+     
+     
