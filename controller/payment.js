@@ -8,27 +8,28 @@
     let buyArticles = 'SELECT * FROM shop WHERE user_id=?'
     let buyProducts = 'SELECT shop.*, products.title, products.price, images.url FROM shop JOIN products ON products.id = shop.product_id JOIN images ON products.image_id = images.id WHERE user_id = ?'
         pool.query(buyProducts, [req.params.id], (err, toBuy) => {
-           console.log(1)
-            console.log("ACHAT", toBuy)
+           
             if (err) throw err
             if (toBuy){
-                console.log(2)
-                console.log("TOBUY", toBuy)
                 res.json({response:true, toBuy})
             }else{
-                console.log(3)
                 res.json({response:false})
             }
         })
-const validate = (req, res) => {
-    // let soldProducts = 'DELETE FROM products WHERE id = ?'
-     let soldProducts = 'SELECT * FROM products WHERE id = ?'
-     pool.query(soldProducts, [req.body.product_id], (err, result) => {
-         if (err) throw err
-         console.log(result)
-         
-     })
-}
-    
  }
- export default payment
+ const sold  = (req, res) => {
+     console.log("PRODUCTS LENGTH", req.body.product_id.length)
+    console.log("PRODUCTS", req.body.product_id)
+    // let soldProducts = 'DELETE FROM products WHERE id = ?'
+    // let soldProducts = 'SELECT * FROM products WHERE id =? '
+    let soldProducts = 'DELETE FROM images WHERE images.id = (SELECT products.image_id FROM products WHERE products.id = ?)'
+    for(let i = 0; i<=req.body.product_id.length; i++){
+        if(i===req.body.product_id.length){
+            res.json({response: true, msg:"Vos produits ne vont certainement pas arriver, c'est une démo                       "})
+        }
+        pool.query(soldProducts, [req.body.product_id[i]], (err, result) => {
+            if (err) throw err
+        })   
+    }
+}
+ export {payment, sold }

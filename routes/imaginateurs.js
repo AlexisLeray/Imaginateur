@@ -15,7 +15,10 @@ import {toApproved, validate} from '../controller/toApproved.js'
 import {showCreator, creatorInfo} from '../controller/creator.js'
 import {showShop, shop} from '../controller/shop.js'
 import showBasket from '../controller/shoppingCart.js'
-import payment from '../controller/payment.js'
+import {payment, sold} from '../controller/payment.js'
+import {addArticle, getArticle} from '../controller/articles.js'
+import withoutPictures from '../controller/articleText.js'
+import deleteArticle from '../controller/deleteArticle.js'
 const host = "http://alexisleray.sites.3wa.io"
 const port = 9300
 const BASE_URL= `${host}:${port}`
@@ -36,7 +39,6 @@ router.get("/api/newPiece", getGategory)
 router.get("/api/myGalery/:id", myGalery)
 
 router.post("/api/deleteProduct", deleteProduct)
-// router.post("/api/deletePost", deletePost)
 router.get("/api/updateProduct/:id", showToUpdate)
 router.post("/api/updateProduct/:id", update)
 router.post("/api/newCategory" , newCategory)
@@ -52,5 +54,12 @@ router.post("/api/shop/", shop)
 
 router.get("/api/panier/:id", showBasket)
 router.get("/api/payment/:id", payment)
+router.post("/api/payment/:id", sold)
+
+router.post("/api/article", addArticle)
+router.post("/api/articleTexte", withoutPictures)
+router.get("/api/article", getArticle)
+
+router.post("/api/deleteArticle", deleteArticle)
 
 export default router
