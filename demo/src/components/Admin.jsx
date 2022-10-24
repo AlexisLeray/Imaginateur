@@ -36,7 +36,7 @@ const Admin =() => {
                     </NavLink>
                 </li>
             </ul>
-            <h2>C'est la page Admin</h2>
+            <h2>Nouvelles propositions d'oeuvres à publier</h2>
         <ToApprouved />    
         </Fragment> 
         

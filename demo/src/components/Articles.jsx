@@ -2,7 +2,7 @@ import React,{useContext, useEffect,Fragment, useState} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import { useParams } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 
 
 const Galery = () => {
@@ -68,32 +68,62 @@ const Galery = () => {
             console.log(err)
             
         })  
-        }
+        }   
      } 
-    //  =============================DELETE ARTICLE============================================
-    const deleteProduct = (e, image) => {
+     //  =============================MODIFICATION D'ARTICLE============================================
+     const updateArticle = () => {
+        axios.post(`${BASE_URL}/updateArticle`, {
+            
+        })
+     }
+    //  =============================SUPPPRESSION D'ARTICLE TIRE DE PRODUCTS===========================================
+    const deleteArticle = (e, article) => {
+        console.log(10)
         e.preventDefault()
+        if(article.image_id !== null){
+            console.log(11)
         axios.post(`${BASE_URL}/deleteArticle`, {
-            id:image.id,
-            imageId:image.image_id,
-            image:image.url
+            
+            id: article.id,
+            imageId: article.image_id,
+            image: article.url
         })
         .then((res) => {
+            console.log(12)
             let data = [...allArticles]
-            setAllArticles(data.filter((i) => i.id !== image.id))
+            setAllArticles(data.filter((i) => i.id !== article.id))
             console.log(res)
         })
         .catch((err) => {
+            console.log(13)
             console.log(err)
         })
-        console.log("ça marche aussi")
+        }else {
+            console.log(14)
+            axios.post(`${BASE_URL}/deleteArticle`, {
+                id: article.id
+            })
+            .then((res) => {
+                console.log(15)
+                let data = [...allArticles]
+                setAllArticles(data.filter((i) => i.id !== article.id))
+            })
+            .catch((err) => {
+                console.log(16)
+                console.log(err)
+            })
+        }
     }
   
   //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("ALLARTICLES", allArticles[2].url)
+   
+            // article est un paramètre qui équivaut au "e" du bouton il va permettre de choisir quel information du e (donc de toutes les informations de l'article) nous voulons récupérer 
+    const test = (e, article) => {
+          e.preventDefault()
+        console.log("ARTICLES", allArticles)
+         console.log("E", article.id)
+         console.log("E", article.image_id)
+         console.log("E", article.url)
      }
   
     return(
@@ -137,8 +167,15 @@ const Galery = () => {
                     )}
                         <div>{e.content}</div>
                         <div>{e.price}</div>
-                        
-                        
+                    {state.admin && 
+                        <div> 
+                            <NavLink to={`/updateArticle/${e.id}`}>
+                                Modifier
+                            </NavLink>
+                             {/*Pour le bouton delete on indique qu'au click on lance la fonction deleteArticle qui prend comme paramètre el l'élément et e l'ensemble des info de l'article en question*/}                                   
+                            <button type="submit" onClick={(el) => deleteArticle(el, e)}> Supprimer </button> 
+                        </div>
+                    }    
                     </div>
                 ))}
                 

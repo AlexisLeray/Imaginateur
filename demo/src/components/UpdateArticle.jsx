@@ -2,23 +2,14 @@ import React,{useContext,useEffect, Fragment, useState} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UpdateArticle = () => {
      
    
    
     // ===================================POUR UPDATE DU PRODUIT ===================================
-    
-    // const [imgDescription, setImgDescription] = React.useState("")
-    // const [price, setPrice] = React.useState("")
-    // const [productDescription, setProductDescription] = React.useState("")
-    // const [title, setTitle] = React.useState("")
-    // const [update, setUpdate] = React.useState(false)
-    // const [product_id, setProduct_id] = React.useState()
-    // const [imgUrl, setImgUrl] = React.useState("")
-    // const [category, setCategory] = React.useState("")
-    // const [category_id, setCategory_id]= React.useState("")
+
     const [articlesArray, setArticlesArray] = React.useState([])
     const [state, dispatch] = useContext(ReducerContext)
     const [title, setTitle] = React.useState("")
@@ -26,17 +17,19 @@ const UpdateArticle = () => {
     const [imgUrl, setImgUrl] = React.useState("")  
     const [update, setUpdate] = React.useState("")
     const [imgDescription, setImgDescription] = React.useState("")
+    const [imgId, setImgId] = React.useState()
     
     
         // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
     const {id} = useParams()
          useEffect(() => {
-             axios.get(`${BASE_URL}/updateProduct/${id}`)
+             axios.get(`${BASE_URL}/updateArticle/${id}`)
                 .then((res) => {
                     setImgDescription(res.data.selectedProduct[0].description)
                     setContent(res.data.selectedProduct[0].content)
                     setTitle(res.data.selectedProduct[0].title)
                     setImgUrl(res.data.selectedProduct[0].url)
+                    setImgId(res.data.selectedProduct[0].image_id)
                     
                     
                 })
@@ -46,7 +39,7 @@ const UpdateArticle = () => {
          }, [])
    
     useEffect(() =>{
-            axios.get(`${BASE_URL}/newPiece`)
+            axios.get(`${BASE_URL}/updateArticle/${id}`)
             .then ((res) => {
                 console.log(2)
                 setArticlesArray(res.data.allCategory)
@@ -66,12 +59,13 @@ const UpdateArticle = () => {
         dataFile.append('content', content )
         dataFile.append('title', title)
         dataFile.append('imgUrl', imgUrl)
+        dataFile.append('imgId', imgId)
         
         // L'image
         if(files[0]){                                                   
             dataFile.append('files', files[0], files[0].name)
         }
-        axios.post(`${BASE_URL}/updateProduct/${id}`, dataFile)
+        axios.post(`${BASE_URL}/updateArticle/${id}`, dataFile)
         .then((res)=> {
             
             console.log(res)
@@ -83,13 +77,19 @@ const UpdateArticle = () => {
             console.log(err)
             
         })
+        
      } 
-     
+     //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    const test = (e) => {
+         e.preventDefault()
+        
+         console.log("imgId", imgId)
+    }
     // ========================================================================================================= 
     return (
         <Fragment>
             <h1>Nouveau produit</h1>
-                          
+                <button type="submit" onClick={test}>test</button>          
                     <form onSubmit={submit} encType="multipart/form-data">
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
                         <label name='picture'>

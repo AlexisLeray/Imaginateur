@@ -18,7 +18,8 @@ import MyGalery from '../components/MyGalery'
 import Product from '../components/Product'
 import UpdateProduct from '../components/UpdateProduct'
 import Payment from '../components/Payment'
-
+import UpdateArticle from '../components/UpdateArticle'
+import ModifyProfil from '../components/ModifyProfil'
 
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
@@ -42,8 +43,9 @@ export const routes = [
         {path: '/product', element: <Product />},
         {path: '/update/:id', element: <UpdateProduct />},
         {path: '/payment/:id', element: <Payment />},
-        {path: '/galery', element: <Galery />}
-                
+        {path: '/galery', element: <Galery />},
+        {path: '/updateArticle/:id', element: <UpdateArticle />},
+        {path: '/updateProfil/:id', element: <ModifyProfil />}
     ]
 // route reservée aux personnes connectées
 export const userPath= [

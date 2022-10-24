@@ -1,13 +1,55 @@
 import {NavLink} from "react-router-dom"
-import {useContext, Fragment} from 'react'
+import {useContext, Fragment, useEffect} from 'react'
 import {ReducerContext} from './reducer/reducer.jsx'
 import { useParams } from "react-router-dom";
+import BASE_URL from "../config.js";
+import axios from 'axios';
+
 const Nav = (props) => {
+   
     const [state, dispatch] = useContext(ReducerContext)
     const {id} = useParams()
-
+    
+      
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken")
+    if(!state.login && token){
+      axios.post(`${BASE_URL}/isLogged`,{token})
+      .then((res) => {
+        console.log(res.data)
+        if(res.data.token){
+          axios.defaults.headers.common['Authorization'] = 'Bearer '+res.data.token
+        }
+        if(res.data.logged){
+            dispatch({
+                type:'connexion',
+                fname:res.data.first_name, 
+                name:res.data.name, 
+                id:res.data.id})
+        }
+        res.data.admin && dispatch({type:'admin',fname:res.data.first_name, 
+                    name:res.data.name, 
+                    id:res.data.id, 
+                    creatorId:res.data.id_creator})
+        res.data.creator && dispatch({type:'creator',creatorId: res.data.id_creator,
+                    fname:res.data.first_name,
+                    name:res.data.name
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  },[])
+//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    const test = (e) => {
+         e.preventDefault()
+        
+         console.log("STATE", state)
+     }
     return(
         <nav>
+        {console.log(state)}
             <ul>
                 <li>
                     <NavLink to="/">
@@ -84,7 +126,7 @@ const Nav = (props) => {
                 </Fragment>
                 }
             </ul>
-           
+           <button type="submit" onClick={test}>test</button>
         </nav>
         )
 }

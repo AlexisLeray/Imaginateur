@@ -24,6 +24,7 @@ const [state, dispatch] = useContext(ReducerContext)
   
     const deleteProduct = (e, image) => {
         e.preventDefault()
+        console.log("IMAGE", image)
         axios.post(`${BASE_URL}/deleteProduct`, {
             id:image.id,
             imageId:image.image_id,
@@ -43,7 +44,7 @@ const [state, dispatch] = useContext(ReducerContext)
     const test = (e) => {
          e.preventDefault()
         
-         console.log("ALLPRODUCTS", allProducts)
+         console.log("all products", allProducts)
      }
 //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
    

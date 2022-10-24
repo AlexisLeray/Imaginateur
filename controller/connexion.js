@@ -1,10 +1,15 @@
 const host = "http://alexisleray.sites.3wa.io"
 const port = 9300
 const BASE_URL = `${host}:${port}`
-import pool from '../config/dataBase.js'
+import {pool} from '../config/dataBase.js'
 import bcrypt from 'bcrypt';
 import {inputLength} from '../components/checkLength.js'
+import {asyncQuery} from '../config/dataBase.js';
+import {generateToken} from "../controller/token.js"
 const saltRounds = 10
+
+
+
 
 
 const connexion = (req, res) => {
@@ -12,30 +17,40 @@ const connexion = (req, res) => {
     //REQUETE SQL
     let connexionSQL = 'SELECT  users.hash, users.id, role_id, name, first_name FROM users WHERE mail=?'
     let creatorConnexion = 'SELECT creators.id FROM creators WHERE `user_id` = ?'
+    
     if (inputLength(req.body.mail,63) && inputLength(req.body.password,63)){
         pool.query(connexionSQL, [req.body.mail, req.body.name, req.body.first_name], function(err, check ) {
             if (err) throw err; 
             if (check[0]) {
-                bcrypt.compare(req.body.password, check[0].hash, function(err, result) {
+                bcrypt.compare(req.body.password, check[0].hash, async function(err, result) {
                     if (err) throw err;
                     if (result) {
                         // si il a le role admin true
+                        const user = true
                         const admin = check[0].role_id === 1
                         const creator = check[0].role_id === 2
                         const name = check[0].name
                         const first_name = check[0].first_name
                         const id = check[0].id
-                            
+                        let userData = { 
+                            user,
+                            admin, 
+                            creator, 
+                            name, 
+                            first_name, 
+                            id
+                        }
                         if(creator || admin){   
-                                console.log(check) 
-                            pool.query(creatorConnexion, [check[0].id] ,(err, test) => {
+                            pool.query(creatorConnexion, [check[0].id], async (err, test) => {
                                 if (err) throw err
-                                console.log(test)
                                 const id_creator = test[0].id
-                                res.json({response: true, admin, creator, name, first_name, id, id_creator})
+                                userData.id_creator = id_creator
+                                const token = await generateToken(userData)
+                                res.json({response: true, admin, creator, name, first_name, id, id_creator, token})
                             })
                         } else {
-                            res.json({response: true, admin, creator, name, first_name, id})
+                            const token = await generateToken(userData)
+                            res.json({response: true, admin, creator, name, first_name, id, token})
                         }
                     }else{
                         console.log("pas connecté ")

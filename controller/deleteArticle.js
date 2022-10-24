@@ -1,7 +1,7 @@
  const host = "http://alexisleray.sites.3wa.io"
  const port = 9300
  const BASE_URL = `${host}:${port}`
- import pool from '../config/dataBase.js'
+ import {pool} from '../config/dataBase.js'
  import fs from 'fs'
  
 const deleteArticle = (req,res) => {
@@ -12,6 +12,7 @@ const deleteArticle = (req,res) => {
     pool.query(deleteSQL, [req.body.id], (err, result) =>{
         if (err) throw err
         if(result) {
+            if(req.body.imageID !== undefined) {
             pool.query(deleteImg, [req.body.imageId], (err, imgDeleted) => {
                 if (err) throw err
                 fs.unlink('public/img/'+req.body.image, (err) => {
@@ -19,6 +20,9 @@ const deleteArticle = (req,res) => {
                     res.json({response:true, msg:"image supprimée"})
                 })
            })
+            }else {
+                res.json({response:true, msg:"article sans image supprimé"})
+            }
         }else{
             console.log("IMAGE PAS SUPPRIMEE")
         }
