@@ -4,7 +4,6 @@ const isLogged = async (req,res) => {
     const userData = await verifyToken(req.body.token)
     if(userData){
         const token = await generateToken(userData)
-        console.log(userData)
         res.json({response:true,
         logged:true,
         admin:userData.admin, 

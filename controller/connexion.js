@@ -13,17 +13,17 @@ const saltRounds = 10
 
 
 const connexion = (req, res) => {
-    // console.log(req.body)  
     //REQUETE SQL
-    let connexionSQL = 'SELECT  users.hash, users.id, role_id, name, first_name FROM users WHERE mail=?'
+    let connexionSQL = 'SELECT  users.hash, users.id, role_id, name, users.mail, first_name FROM users WHERE mail=?'
     let creatorConnexion = 'SELECT creators.id FROM creators WHERE `user_id` = ?'
     
     if (inputLength(req.body.mail,63) && inputLength(req.body.password,63)){
-        pool.query(connexionSQL, [req.body.mail, req.body.name, req.body.first_name], function(err, check ) {
+        pool.query(connexionSQL, [req.body.mail], function(err, check ) {
             if (err) throw err; 
-            if (check[0]) {
+            if (check[0].mail) {
                 bcrypt.compare(req.body.password, check[0].hash, async function(err, result) {
                     if (err) throw err;
+                    console.log("RESULT", check)
                     if (result) {
                         // si il a le role admin true
                         const user = true
@@ -32,25 +32,28 @@ const connexion = (req, res) => {
                         const name = check[0].name
                         const first_name = check[0].first_name
                         const id = check[0].id
+                        const mail = check[0].mail
                         let userData = { 
                             user,
                             admin, 
                             creator, 
                             name, 
                             first_name, 
+                            mail,
                             id
                         }
+                        
                         if(creator || admin){   
                             pool.query(creatorConnexion, [check[0].id], async (err, test) => {
                                 if (err) throw err
                                 const id_creator = test[0].id
                                 userData.id_creator = id_creator
                                 const token = await generateToken(userData)
-                                res.json({response: true, admin, creator, name, first_name, id, id_creator, token})
+                                res.json({response: true, admin, creator, name, first_name, mail, id, id_creator, token})
                             })
                         } else {
                             const token = await generateToken(userData)
-                            res.json({response: true, admin, creator, name, first_name, id, token})
+                            res.json({response: true, admin, creator, name, first_name, mail, id, token})
                         }
                     }else{
                         console.log("pas connecté ")

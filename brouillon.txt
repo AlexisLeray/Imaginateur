@@ -7,62 +7,6 @@
 //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
      <button type="submit" onClick={test}>test</button>
      
-//=========================================================================================================================================     
-     
-    let updateArticle = 'UPDATE articles SET articles.title=?, articles.content=? WHERE articles.id=?'
-    let updatePicture = 'UPDATE images SET description=?, url=? WHERE images.id= (SELECT * FROM (SELECT images.id FROM images INNER JOIN articles ON articles.image_id = images.id WHERE articles.id= ?)sub GROUP BY id)'
-        form.parse(req, (err, fields, files) => {
-            console.log(1)
-            if (err) throw err;
-            if(files.files){    //Si le nom du fichier n'est pas vide 
-            console.log(2)
-                let newFilename = files.files.newFilename;  
-                let oldPath = files.files.filepath;  //fichier stocké dans le dossier temp 
-                let newPath = `public/img/${newFilename}`; //nouveau lieu du fichier stocké 
-                const file = files.files
-                 if(checkAcceptedExtensions(file)){   //Si le fichier fait partie des fichier acceptés 
-                 console.log(3)
-                    fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
-                    console.log(4)
-                        if (err) throw err;
-                        // 
-                          fs.unlink('public/img/'+fields.imgUrl, (err) => {  //Suppression de l'ancien fichier du dossier public 
-                          console.log(5)
-                             if (err) throw err
-                                    })            
-                        //On lance la pool.query pour l'envoi de l'url et de la description en bdd
-                         pool.query(updatePicture, [fields.imgDescription,newFilename, req.params.id], (err, added) => {  
-                             console.log(6)
-                            if (err) throw err
-                                if (added){
-                                    console.log(7)
-                                  pool.query(updateArticle, [fields.title, fields.content, req.params.id], (err, addArticle) => {
-                                      console.log(8)
-                                    if (err) throw err
-                                    if(addArticle) {
-                                        console.log(9)
-                                         res.json({response: true})   //l'url du fichier est bien transféré
-                                    }else{
-                                        console.log(10)
-                                        res.json({response:false})  //il y a eu un soucis, l'url n'est pas envoyée// 
-                                    }
-                               }) 
-                            }   
-                        })    
-                    }) 
-                }
-            } else {
-// ============================================= UPDATE DU ARTICLE SANS IMAGE================================================
-            pool.query(updateArticle, [fields.title, fields.content, req.params.id], (err, addArticle) => { 
-                console.log(1)
-                if (err) throw err
-                if(addArticle) {
-                    console.log(12)
-                    res.json({response: true})
-                }else{
-                    console.log(13)
-                    res.json({response:false})
-                }
-            })
-        }
-    })
+testuser@mail.fr
+Test2410!
+Autre2410!

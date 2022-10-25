@@ -16,7 +16,7 @@ const ToApproved = ({update}) => {
                 .catch((err)=> {
                     console.log(err)
                 })
-         }, [update])
+         }, [])
 //================================= VALIDATION DE L'ARTICLE PAR L'ADMIN ============================         
     const validate = (e, id) => {
         axios.post(`${BASE_URL}/toApproved`,  {
@@ -48,7 +48,6 @@ const ToApproved = ({update}) => {
             </thead>
             <tbody>
                 {pendingPiece.map((e,i) => {
-                console.log(e)
                  return(
         
                 <tr key={i}>

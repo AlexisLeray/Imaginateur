@@ -1,7 +1,6 @@
 import Home from '../components/Home'
 import Register from '../components/Register'
 import Connexion from '../components/Connexion'
-import Workshop from '../components/Workshop'
 import Galery from '../components/Articles'
 import Shop from '../components/Shop'
 import Contact from '../components/Contact'
@@ -9,13 +8,11 @@ import About from '../components/About'
 import ShoppingCart from '../components/ShoppingCart'
 import Creator from '../components/Creator'
 import Admin from '../components/Admin'
-import Profil from '../components/Profil'
 import Logout from '../components/Deconnexion'
 import Messagerie from '../components/AdminMessage'
 import NewPiece from '../components/NewPiece'
 import NewCreator from '../components/NewCreator'
 import MyGalery from '../components/MyGalery'
-import Product from '../components/Product'
 import UpdateProduct from '../components/UpdateProduct'
 import Payment from '../components/Payment'
 import UpdateArticle from '../components/UpdateArticle'
@@ -24,7 +21,6 @@ import ModifyProfil from '../components/ModifyProfil'
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
         {path: '/', element:<Home />},
-        {path: '/workshop', element:<Workshop />},
         {path: '/galery', element:<Galery />},
         {path: '/shop', element:<Shop />},
         {path: '/contact', element:<Contact />},
@@ -34,13 +30,11 @@ export const routes = [
         {path: '/panier/:id', element:<ShoppingCart />},
         {path: '/creator/:id', element:<Creator />},
         {path: '/admin', element:<Admin />},
-        {path: '/profil', element:<Profil />},
         {path: '/logout', element: <Logout />},
         {path: '/admin/getMessage', element: <Messagerie />},
         {path: '/newPiece', element:  <NewPiece />},
         {path: '/admin/newCreator', element: <NewCreator /> },
         {path: '/myGalery', element: <MyGalery />},
-        {path: '/product', element: <Product />},
         {path: '/update/:id', element: <UpdateProduct />},
         {path: '/payment/:id', element: <Payment />},
         {path: '/galery', element: <Galery />},

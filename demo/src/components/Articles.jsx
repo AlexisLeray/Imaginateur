@@ -3,7 +3,7 @@ import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 import { useParams, NavLink, useNavigate } from "react-router-dom";
-
+import {inputLength} from '../utils/utils.js'
 
 const Galery = () => {
     const [state, dispatch] = useContext(ReducerContext)
@@ -37,39 +37,45 @@ const Galery = () => {
         
         
         // L'image
-        if(files[0]){
-        dataFile.append('files', files[0], files[0].name)
-        axios.post(`${BASE_URL}/article`, dataFile)
-        .then((res)=> {
+        if(inputLength(title,63) && inputLength(content) && inputLength(imgDescription,255)){
             
-            console.log(res)
-            res.data.response && console.log('succesfully upload');
-            setUpdate(!update)
-            
-        })
-        .catch((err) => {
-            console.log(err)
-            
-        })
-        } else {
-            console.log("ça passe dans le else")
-            axios.post(`${BASE_URL}/articleTexte`, {
-                
-                title, 
-                content
-                
-            })
+            if(files[0]){
+            dataFile.append('files', files[0], files[0].name)
+            axios.post(`${BASE_URL}/article`, dataFile)
             .then((res)=> {
-                console.log(res)
+                
+                
                 res.data.response && console.log('succesfully upload');
                 setUpdate(!update)
-        })
-        .catch((err) => {
-            console.log(err)
-            
-        })  
-        }   
-     } 
+                
+            })
+            .catch((err) => {
+                console.log(err)
+                
+            })
+            }else {
+                console.log("ça passe dans le else")
+                axios.post(`${BASE_URL}/articleTexte`, {
+                    
+                    title, 
+                    content
+                    
+                })
+                .then((res)=> {
+                    
+                    res.data.response && console.log('succesfully upload');
+                    setUpdate(!update)
+            })
+            .catch((err) => {
+                console.log(err)
+                
+            })  
+            }
+        }else{
+            console.log("champs trops longs")
+        }
+        
+     } //fin de la fonction submit
      //  =============================MODIFICATION D'ARTICLE============================================
      const updateArticle = () => {
         axios.post(`${BASE_URL}/updateArticle`, {
@@ -78,10 +84,8 @@ const Galery = () => {
      }
     //  =============================SUPPPRESSION D'ARTICLE TIRE DE PRODUCTS===========================================
     const deleteArticle = (e, article) => {
-        console.log(10)
         e.preventDefault()
         if(article.image_id !== null){
-            console.log(11)
         axios.post(`${BASE_URL}/deleteArticle`, {
             
             id: article.id,
@@ -89,27 +93,22 @@ const Galery = () => {
             image: article.url
         })
         .then((res) => {
-            console.log(12)
             let data = [...allArticles]
             setAllArticles(data.filter((i) => i.id !== article.id))
-            console.log(res)
+    
         })
         .catch((err) => {
-            console.log(13)
             console.log(err)
         })
         }else {
-            console.log(14)
             axios.post(`${BASE_URL}/deleteArticle`, {
                 id: article.id
             })
             .then((res) => {
-                console.log(15)
                 let data = [...allArticles]
                 setAllArticles(data.filter((i) => i.id !== article.id))
             })
             .catch((err) => {
-                console.log(16)
                 console.log(err)
             })
         }
@@ -120,10 +119,7 @@ const Galery = () => {
             // article est un paramètre qui équivaut au "e" du bouton il va permettre de choisir quel information du e (donc de toutes les informations de l'article) nous voulons récupérer 
     const test = (e, article) => {
           e.preventDefault()
-        console.log("ARTICLES", allArticles)
-         console.log("E", article.id)
-         console.log("E", article.image_id)
-         console.log("E", article.url)
+  
      }
   
     return(
@@ -141,13 +137,22 @@ const Galery = () => {
                         <input type='file' name='avatar'/>
                     </label>
                      <label>Description de l'image
-                        <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} />
+                        <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="63"/>
+                            {!inputLength(imgDescription,63) && 
+                                <p>Max 63 caractères</p>
+                            }
                     </label>
                     <label>Titre
-                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"/>
+                            {!inputLength(title,63) && 
+                                <p>Max 63 caractères</p>
+                            }
                     </label>
                      <label>Contenu
-                        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} />
+                        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} maxLength="255" />
+                            {!inputLength(content) && 
+                                <p>Max 255 caractères</p>
+                            }
                     </label>
                         <input type='submit' value='Submit'/>
                 </form>

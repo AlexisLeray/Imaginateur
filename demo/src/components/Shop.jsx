@@ -2,6 +2,7 @@ import React,{useContext, Fragment, useEffect} from "react"
  import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
+import {NavLink} from "react-router-dom"
 
 const Shop =({update}) => {
     
@@ -51,8 +52,14 @@ const Shop =({update}) => {
                 </div>
                 <div>{e.content}</div>
                 <div>{e.price}</div>
-                
+            {state.logged ?     
                 <button type="submit" onClick={(el) => submit(el, e)}>Ajouter au panier</button>
+            :
+                <p>
+                    <NavLink to="/connexion">connectez vous </NavLink> pour passer commande
+                    
+                </p>
+            }
             </div>
         ))}
     </div>

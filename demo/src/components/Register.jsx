@@ -12,8 +12,8 @@ const Register = () =>{
     const [password, setPassword] = React.useState("")
     
   
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-        const mailRegex = /^(?=.*[@])(?=.*[.])/
+          const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+          const mailRegex = /^(?=.*[@])(?=.*[.])/
    
     const submit = (e) => {
         e.preventDefault()
@@ -33,7 +33,7 @@ const Register = () =>{
             })
         } 
         
-    }
+      }
     
     
     return(
@@ -46,17 +46,17 @@ const Register = () =>{
             }
             </label>
             <label>Prénom : 
-                <input type="text" value={first_name} onChange={(e) => setFirst_name(e.target.value)} name="first_name" maxLength="63"/>
+                <input type="text" value={first_name} onChange={(e) => setFirst_name(e.target.value)} name="first_name" maxLength="63" />
             {!inputLength(first_name,63) && 
                 <p>Max 63 caractères</p>
             }
             </label>
             <label>Mail : 
-                <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} name="mail" maxLength="255"/>
+                <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} name="mail" maxLength="255" />
             {!inputLength(mail) && 
                 <p>Max 255 caractères</p>
             }
-            {!mail.match(mailRegex) &&
+            {!mail.match(mailRegex) && 
             <p>Veuillez entrer une adresse mail valide</p>
             }
             </label>
@@ -70,7 +70,7 @@ const Register = () =>{
             }
         
         
-            {  !password.match(regex) &&
+            {  !password.match(regex) && 
             <p>Le mot de passe doit inclure une majuscule, une minuscule, un chiffre et un caractère spécial</p>
             }
                 

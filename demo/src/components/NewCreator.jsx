@@ -25,7 +25,6 @@ const NewCreator = (e) => {
     
     const submit = (e, user_id) => {
         e.preventDefault()          
-        console.log('ici')
         axios.post(`${BASE_URL}/admin/addCreator`, {          
             id:user_id                                      
         })                                                  

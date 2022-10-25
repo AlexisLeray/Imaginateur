@@ -22,7 +22,9 @@
     console.log("PRODUCTS", req.body.product_id)
     // let soldProducts = 'DELETE FROM products WHERE id = ?'
     // let soldProducts = 'SELECT * FROM products WHERE id =? '
-    let soldProducts = 'DELETE FROM images WHERE images.id = (SELECT products.image_id FROM products WHERE products.id = ?)'
+    //celle d'après est la requête initiale 
+    // let soldProducts = 'DELETE FROM images WHERE images.id = (SELECT products.image_id FROM products WHERE products.id = ?)'
+    let soldProducts = 'UPDATE products SET products.approved= 0 WHERE products.id = ?'
     for(let i = 0; i<=req.body.product_id.length; i++){
         if(i===req.body.product_id.length){
             res.json({response: true, msg:"Vos produits ne vont certainement pas arriver, c'est une démo                       "})

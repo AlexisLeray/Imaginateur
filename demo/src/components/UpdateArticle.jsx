@@ -3,6 +3,7 @@ import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 import { useParams, useNavigate } from "react-router-dom";
+import {inputLength} from '../utils/utils.js'
 
 const UpdateArticle = () => {
      
@@ -62,22 +63,25 @@ const UpdateArticle = () => {
         dataFile.append('imgId', imgId)
         
         // L'image
-        if(files[0]){                                                   
-            dataFile.append('files', files[0], files[0].name)
+        if(inputLength(title,63) && inputLength(content) && inputLength(imgDescription)){
+            if(files[0]){                                                   
+                dataFile.append('files', files[0], files[0].name)
+            }
+            axios.post(`${BASE_URL}/updateArticle/${id}`, dataFile)
+            .then((res)=> {
+                
+                console.log(res)
+                res.data.response && console.log('succesfully upload');
+                setUpdate(!update)
+                
+            })
+            .catch((err) => {
+                console.log(err)
+                
+            })
+        }else{
+            console.log("champs trops longs")
         }
-        axios.post(`${BASE_URL}/updateArticle/${id}`, dataFile)
-        .then((res)=> {
-            
-            console.log(res)
-            res.data.response && console.log('succesfully upload');
-            setUpdate(!update)
-            
-        })
-        .catch((err) => {
-            console.log(err)
-            
-        })
-        
      } 
      //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     const test = (e) => {
@@ -94,14 +98,26 @@ const UpdateArticle = () => {
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
                         <label name='picture'>
                             <input type='file' name='picture'/>
-                        <label>Description de l'image</label>
-                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} />
-                         <label>Titre de l'oeuvre</label>
-                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}  />
-                        <label>Contenu de l'article</label>
-                            <textarea  value={content} onChange={(e) => setContent(e.target.value)} />
-                            <input type='submit' value='Submit' />
                         </label>
+                        <label>Description de l'image
+                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255" />
+                            {!inputLength(imgDescription) && 
+                               <p>Max 255 caractères</p>
+                            }
+                        </label>    
+                        <label>Titre de l'oeuvre
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}  maxLength="63"  />
+                            {!inputLength(title) && 
+                               <p>Max 63 caractères</p>
+                            }
+                        </label>
+                        <label>Contenu de l'article
+                            <textarea  value={content} onChange={(e) => setContent(e.target.value)} maxLength="255" />
+                            {!inputLength(content) && 
+                               <p>Max 255 caractères</p>
+                            }
+                        </label>    
+                            <input type='submit' value='Submit' />
                     </form>
                 <button type="submit" onClick={test}>test</button>
         </Fragment>

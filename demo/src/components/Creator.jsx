@@ -5,6 +5,7 @@ import BASE_URL from "../config.js"
 import Connexion from './Connexion.jsx'
 import {NavLink} from "react-router-dom"
 import { useParams } from "react-router-dom";
+import {inputLength} from '../utils/utils.js'
 
 const Creator =({update}) => {
     
@@ -36,32 +37,36 @@ const Creator =({update}) => {
         
         
         const submit = (e) => {
-            e.preventDefault()
-            const dataFile = new FormData();  //crer un nouvel objet vide appelé dataFile
-            const files = {...e.target.avatar.files};
-            
-            // ajouter d'autre input au formulaire
-            dataFile.append('imgDescription', imgDescription)
-            dataFile.append('description', description)
-            dataFile.append('imgUrl', imgUrl)
-            dataFile.append('imgId', imgId)
-            
-            // L'image
-            if(files[0]){
-            dataFile.append('files', files[0], files[0].name)
+                e.preventDefault()
+                const dataFile = new FormData();  //crer un nouvel objet vide appelé dataFile
+                const files = {...e.target.avatar.files};
+                
+                // ajouter d'autre input au formulaire
+                dataFile.append('imgDescription', imgDescription)
+                dataFile.append('description', description)
+                dataFile.append('imgUrl', imgUrl)
+                dataFile.append('imgId', imgId)
+                
+                // L'image
+                if(files[0]){
+                dataFile.append('files', files[0], files[0].name)
+                }
+            if(inputLength(imgDescription) && inputLength(description)){    
+                axios.post(`${BASE_URL}/creator/${id}`, dataFile)
+                .then((res)=> {
+                    
+                    console.log(res)
+                    res.data.response && console.log('succesfully upload');
+                    // setUpdate(!update)
+                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    
+                })
+            }else{
+                console.log("champs trops longs")
             }
-            axios.post(`${BASE_URL}/creator/${id}`, dataFile)
-            .then((res)=> {
-                
-                console.log(res)
-                res.data.response && console.log('succesfully upload');
-                // setUpdate(!update)
-                
-            })
-            .catch((err) => {
-                console.log(err)
-                
-            })
          } 
 //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     const test = (e) => {
@@ -103,10 +108,16 @@ const Creator =({update}) => {
                                 <input type='file' name='avatar'/>
                             </label>
                             <label>Courte descrption de votre image 
-                                <input type="text/"  defaultValue={creator[0].imgTxt}  onChange={(e) => setImgDescription(e.target.value)}  />
+                                <input type="text/"  defaultValue={creator[0].imgTxt}  onChange={(e) => setImgDescription(e.target.value)}  maxLength="255"/>
+                                {!inputLength(imgDescription) && 
+                                    <p>Max 255 caractères</p>
+                                }    
                             </label>
                             <label>Présentez vous en quelques mots
-                                <textarea   defaultValue={creator[0].description}  onChange={(e) => setDescription(e.target.value)}  />
+                                <textarea   defaultValue={creator[0].description}  onChange={(e) => setDescription(e.target.value)}  maxLength="255"/>
+                                {!inputLength(description) && 
+                                    <p>Max 255 caractères</p>
+                                 }
                             </label>
                             <input type='submit' value='Submit' />
                         </form>
@@ -122,14 +133,20 @@ const Creator =({update}) => {
                             </label>
                             <label>Courte descrption de votre image 
                                 <input type="text/"  value={imgDescription}  onChange={(e) => setImgDescription(e.target.value)}  />
+                                {!inputLength(imgDescription) && 
+                                    <p>Max 255 caractères</p>
+                                }
                             </label>
                             <label>Présentez vous en quelques mots
                                 <textarea  value={description} onChange={(e) => setDescription(e.target.value)}  />
+                                {!inputLength(description) && 
+                                    <p>Max 255 caractères</p>
+                                 }
                             </label>
                             <input type='submit' value='Submit' />
                         </form>
                     </Fragment>
-                /*)*/}
+                    }
 
                    
                 </Fragment>    

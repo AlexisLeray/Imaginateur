@@ -21,6 +21,7 @@ export const reducer = (state, action) => {
             logged:true, 
             name:action.name, 
             first_name:action.fname, 
+            mail: action.mail,
             id:action.id
             }
         }

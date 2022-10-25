@@ -94,10 +94,10 @@ const Payment = () => {
             } 
             <form type="post">
                 <label> Numéro de carte
-                    <input type="number"   maxLength="5" /> 
+                    <input type="number"   maxLength="5" min="16" max="16"/> 
                 </label>
                 <label>Date d'expiration
-                    <input type="number" /> 
+                    <input type="number" min="3" max="4"/> 
                 </label>
                 <label>Nom du titulaire
                     <input type="text" maxLength="63"/>

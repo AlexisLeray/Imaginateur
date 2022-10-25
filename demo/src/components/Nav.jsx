@@ -16,7 +16,6 @@ const Nav = (props) => {
     if(!state.login && token){
       axios.post(`${BASE_URL}/isLogged`,{token})
       .then((res) => {
-        console.log(res.data)
         if(res.data.token){
           axios.defaults.headers.common['Authorization'] = 'Bearer '+res.data.token
         }
@@ -41,24 +40,13 @@ const Nav = (props) => {
       })
     }
   },[])
-//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("STATE", state)
-     }
+
     return(
         <nav>
-        {console.log(state)}
             <ul>
                 <li>
                     <NavLink to="/">
                         Accueil
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/workshop">
-                        Atelier
                     </NavLink>
                 </li>
                 <li>
@@ -126,7 +114,6 @@ const Nav = (props) => {
                 </Fragment>
                 }
             </ul>
-           <button type="submit" onClick={test}>test</button>
         </nav>
         )
 }

@@ -1,10 +1,11 @@
 // FORMULAIRE D'AJOUT D'UNE NOUVELLE PIECE A DISSOCIER DU RESTE POUR L'APPELER UNIQUEMENT SI BESOIN
 
 import React,{useContext, Fragment, useEffect} from "react"
- import {ReducerContext} from "./reducer/reducer.jsx"
+import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 import MyGalery from './MyGalery.jsx'
+import {inputLength} from '../utils/utils.js'
 
 const NewPiece = () => {
 
@@ -46,24 +47,33 @@ const NewPiece = () => {
         
         
         // L'image
-        if(files[0]){
-        dataFile.append('files', files[0], files[0].name)
-        axios.post(`${BASE_URL}/newPiece`, dataFile)
-        .then((res)=> {
-            
-            console.log(res)
-            res.data.response && console.log('succesfully upload');
-            setUpdate(!update)
-            
-        })
-        .catch((err) => {
-            console.log(err)
-            
-        })
-        } else {
-            console.log("met ton image !!!! CONNARD")
-        }
-     } 
+        if(inputLength(title,63) && inputLength(productDescription) && inputLength(price, 11) && inputLength(imgDescription,255)){
+            if(files[0]){
+            dataFile.append('files', files[0], files[0].name)
+                if(imgDescription && price && productDescription && title ){
+                    axios.post(`${BASE_URL}/newPiece`, dataFile)
+                    .then((res)=> {
+                        
+                        console.log(res)
+                        res.data.response && console.log('succesfully upload');
+                        setUpdate(!update)
+                        
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        
+                    })
+                }else{
+                    window.alert("merci de remplir tous les champs")
+                }
+                
+            } else {
+                window.alert("N'oubliez pas la photo pour montrer votre oeuvre")
+            }
+        }else{
+            console.log("champs trops longs")
+        }    
+    } 
      
     
     return (
@@ -74,16 +84,25 @@ const NewPiece = () => {
                     <input type='file' name='avatar'/>
                 </label>
                 <label>Description de l'image
-                    <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} />
+                    <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"/>
+                    {!inputLength(imgDescription,255) && 
+                        <p>Max 255 caractères</p>
+                    }
                 </label>
                  <label>Titre de l'oeuvre
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"/>
+                    {!inputLength(title,63) && 
+                        <p>Max 63 caractères</p>
+                    }
                 </label>    
                 <label>Prix
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} min="1" max="10000"/>
                 </label>    
                 <label>Description de l'article
-                    <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} />
+                    <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} maxLength="255"/>
+                    {!inputLength(productDescription,255) && 
+                        <p>Max 255 caractères</p>
+                    }
                 </label>    
                 <label>Catégorie
                     <select name="category" onChange={(e) => setCategory(e.target.value)}>
