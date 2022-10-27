@@ -7,9 +7,9 @@ const USER = 'user'
 
 const protectedPath = (pathname) => {
     // indiquer les routes principales dans le tableau selon l'accès
-    const adminPath = ['updateProduct'];
-    const creatorPath = ['creatorPath'];
-    const userPath = ['userPath'];
+    const adminPath = [ 'newCategory', 'toApproved'];
+    const creatorPath = ['updateProduct'];
+    const userPath = ['contact', 'payment'];
     
     // router.get("/api/updateProduct/:id", showToUpdate)
     

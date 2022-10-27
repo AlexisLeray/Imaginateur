@@ -1,13 +1,24 @@
-import React,{Fragment} from "react"
+import React,{Fragment, useEffect, useState} from "react"
 import {NavLink} from "react-router-dom"
 import NewCategory from "./NewCategory"
 import ToApprouved from "./ToApprouved"
+import BASE_URL from "../config.js"
+import axios from "axios"
 
 
 
 
 const Admin =() => {
-    
+    const [counter, setCounter] = useState(0)
+    useEffect(() => {
+    axios.get(`${BASE_URL}/admin/getMessage`)
+        .then((res) => {
+            setCounter(res.data.commentArray.length)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    },[])
     
     return(
         
@@ -16,7 +27,7 @@ const Admin =() => {
             <ul>
                 <li>
                     <NavLink to="/admin/getMessage">
-                        T'as des messages ? 
+                        {counter} nouveaux messages
                     </NavLink>
                 </li>
                 <li>
@@ -24,12 +35,6 @@ const Admin =() => {
                         Mes oeuvres
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to="/newPiece">
-                        Nouvelle oeuvre 
-                    </NavLink>
-                </li>
-                
                 <li>
                     <NavLink to="/admin/newCreator">
                         Nouveau Créateur

@@ -17,6 +17,7 @@ const ModifyProfil = () => {
     const [password, setPassword] = React.useState("")
     const [confirmPassword, setConfirmPassword]= React.useState("")
     
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
     useEffect(()=> {
         axios.get(`${BASE_URL}/profil/${id}`)
         .then((res) => {
@@ -35,33 +36,38 @@ const ModifyProfil = () => {
     //========================================SUBMIT MODIFICATIONS ====================================
     const submit = (e) =>     {
         e.preventDefault()
+        
         if(inputLength(name,63) && inputLength(first_name, 63) && inputLength(password) && inputLength(confirmPassword)){
-            if(password === confirmPassword){
-                axios.post(`${BASE_URL}/profil/${id}`, {
-                    name,
-                    first_name,
-                    password
-                })
-                .then((res) => {
-                    console.log('ça passe')
-                    navigate("/logout")
-                    
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            }else{
-                window.alert("les deux mots de passe sont différent")
-            }
+                if(password.match(regex) && confirmPassword.match(regex)){
+                    if(password === confirmPassword){
+                        axios.post(`${BASE_URL}/profil/${id}`, {
+                            name,
+                            first_name,
+                            password
+                        })
+                        .then((res) => {
+                            console.log('ça passe')
+                            navigate("/logout")
+                            
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                    }else{
+                        window.alert("les deux mots de passe sont différent")
+                    }
+                }else{
+                   window.alert("Le mot de passe doit contenir au minimum 8 caractères, un chiffre, une majuscule et un caractère spécial")
+                }
         }else{
-            console.log("champs trops longs")
+            window.alert("Nom et prénom limités à 63 charactères, 255 pour le mot de passe ")
         }
     } //fin fonction submit
     //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     const test = (e) => {
          e.preventDefault()
         
-         console.log("allProfil", name,first_name)
+         console.log("allProfil", password)
      }
     return (
         <Fragment>
@@ -84,7 +90,7 @@ const ModifyProfil = () => {
                                 <p>Max 63 caractères</p>
                             }
                         </label>
-                        <label> Mot de passe  
+                        <label> Nouveau mot de passe 
                             <input type="text" value={password}  name="password" onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
                             {!inputLength(password) && 
                                 <p>Max 255 caractères</p>

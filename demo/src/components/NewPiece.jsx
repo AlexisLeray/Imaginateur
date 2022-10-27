@@ -22,11 +22,9 @@ const NewPiece = () => {
     useEffect(() =>{
             axios.get(`${BASE_URL}/newPiece`)
             .then ((res) => {
-                console.log(2)
                 setCategoryArray(res.data.allCategory)
             })
             .catch((err) => {
-                console.log(3)
                 console.log(err)
             })
     }, [])
@@ -48,13 +46,12 @@ const NewPiece = () => {
         
         // L'image
         if(inputLength(title,63) && inputLength(productDescription) && inputLength(price, 11) && inputLength(imgDescription,255)){
+        //  if(category ==="")    {
             if(files[0]){
             dataFile.append('files', files[0], files[0].name)
                 if(imgDescription && price && productDescription && title ){
                     axios.post(`${BASE_URL}/newPiece`, dataFile)
                     .then((res)=> {
-                        
-                        console.log(res)
                         res.data.response && console.log('succesfully upload');
                         setUpdate(!update)
                         
@@ -70,6 +67,9 @@ const NewPiece = () => {
             } else {
                 window.alert("N'oubliez pas la photo pour montrer votre oeuvre")
             }
+        // }else{
+        //     window.alert("Veuillez choisir une catégorie")
+        // }
         }else{
             console.log("champs trops longs")
         }    
@@ -108,7 +108,7 @@ const NewPiece = () => {
                     <select name="category" onChange={(e) => setCategory(e.target.value)}>
                         {categoryArray.map((e,i) => {
                             return(
-                                <option key={i} value={e.id}>
+                                <option key={i} value={e.id} selected={e[0]}>
                                     {e.category}
                                 </option>
                             )

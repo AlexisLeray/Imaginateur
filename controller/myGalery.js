@@ -11,16 +11,18 @@
     
     
         pool.query(myProducts, [req.params.id], (error, products) => {
+            console.log(1)
         
         if (error) throw error
         if(products){
-            
+            console.log(2)
             if (error) throw error
-            
+            console.log(3)
             productArray= products
             res.json({response:true, productArray})
         
         }else {
+            console.log(4)
             res.json({response:false})
         }
     }) 

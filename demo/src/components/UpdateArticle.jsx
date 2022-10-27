@@ -92,7 +92,7 @@ const UpdateArticle = () => {
     // ========================================================================================================= 
     return (
         <Fragment>
-            <h1>Nouveau produit</h1>
+            <h1>Modification d'article</h1>
                 <button type="submit" onClick={test}>test</button>          
                     <form onSubmit={submit} encType="multipart/form-data">
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
@@ -100,20 +100,20 @@ const UpdateArticle = () => {
                             <input type='file' name='picture'/>
                         </label>
                         <label>Description de l'image
-                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255" />
-                            {!inputLength(imgDescription) && 
+                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"  />
+                            {(imgDescription && !inputLength(imgDescription)) && 
                                <p>Max 255 caractères</p>
                             }
                         </label>    
                         <label>Titre de l'oeuvre
-                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}  maxLength="63"  />
-                            {!inputLength(title) && 
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"  />
+                            {!inputLength(title, 63) && 
                                <p>Max 63 caractères</p>
                             }
                         </label>
                         <label>Contenu de l'article
-                            <textarea  value={content} onChange={(e) => setContent(e.target.value)} maxLength="255" />
-                            {!inputLength(content) && 
+                            <textarea  value={content} onChange={(e) => setContent(e.target.value)}  maxLength="255" />
+                            {!inputLength(content) &&  
                                <p>Max 255 caractères</p>
                             }
                         </label>    

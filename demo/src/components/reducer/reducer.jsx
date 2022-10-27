@@ -36,6 +36,9 @@ export const reducer = (state, action) => {
         case 'logout': {
             return {...state, logged:false, admin:false, creator:false, name:null, first_name:null, creatorId: null, id: null}
         }
+        case 'shop': {
+            return {...state, quantity:action.quantity}
+        }
         default: return state 
     }
 }

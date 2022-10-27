@@ -20,10 +20,9 @@ const connexion = (req, res) => {
     if (inputLength(req.body.mail,63) && inputLength(req.body.password,63)){
         pool.query(connexionSQL, [req.body.mail], function(err, check ) {
             if (err) throw err; 
-            if (check[0].mail) {
+            if (check[0] && check[0].mail) {
                 bcrypt.compare(req.body.password, check[0].hash, async function(err, result) {
                     if (err) throw err;
-                    console.log("RESULT", check)
                     if (result) {
                         // si il a le role admin true
                         const user = true

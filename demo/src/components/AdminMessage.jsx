@@ -8,7 +8,7 @@ import BASE_URL from "../config.js"
 const Messagerie = () => {
     const [state, dispatch] = useContext(ReducerContext)
     const [allComment, setAllComment] = useState([])
-    
+    const [count, setCount] = useState()
     
     useEffect(() => {
      axios.get(`${BASE_URL}/admin/getMessage`)
@@ -19,7 +19,8 @@ const Messagerie = () => {
         console.log(err)
     })
     },[])
-    
+  
+    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     
     return (
         <Fragment>    

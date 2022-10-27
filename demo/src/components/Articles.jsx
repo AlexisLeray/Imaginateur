@@ -76,12 +76,6 @@ const Galery = () => {
         }
         
      } //fin de la fonction submit
-     //  =============================MODIFICATION D'ARTICLE============================================
-     const updateArticle = () => {
-        axios.post(`${BASE_URL}/updateArticle`, {
-            
-        })
-     }
     //  =============================SUPPPRESSION D'ARTICLE TIRE DE PRODUCTS===========================================
     const deleteArticle = (e, article) => {
         e.preventDefault()

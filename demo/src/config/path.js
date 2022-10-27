@@ -17,6 +17,7 @@ import UpdateProduct from '../components/UpdateProduct'
 import Payment from '../components/Payment'
 import UpdateArticle from '../components/UpdateArticle'
 import ModifyProfil from '../components/ModifyProfil'
+import Product from '../components/Product'
 
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
@@ -39,7 +40,9 @@ export const routes = [
         {path: '/payment/:id', element: <Payment />},
         {path: '/galery', element: <Galery />},
         {path: '/updateArticle/:id', element: <UpdateArticle />},
-        {path: '/updateProfil/:id', element: <ModifyProfil />}
+        {path: '/updateProfil/:id', element: <ModifyProfil />},
+        {path: '/product/:id', element: <Product /> },
+        
     ]
 // route reservée aux personnes connectées
 export const userPath= [
@@ -47,7 +50,7 @@ export const userPath= [
     ]
 // route reservée aux crétaeurs connectées
 export const creatorsPath= [
-        '/creator/:id', '/myGalery'
+        '/creator/:id', 
     ]
     // route reservée aux admin connectées
 export const adminPath= [

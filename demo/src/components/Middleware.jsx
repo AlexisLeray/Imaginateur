@@ -13,7 +13,6 @@ const Middleware = ({children}) => {
     useEffect(() => {
         
          if (state.logged === false) {   // Si l'utilisateur n'est pas connecté 
-            console.log('connecté')
         
             if(userPath.includes(currentPath)){
                 if(!state.logged){

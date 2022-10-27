@@ -34,7 +34,7 @@ a {
     justify-content: space-around;
     align-items: center;
     height: 1000px;
-    /*flex-wrap: wrap;*/
+    flex-wrap: wrap;
 }
 .cards{
     border: 1px solid red;

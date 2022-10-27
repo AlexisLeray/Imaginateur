@@ -4,11 +4,12 @@ import axios from 'axios'
 import BASE_URL from "../config.js"
 import { useParams } from "react-router-dom";
 
-const Payment = () => {
+const Payment = ({update}) => {
     const {id} = useParams()
     const [state, dispatch] = useContext(ReducerContext)
     const [toBuy,setToBuy] = React.useState([])
     const [price, setPrice] = React.useState([])
+    const [msg, setMsg] = React.useState("")
     
     useEffect(()=> {
         axios.get(`${BASE_URL}/payment/${id}`)
@@ -20,7 +21,7 @@ const Payment = () => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [state.quantity])
     
     useEffect(()=> {
         let total = 0 
@@ -30,7 +31,6 @@ const Payment = () => {
             }
              
          setPrice(total)
-         console.log(price)
      }, [toBuy])
      
      
@@ -43,6 +43,7 @@ const Payment = () => {
         axios.post(`${BASE_URL}/payment/${id}`, {
             product_id: idProduct})
             .then((res) => {
+                setMsg(res.data.msg)
                 console.log("c'est bon")
             })
             .catch((err) => {
@@ -54,14 +55,18 @@ const Payment = () => {
     //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     const test = (e) => {
          e.preventDefault()
+        console.log(toBuy)
  
-         console.log(id)
+         
      }
     return(
         <Fragment>
-        {console.log(toBuy)}
         <button type="submit" onClick={test}>test</button>
-            {toBuy &&   
+        {msg &&
+            <h2>{msg}</h2>
+        }
+            {toBuy[0]  ?  
+            <Fragment>
                 <table className="payment_table">
                     <thead>
                         <tr>
@@ -90,23 +95,28 @@ const Payment = () => {
                             <td>{price}</td>
                         </tr>
                     </tbody>
-                </table>
-            } 
-            <form type="post">
-                <label> Numéro de carte
-                    <input type="number"   maxLength="5" min="16" max="16"/> 
-                </label>
-                <label>Date d'expiration
-                    <input type="number" min="3" max="4"/> 
-                </label>
-                <label>Nom du titulaire
-                    <input type="text" maxLength="63"/>
-                </label>
-                <label>Cryptogramme
-                    <input type="number" /> 
-                </label>
-                <button type="submit" onClick={submit}>Ca part !</button>
-            </form>
+                </table>  
+                <form type="post">
+                    <label> Numéro de carte
+                        <input type="number"   maxLength="5" min="16" max="16"/> 
+                    </label>
+                    <label>Date d'expiration
+                        <input type="number" min="3" max="4"/> 
+                    </label>
+                    <label>Nom du titulaire
+                        <input type="text" maxLength="63"/>
+                    </label>
+                    <label>Cryptogramme
+                        <input type="number" /> 
+                    </label>
+                    <button type="submit" onClick={submit}>Ca part !</button>
+                </form> 
+        </Fragment>
+        :
+        <Fragment>
+            <p>Votre panier est vide</p>
+        </Fragment>
+            }
         </Fragment>
         )
 }

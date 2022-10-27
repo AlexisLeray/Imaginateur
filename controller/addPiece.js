@@ -12,8 +12,10 @@
 const getGategory = (req, res) => {
     const category = 'SELECT * from categories'
     pool.query(category, [], (err, allCategory) => {
+        console.log(100)
         if (err) throw err
         if(allCategory) {
+            console.log(101)
             res.json({response: true, allCategory})
         }else {
             res.json({response:false})

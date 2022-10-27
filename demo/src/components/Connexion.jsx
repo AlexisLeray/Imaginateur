@@ -16,46 +16,70 @@ const Connexion = () => {
     const [state, dispatch] = useContext(ReducerContext);
     const navigate = useNavigate();
     
-  
+  const mailRegex = /^(?=.*[@])(?=.*[.])/
   const submit = (e) => {
       
       e.preventDefault()
-        if(inputLength(mail) && inputLength(password)){  
+        if(mail.match(mailRegex)){
+            console.log(1)
+        if(inputLength(mail) && inputLength(password) ){  
                 axios.post(`${BASE_URL}/connexion`, {
                   mail, 
                   password
               })
             .then((res) => {
+                console.log(2)
                 if(res.data.response) {
                     localStorage.setItem('jwtToken', res.data.token)
                     axios.defaults.headers.common['Authorization'] = 'Bearer '+res.data.token
                     
                     res.data.msg && setErrorBack(res.data.msg)
                     // si la connexion est ok
-                    res.data.response && dispatch({type:'connexion', fname:res.data.first_name, name:res.data.name, id:res.data.id, mail:res.data.mail}); navigate("/")
+                    if(res.data.response){
+                      dispatch({type:'connexion', 
+                      fname:res.data.first_name, 
+                      name:res.data.name, 
+                      id:res.data.id, 
+                      mail:res.data.mail});
+                      navigate("/")  
+                    } 
                     // si l'user a le role admin
                     // res.data.admin && dispatch({type:'admin', fname:res.data.first_name, name:res.data.name, id:res.data.id, creatorId:res.data.id_creator});
                     if(res.data.admin){
+                        console.log(3)
                         dispatch({type:'admin', fname:res.data.first_name, 
                         name:res.data.name, 
                         id:res.data.id, 
                         creatorId:res.data.id_creator});
+                        navigate("/admin")
                     }
-                    res.data.creator && dispatch({type:'creator', name:res.data.name, fname:res.data.first_name, creatorId: res.data.id_creator}); 
-                    // name, fname, creatorId
+                    if(res.data.creator){ 
+                    dispatch({type:'creator', 
+                    name:res.data.name, 
+                    fname:res.data.first_name, 
+                    creatorId: res.data.id_creator,}) ; 
+                    navigate("/creator/:id")
+                    }
                     
-                    navigate("/")
                 } else {
+                    console.log(4)
                     window.alert("Email ou mot de passe inconnu")
                 }
             })
             .catch((err) => {
+                console.log(5)
+                window.alert("Y'a une douille")
                 console.log(err)
             })
   
         }else{
+            console.log(6)
             console.log("champs trops longs")
-        }   
+        }
+  }else{
+      console.log(7)
+      window.alert("Adresse mail non valide")
+  }
             
     } //fin de la fonction submit
 

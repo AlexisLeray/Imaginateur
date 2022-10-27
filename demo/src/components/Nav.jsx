@@ -1,12 +1,12 @@
 import {NavLink} from "react-router-dom"
-import {useContext, Fragment, useEffect} from 'react'
+import {useContext, Fragment, useEffect, useState} from 'react'
 import {ReducerContext} from './reducer/reducer.jsx'
 import { useParams } from "react-router-dom";
 import BASE_URL from "../config.js";
 import axios from 'axios';
 
 const Nav = (props) => {
-   
+   const [count, setCount] = useState(0)
     const [state, dispatch] = useContext(ReducerContext)
     const {id} = useParams()
     
@@ -40,9 +40,28 @@ const Nav = (props) => {
       })
     }
   },[])
+  useEffect(()=> {
+        axios.get(`${BASE_URL}/payment/${state.id}`)
+            .then((res)=>{
+                dispatch({type:'shop', 
+                    quantity: res.data.toBuy.length
+                })
+                
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    })
+    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    const test = (e) => {
+         e.preventDefault()
+        
+         console.log("State", state)
+     }
 
     return(
         <nav>
+        <button type="submit" onClick={test}>test</button>
             <ul>
                 <li>
                     <NavLink to="/">
@@ -83,7 +102,7 @@ const Nav = (props) => {
                 </li>
                 <li>
                     <NavLink to={`/panier/${state.id}`}>
-                        Panier
+                        Panier {state.quantity}
                     </NavLink>
                 </li>
                 {state.creator &&  

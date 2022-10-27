@@ -12,10 +12,8 @@ const ShoppingCart =() => {
     let [myShop, setMyShop] = React.useState([])
         
         useEffect(() => {
-            console.log(10)
             axios.get(`${BASE_URL}/panier/${id}`)    
                 .then((res) => {
-                    console.log(11)
                     setMyShop(res.data.result)
                     console.log("ça passe ")
                 })
@@ -36,8 +34,8 @@ const ShoppingCart =() => {
         <Fragment>
         <button type="submit" onClick={test}>test</button>
             <h2>C'est la page du panier</h2>
-            {myShop &&   
-               <div>
+            {myShop[0] ?   
+               <Fragment>
                     {myShop.map((e,i) => (
                         <div key={i} className="cards">
                             <div className=""><p>{e.title}</p></div>
@@ -48,11 +46,17 @@ const ShoppingCart =() => {
                             <div>{e.price}</div>
                         </div>
                     ))}
-                </div>
-            }   
-                <NavLink to={`/payment/${id}`}> 
-                    Valider mon panier 
-                </NavLink>
+                
+               
+                    <NavLink to={`/payment/${id}`}> 
+                        Valider mon panier 
+                    </NavLink>
+               </Fragment>
+            :
+            <Fragment>
+                <h3>Votre panier est vide</h3>
+            </Fragment>
+            }
         </Fragment>
         )
 }

@@ -17,8 +17,28 @@ const showShop= (req, res) => {
             }    
         })   
 }
-        
+
+const checkBasket = (req,res) => {
+    console.log(req.params)
+    let toCheck = 'SELECT shop.product_id FROM shop WHERE shop.user_id = ? '
+    pool.query(toCheck, [req.params.id], (err, checked) => {
+        if (err) throw err
+        if(checked){
+            const data = []
+            for(let i = 0; i <= checked.length; i++){
+                if(i === checked.length){
+                    res.json({response: true, checked:data})
+                }else {
+                    data.push(checked[i].product_id)
+                }
+                
+            }
             
+        }else {
+            res.json({response:false})
+        }
+    })
+}
 
 
 const shop = (req, res) => {
@@ -33,4 +53,4 @@ const shop = (req, res) => {
         })
     
 }
-export {showShop, shop} 
+export {showShop, shop, checkBasket} 

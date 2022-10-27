@@ -3,6 +3,7 @@ import {useContext, useEffect, Fragment} from "react"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 import {inputLength} from '../utils/utils.js'
+import { useNavigate, NavLink, useParams} from "react-router-dom"
 
 
 const Register = () =>{
@@ -10,15 +11,16 @@ const Register = () =>{
     const [first_name, setFirst_name] = React.useState("")
     const [mail, setMail] = React.useState("")
     const [password, setPassword] = React.useState("")
+    const navigate = useNavigate();
     
   
-          const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-          const mailRegex = /^(?=.*[@])(?=.*[.])/
+        //   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+        //   const mailRegex = /^(?=.*[@])(?=.*[.])/
    
     const submit = (e) => {
         e.preventDefault()
 
-       if(password.match(regex) && inputLength(name,63) && inputLength(first_name,63) && mail.match(mailRegex) && inputLength(mail)){
+    //   if(password.match(regex) && inputLength(name,63) && inputLength(first_name,63) && mail.match(mailRegex) && inputLength(mail)){
           axios.post(`${BASE_URL}/register`, {
                 name,
                 first_name,
@@ -27,13 +29,14 @@ const Register = () =>{
             })
             .then( (res) => {
                 console.log(res)
+                navigate('/connexion')
             })
             .catch((err) => {
                 console.log(err)
             })
         } 
         
-      }
+    //   }
     
     
     return(
@@ -56,9 +59,9 @@ const Register = () =>{
             {!inputLength(mail) && 
                 <p>Max 255 caractères</p>
             }
-            {!mail.match(mailRegex) && 
+            {/* !mail.match(mailRegex) && 
             <p>Veuillez entrer une adresse mail valide</p>
-            }
+            */}
             </label>
             <label>Mot de passe : 
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" maxLength="255" />
@@ -70,9 +73,9 @@ const Register = () =>{
             }
         
         
-            {  !password.match(regex) && 
+            { /* !password.match(regex) && 
             <p>Le mot de passe doit inclure une majuscule, une minuscule, un chiffre et un caractère spécial</p>
-            }
+            */ }
                 
             </label>
             <button onClick={submit}>clique</button>

@@ -2,7 +2,7 @@ import React,{useContext,useEffect, Fragment, useState} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import {inputLength} from '../utils/utils.js'
 
 const UpdateProduct = () => {

@@ -20,7 +20,6 @@ const Creator =({update}) => {
         useEffect(() => {
              axios.get(`${BASE_URL}/creator/${id}`)
                 .then((res) => {
-                    console.log(res.data)
                     setImgUrl(res.data.creator[0].url)
                     setImgDescription(res.data.creator[0].imgTxt)
                     setDescription(res.data.creator[0].description)
@@ -54,8 +53,6 @@ const Creator =({update}) => {
             if(inputLength(imgDescription) && inputLength(description)){    
                 axios.post(`${BASE_URL}/creator/${id}`, dataFile)
                 .then((res)=> {
-                    
-                    console.log(res)
                     res.data.response && console.log('succesfully upload');
                     // setUpdate(!update)
                     

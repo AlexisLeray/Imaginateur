@@ -13,11 +13,14 @@ const [state, dispatch] = useContext(ReducerContext)
     let id = state.creatorId
     
     useEffect(() => {
+        console.log(1)
         axios.get(`${BASE_URL}/myGalery/${id}`)
         .then((res) => {
+            console.log(2)
             setAllProducts(res.data.productArray)
         })
         .catch((err) => {
+            console.log(3)
             console.log(err)
         })
     },[update])
