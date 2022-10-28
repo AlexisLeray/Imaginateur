@@ -19,7 +19,6 @@ const showShop= (req, res) => {
 }
 
 const checkBasket = (req,res) => {
-    console.log(req.params)
     let toCheck = 'SELECT shop.product_id FROM shop WHERE shop.user_id = ? '
     pool.query(toCheck, [req.params.id], (err, checked) => {
         if (err) throw err

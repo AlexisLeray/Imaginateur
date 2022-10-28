@@ -18,8 +18,6 @@
         })
  }
  const sold  = (req, res) => {
-     console.log("PRODUCTS LENGTH", req.body.product_id.length)
-    console.log("PRODUCTS", req.body.product_id)
     // let soldProducts = 'DELETE FROM products WHERE id = ?'
     // let soldProducts = 'SELECT * FROM products WHERE id =? '
     //celle d'après est la requête initiale 

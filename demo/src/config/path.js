@@ -22,7 +22,7 @@ import Product from '../components/Product'
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
         {path: '/', element:<Home />},
-        {path: '/galery', element:<Galery />},
+        // {path: '/galery', element:<Galery />},
         {path: '/shop', element:<Shop />},
         {path: '/contact', element:<Contact />},
         {path: '/About', element:<About />},
@@ -46,13 +46,13 @@ export const routes = [
     ]
 // route reservée aux personnes connectées
 export const userPath= [
-        '/profil'
+        '/profil', 'panier', 'payment', 'updateProfil'
     ]
 // route reservée aux crétaeurs connectées
 export const creatorsPath= [
-        '/creator/:id', 
+        '/creator', 'newPiece', 'myGalery', 'update'
     ]
     // route reservée aux admin connectées
 export const adminPath= [
-        '/admin', '/getMessage', '/admin/newCreator'
+        '/admin', '/getMessage', '/admin/newCreator', 'updateArticle'
     ]

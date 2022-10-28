@@ -105,14 +105,14 @@ const NewPiece = () => {
                     }
                 </label>    
                 <label>Catégorie
-                    <select name="category" onChange={(e) => setCategory(e.target.value)}>
-                        {categoryArray.map((e,i) => {
+                    <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                        {/*categoryArray.map((e,i) => {
                             return(
                                 <option key={i} value={e.id} selected={e[0]}>
                                     {e.category}
                                 </option>
                             )
-                        })}
+                        })*/}
                     </select>
                 </label>
                 

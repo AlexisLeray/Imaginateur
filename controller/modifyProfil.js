@@ -22,7 +22,6 @@ const saltRounds = 10
     const updateProfil = (req, res) => {
         let updatePass = 'UPDATE users SET first_name=?, hash=?, name=? WHERE users.id =? '
         let updateDetail = 'UPDATE users SET first_name=?, name=? WHERE users.id =? '
-        console.log(4)
         if(req.body.password){
             bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
                 if (err) throw err

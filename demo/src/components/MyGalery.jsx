@@ -16,7 +16,7 @@ const [state, dispatch] = useContext(ReducerContext)
         console.log(1)
         axios.get(`${BASE_URL}/myGalery/${id}`)
         .then((res) => {
-            console.log(2)
+            console.log(res.data)
             setAllProducts(res.data.productArray)
         })
         .catch((err) => {
@@ -67,7 +67,7 @@ const [state, dispatch] = useContext(ReducerContext)
                     </tr>    
                 </thead>
             <tbody>
-             {allProducts.map((e,i) => {
+             {allProducts[0] && allProducts.map((e,i) => {
                  return(
         
                 <tr key={i}>

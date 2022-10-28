@@ -43,7 +43,6 @@ const getToUpdateArticle = (req, res) => {
                 if(checkAcceptedExtensions(file)){   //Si le fichier fait partie des fichier acceptés 
                     fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
                         if (err) throw err;
-                        console.log("IMAGE", fields.imgId)
                          if(fields.imgId !== 'null'){  // si il y a déjà une image 
                             const paramsArticlesQL = [fields.title, fields.content, req.params.id]
                             const articlesQL = 'UPDATE articles SET articles.title=?, articles.content=? WHERE articles.id=?'

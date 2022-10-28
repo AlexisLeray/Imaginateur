@@ -18,8 +18,8 @@ const UpdateArticle = () => {
     const [imgUrl, setImgUrl] = React.useState("")  
     const [update, setUpdate] = React.useState("")
     const [imgDescription, setImgDescription] = React.useState("")
-    const [imgId, setImgId] = React.useState()
-    
+    const [imgId, setImgId] = React.useState("")
+    const navigate = useNavigate()
     
         // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
     const {id} = useParams()
@@ -73,6 +73,7 @@ const UpdateArticle = () => {
                 console.log(res)
                 res.data.response && console.log('succesfully upload');
                 setUpdate(!update)
+                navigate("/galery")
                 
             })
             .catch((err) => {
@@ -86,8 +87,11 @@ const UpdateArticle = () => {
      //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     const test = (e) => {
          e.preventDefault()
-        
+        // ces 4 là sont null ce quie fait planter la maj de l'article parce que null ne peut pas se faire toString
+         console.log("imgUrl", imgUrl)
+         console.log("imgDescription", imgDescription)
          console.log("imgId", imgId)
+         
     }
     // ========================================================================================================= 
     return (

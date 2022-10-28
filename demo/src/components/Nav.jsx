@@ -43,9 +43,7 @@ const Nav = (props) => {
   useEffect(()=> {
         axios.get(`${BASE_URL}/payment/${state.id}`)
             .then((res)=>{
-                dispatch({type:'shop', 
-                    quantity: res.data.toBuy.length
-                })
+                res.data.toBuy && dispatch({type:'shop', quantity: res.data.toBuy.length})
                 
             })
             .catch((err) => {
@@ -100,11 +98,17 @@ const Nav = (props) => {
                         Mon compte
                     </NavLink>
                 </li>
-                <li>
-                    <NavLink to={`/panier/${state.id}`}>
-                        Panier {state.quantity}
-                    </NavLink>
-                </li>
+               {state.logged &&
+                    <li>
+                    
+                        <NavLink to={`/panier/${state.id}`}>
+                            Panier
+                        
+                            {state.quantity}
+                        
+                        </NavLink>
+                    </li>
+               }
                 {state.creator &&  
                 <Fragment> 
                     <li> 

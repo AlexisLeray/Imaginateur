@@ -1,3 +1,4 @@
 export const inputLength = (input, length = 255) => {
-    return input.length < length
+    const value = input ? input.toString() : ''
+    return value.length < length
 }

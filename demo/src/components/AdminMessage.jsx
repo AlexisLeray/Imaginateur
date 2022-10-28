@@ -9,6 +9,7 @@ const Messagerie = () => {
     const [state, dispatch] = useContext(ReducerContext)
     const [allComment, setAllComment] = useState([])
     const [count, setCount] = useState()
+    const [update, setUpdate] = useState(false)
     
     useEffect(() => {
      axios.get(`${BASE_URL}/admin/getMessage`)
@@ -18,12 +19,37 @@ const Messagerie = () => {
     .catch((err) => {
         console.log(err)
     })
-    },[])
-  
-    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    },[update])
+
+const deleteMsg = (e,id)=> {
+    e.preventDefault()
+    axios.post(`${BASE_URL}/admin/getMessage`, {
+        id: id
+    })
+    .then((res) => {
+        setUpdate(!update)
+        console.log("message supprimé ")
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+}
+// ==================================FONCTION POUR L'ENVOI D'UN MAIL================================
+   function onEmailClick() {
+      window.open(`mailto:${allComment[0].mail}`);
+  }
+    
+//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+    const test = (e) => {
+         e.preventDefault()
+        
+         console.log("TEST", allComment)
+     }
     
     return (
         <Fragment>    
+        <button type="submit" onClick={test}>test</button>
+     
           <table>
             <thead>
             <tr>
@@ -33,6 +59,7 @@ const Messagerie = () => {
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Mail</th>
+                <th></th>
             </tr>    
             </thead>
             <tbody>
@@ -45,7 +72,10 @@ const Messagerie = () => {
                     <td>{new Date (e.date).toLocaleDateString('fr')}</td>
                     <td>{e.name}</td>
                     <td>{e.first_name}</td>
-                    <td>{e.mail}</td>
+                    <td><button onClick={onEmailClick} target="_blank">{e.mail}</button></td>
+                    <td>
+                        <button type="submit" onClick={(el) => deleteMsg(el, e.id)}> supprimer </button>
+                    </td>
                 </tr>    
                 
                 )

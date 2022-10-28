@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 const privateKey = 'eyJlbWFpbCI6InRlc3RAdGVzdC5mciIsInVzZXIiOnRydWUsImFkbWluIjp0cnVlLCJpYXQiOjE2NjY1MjQyNjYsImV4cCI6MTY2NjUyNzg2Nn0'
 
 export const generateToken = async (userData) => {
+    console.log(userData)
     const token = await jwt.sign(userData, privateKey)
     return token
 }

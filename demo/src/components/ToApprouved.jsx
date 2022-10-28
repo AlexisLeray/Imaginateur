@@ -24,7 +24,6 @@ const ToApproved = ({}) => {
          id: id
      })
      .then((res) => {
-         console.log("ARTICLE VALIDE : ", id)
          setUpdate(!update)
          })
         .catch((err) => {

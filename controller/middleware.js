@@ -7,9 +7,9 @@ const USER = 'user'
 
 const protectedPath = (pathname) => {
     // indiquer les routes principales dans le tableau selon l'accès
-    const adminPath = [ 'newCategory', 'toApproved'];
-    const creatorPath = ['updateProduct'];
-    const userPath = ['contact', 'payment'];
+    const adminPath = [ 'newCategory',  'admin', 'newCategory',  ' deleteArticle', 'updateArticle', 'deleteProduct'];
+    const creatorPath = ['updateProduct', 'newPiece', 'myGalery', 'deleteProduct' , 'creator'];
+    const userPath = ['contact', 'payment','profil', 'panier'];
     
     // router.get("/api/updateProduct/:id", showToUpdate)
     
@@ -56,7 +56,7 @@ const middleware = async (req, res, next) => {
     if(accesAutorized(pathname,userData)){
         next()
     } else {
-        res.json({response:false, msg:'acces refuser'})
+        res.json({response:false, msg:'acces refusé'})
     }
 }
 

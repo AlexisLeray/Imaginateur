@@ -10,7 +10,7 @@ import { useParams, NavLink } from "react-router-dom";
 const ShoppingCart =() => {
     const {id} = useParams()
     let [myShop, setMyShop] = React.useState([])
-        
+    const [update, setUpdate] = React.useState(false)
         useEffect(() => {
             axios.get(`${BASE_URL}/panier/${id}`)    
                 .then((res) => {
@@ -21,7 +21,23 @@ const ShoppingCart =() => {
                 .catch((err) => {
                     console.log(err)
                 })
-        }, [])
+        }, [update])
+        
+const submit =(e, shop_id) => {
+    e.preventDefault()
+    console.log("SHOPÏD", shop_id)
+    axios.post(`${BASE_URL}/panier/${id}`, {
+        shop_id: shop_id
+    })
+    .then((res) => {
+        
+        setUpdate(!update)
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+    
+}
         
 
         //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
@@ -35,9 +51,10 @@ const ShoppingCart =() => {
         <button type="submit" onClick={test}>test</button>
             <h2>C'est la page du panier</h2>
             {myShop[0] ?   
-               <Fragment>
+               <Fragment >
                     {myShop.map((e,i) => (
-                        <div key={i} className="cards">
+                    <Fragment  key={i}>
+                        <div className="cards">
                             <div className=""><p>{e.title}</p></div>
                             <div>
                                 <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} className="img_lite"/>
@@ -45,6 +62,8 @@ const ShoppingCart =() => {
                             <div>{e.content}</div>
                             <div>{e.price}</div>
                         </div>
+                            <button type="submit" onClick={(el) => submit(el, e.shop_id)}>Supprimer</button>
+                        </Fragment>
                     ))}
                 
                

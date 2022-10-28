@@ -2,7 +2,7 @@ import express from 'express'
 import fs from 'fs'
 import addUserSubmit from '../controller/addUser.js'
 import connexion from '../controller/connexion.js'
-import getMessage from '../controller/adminMessage.js'
+import {getMessage, deleteMsg} from '../controller/adminMessage.js'
 import  sendMessage from '../controller/contact.js'
 import newCreator from '../controller/newCreator.js'
 import addCreator from '../controller/addCreator.js'
@@ -14,7 +14,7 @@ import newCategory from '../controller/newCategory.js'
 import {toApproved, validate} from '../controller/toApproved.js'
 import {showCreator, creatorInfo} from '../controller/creator.js'
 import {showShop, shop, checkBasket} from '../controller/shop.js'
-import showBasket from '../controller/shoppingCart.js'
+import {showBasket, deleteBasket} from '../controller/shoppingCart.js'
 import {payment, sold} from '../controller/payment.js'
 import {addArticle, getArticle} from '../controller/articles.js'
 import withoutPictures from '../controller/articleText.js'
@@ -36,6 +36,7 @@ router.get("/api/profil/:id", getProfil )
 router.post("/api/profil/:id", updateProfil) 
 
 router.get("/api/admin/getMessage", getMessage) 
+router.post("/api/admin/getMessage", deleteMsg)
 router.post("/api/contact", sendMessage) 
 
 router.get("/api/admin/newCreator", newCreator) 
@@ -61,6 +62,7 @@ router.get("/api/shop/", showShop)
 router.post("/api/shop/", shop)
 router.get("/api/checkShop/:id", checkBasket)
 
+router.post("/api/panier/:id", deleteBasket)
 router.get("/api/panier/:id", showBasket)
 router.get("/api/payment/:id", payment)
 router.post("/api/payment/:id", sold)

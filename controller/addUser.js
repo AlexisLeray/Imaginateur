@@ -15,7 +15,6 @@ const addUserSubmit = (req, res) => {
      
      if (err) throw err
      if(newMail[0].cnt > 0){
-      console.log("mail déjà pris")
       res.json({response:false})
      }
      else {
@@ -30,7 +29,6 @@ const addUserSubmit = (req, res) => {
     
     })
   } else {
-   console.log("c'est trop long")
    res.json({response: false, msg: 'champs trop long'})
   }
 }

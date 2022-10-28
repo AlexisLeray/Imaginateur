@@ -13,7 +13,7 @@ const sendMessage = (req, res) => {
     
         pool.query(newMessage, [req.body.id, req.body.title, req.body.content, new Date()], (err, newMsg) => {
             if (err) throw err
-            res.json({response:true, msg: 'Votre message a bien etait pris en compte'})
+            res.json({response:true, msg: 'Votre message a bien été pris en compte'})
         })
 }
 

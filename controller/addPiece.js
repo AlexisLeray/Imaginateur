@@ -12,10 +12,8 @@
 const getGategory = (req, res) => {
     const category = 'SELECT * from categories'
     pool.query(category, [], (err, allCategory) => {
-        console.log(100)
         if (err) throw err
         if(allCategory) {
-            console.log(101)
             res.json({response: true, allCategory})
         }else {
             res.json({response:false})
@@ -64,7 +62,6 @@ const addPiece = (req, res) => {
                             pool.query(selectImg, [], (err, selected) => {
                                 if (err) throw err;
                                 if(selected){
-                                    console.log("NEWPIECE", newPiece)
                                     pool.query(newPiece, [fields.creatorId, selected[0].id, fields.title, fields.price, fields.productDescription, fields.category], (err, addProduct) => {
                                         if (err) throw err
                                         res.json({response: true})

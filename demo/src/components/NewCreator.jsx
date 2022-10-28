@@ -9,19 +9,18 @@ const NewCreator = (e) => {
     const [state, dispatch] = useContext(ReducerContext)
     const [allUsers, setAllUsers] = useState([])
     const [info, setInfo] = useState("")
+    const [update, setUpdate] = useState(false)
     let {id} = state
     useEffect(() => {
         axios.get(`${BASE_URL}/admin/newCreator`)
             .then((res) => {
-                console.log(res)
                 setAllUsers(res.data.usersTable)
-                console.log("la réponse est : ", allUsers[0].id)
            
             })
             .catch((err) => {
                 console.log(err)
             })
-    },[])
+    },[update])
     
     const submit = (e, user_id) => {
         e.preventDefault()          
@@ -29,7 +28,8 @@ const NewCreator = (e) => {
             id:user_id                                      
         })                                                  
             .then((res) => {                                
-                setInfo(res.data.msg)                       
+                setInfo(res.data.msg)           
+                setUpdate(!update)
             })                                              
             .catch((err) => {                               
                 console.log(err)                            

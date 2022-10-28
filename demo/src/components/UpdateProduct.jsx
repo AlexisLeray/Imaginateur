@@ -24,6 +24,7 @@ const UpdateProduct = () => {
     const [categoryArray, setCategoryArray] = React.useState([])
     
     
+    
         // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
     const {id} = useParams()
          useEffect(() => {
@@ -41,7 +42,7 @@ const UpdateProduct = () => {
                 .catch((err)=> {
                     console.log(err)
                 })
-         }, [])
+         }, [update])
    
     useEffect(() =>{
             axios.get(`${BASE_URL}/newPiece`)
@@ -51,7 +52,7 @@ const UpdateProduct = () => {
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
+    }, [update])
     
     const submit = (e) => {
         e.preventDefault()
@@ -67,6 +68,9 @@ const UpdateProduct = () => {
         dataFile.append('category_id', category_id)
         
         // L'image
+        console.log(price)
+        console.log(inputLength(price, 11))
+       
         if(inputLength(imgDescription) && inputLength(price, 11 ) && inputLength(productDescription) && inputLength(title)){
             if(files[0]){                                                   
                 dataFile.append('files', files[0], files[0].name)
@@ -94,13 +98,13 @@ const UpdateProduct = () => {
      const test = (e) => {
          e.preventDefault()
             
-         console.log("CATEGORIE ID", category_id, "CATEGORIE", category )
+         console.log("imgurl", imgUrl )
      }
     // ========================================================================================================= 
     return (
         <Fragment>
             <h1>Nouveau produit</h1>
-                          
+                          <button type="submit" onClick={test}>test</button>
                     <form onSubmit={submit} encType="multipart/form-data">
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
                         <label name='picture'>

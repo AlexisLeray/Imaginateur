@@ -34,7 +34,7 @@ export const reducer = (state, action) => {
             return {...state, creator:true, name:action.name, first_name:action.fname, creatorId:action.creatorId}
         }
         case 'logout': {
-            return {...state, logged:false, admin:false, creator:false, name:null, first_name:null, creatorId: null, id: null}
+            return {...state, logged:false, admin:false, creator:false, name:null, first_name:null, creatorId: null, id: null, quantity: null}
         }
         case 'shop': {
             return {...state, quantity:action.quantity}

@@ -12,7 +12,6 @@ const toApproved = (req, res) => {
         if (err) throw err
         if (all) {
             newProducts= all
-            console.log(newProducts)
             res.json({response: true, newProducts})
         }else{
             res.json({response:false })
