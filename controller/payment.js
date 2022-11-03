@@ -18,8 +18,6 @@
         })
  }
  const sold  = (req, res) => {
-    // let soldProducts = 'DELETE FROM products WHERE id = ?'
-    // let soldProducts = 'SELECT * FROM products WHERE id =? '
     //celle d'après est la requête initiale 
     // let soldProducts = 'DELETE FROM images WHERE images.id = (SELECT products.image_id FROM products WHERE products.id = ?)'
     let deleteShop = 'DELETE FROM shop WHERE shop.product_id = ?'

@@ -51,6 +51,7 @@ const addPiece = (req, res) => {
             let newPath = `public/img/${newFilename}`;
             
             const file = files.files
+            if(inputLength(fields.imgDescription) && inputLength(fields.title) && inputLength(fields.price, 11) && inputLength(fields.productDescription, 255)){
             if(files.originalFilename !== ''){
                 if(checkAcceptedExtensions(file)){
                     fs.copyFile(oldPath, newPath, (err) => {
@@ -74,6 +75,9 @@ const addPiece = (req, res) => {
                     })
                 }) 
             }
+        }
+        }else{
+            
         }
     })
 }

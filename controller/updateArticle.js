@@ -2,6 +2,7 @@
  const port = 9300
  const BASE_URL = `${host}:${port}`
  import {pool} from '../config/dataBase.js'
+ import {inputLength} from '../components/checkLength.js'
  
 
 import formidable from 'formidable';
@@ -44,13 +45,14 @@ const getToUpdateArticle = (req, res) => {
                     fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
                         if (err) throw err;
                          if(fields.imgId !== 'null'){  // si il y a déjà une image 
-                            const paramsArticlesQL = [fields.title, fields.content, req.params.id]
+                           if(inputLength(fields.title, 63) && inputLength(fields.content, 1500)){
+                            const paramsArticleSQL = [fields.title, fields.content, req.params.id]
                             const articlesQL = 'UPDATE articles SET articles.title=?, articles.content=? WHERE articles.id=?'
     
                             const paramsImgSQL = [fields.imgDescription, newFilename, fields.imgId]
                             const imgSQL = 'UPDATE images SET description = ?, url = ?  WHERE id = ?'
-    
-                            pool.query(articlesQL, paramsArticlesQL, (err, result) => {
+                            
+                            pool.query(articlesQL, paramsArticleSQL, (err, result) => {
                                 if(err) throw err
                                 pool.query(imgSQL,paramsImgSQL, (err, result) => {
                                     if(err) throw err
@@ -60,34 +62,45 @@ const getToUpdateArticle = (req, res) => {
                                     })
                                 })
                             })
+                           }else{
+                               res.json({response: false, msg:"Champs trop longs"})
+                           }
                   
-                    } else {
-                        const paramsImgSQL = [fields.imgDescription, newFilename]
-                        const imgSQL = 'INSERT INTO images (description, url) VALUES (?,?)' 
-                        const articlesQL = 'UPDATE articles SET articles.title=?, articles.content=?, articles.image_id=? WHERE articles.id=?'
-                        pool.query(imgSQL,paramsImgSQL, (err, result) => {
-                            if(err) throw err
-                            const paramsarticlesQL = [fields.title, fields.content, result.insertId, req.params.id]
-                            pool.query(articlesQL,paramsarticlesQL, (err, result) => {
+                    } else {  //Changement de l'image uniquement 
+                        if(inputLength(fields.imgDescription)){
+                            const paramsImgSQL = [fields.imgDescription, newFilename]
+                            const imgSQL = 'INSERT INTO images (description, url) VALUES (?,?)' 
+                            const articlesQL = 'UPDATE articles SET articles.title=?, articles.content=?, articles.image_id=? WHERE articles.id=?'
+                            pool.query(imgSQL,paramsImgSQL, (err, result) => {
                                 if(err) throw err
-                                res.json({response:true, message:"image envoyer + pas d'image en BDD pour ce createur"})    
+                                const paramsarticlesQL = [fields.title, fields.content, result.insertId, req.params.id]
+                                pool.query(articlesQL,paramsarticlesQL, (err, result) => {
+                                    if(err) throw err
+                                    res.json({response:true, message:"image envoyer + pas d'image en BDD pour ce createur"})    
+                                })
                             })
-                        })
+                        }else{
+                            res.json({response: false, msg:"Champs trop longs"})
+                        }
                     }
                 })
             }else {
                             res.json({response:false, message:'image au mauvais format'})
-                        }
-             
-        } else {
+            }
+        } else { //Changement du contenu de l'article sans image
+        if(inputLength(fields.title, 63) && inputLength(fields.content, 1500)){
             const creatorDescription = 'UPDATE articles SET articles.title=?, articles.content=? WHERE articles.id=?'
             const creatorDescriptionParams = [fields.title, fields.content, req.params.id]
             pool.query(creatorDescription, creatorDescriptionParams, (err, result) => {
                 if(err) throw err
                 res.json({response:true, message:"pas d'image envoyer + update description createur"})    
             })
+        }else{
+            res.json({response: false, msg:"Champs trop longs"})
+        }
         }
     })
+    // 
   
  }
 

@@ -14,7 +14,7 @@ const Creator =() => {
     const [description, setDescription] = React.useState("")
     const [imgDescription, setImgDescription] = React.useState("")
     const [imgUrl, setImgUrl] = React.useState("")
-    const [imgId, setImgId] = React.useState()
+    const [imgId, setImgId] = React.useState(0)
     const [creator, setCreator]= React.useState([])
     const [update, setUpdate] = React.useState(false)
         
@@ -59,14 +59,14 @@ const Creator =() => {
                     console.log(2)
                 dataFile.append('files', files[0], files[0].name)
                 }
-            if(inputLength(imgDescription) && inputLength(description)){    
+            if(inputLength(imgDescription) && inputLength(description, 5000)){    
                 console.log(3)
                 axios.post(`${BASE_URL}/creator/${id}`, dataFile)
                 .then((res)=> {
                     console.log(4)
                     setUpdate(!update)
                     res.data.response && console.log('succesfully upload');
-                    // setUpdate(!update)
+                    
                     
                 })
                 .catch((err) => {
@@ -83,7 +83,7 @@ const Creator =() => {
     const test = (e) => {
          e.preventDefault()
         
-         console.log("CREATOR", creator)
+         console.log("TEST", imgId)
      } 
     
 // ========================================================================================
@@ -108,58 +108,57 @@ const Creator =() => {
                     </ul>
                 </Fragment>    
                 }
-            
-                 {creator[0] ? // ( 
-                    
-                        <Fragment>
-                            <div className="img_lite">
-                                <img  src={`http://alexisleray.sites.3wa.io:9300/img/${creator[0].url}`}  />
-                            </div>
-                            <form onSubmit={submit} encType="multipart/form-data">
-                                <label name='avatar'>
-                                    <input type='file' name='avatar'/>
-                                </label>
-                                <label>Courte descrption de votre image 
-                                    <input type="text/"  defaultValue={creator[0].imgTxt}  onChange={(e) => setImgDescription(e.target.value)}  maxLength="255"/>
-                                    {!inputLength(imgDescription) && 
-                                        <p>Max 255 caractères</p>
-                                    }    
-                                </label>
-                                <label>Présentez vous en quelques mots
-                                    <textarea   defaultValue={creator[0].description}  onChange={(e) => setDescription(e.target.value)}  maxLength="255"/>
-                                    {!inputLength(description) && 
-                                        <p>Max 255 caractères</p>
-                                     }
-                                </label>
-                                <input type='submit' value='Submit' />
-                            </form>
-                        </Fragment>
-                        : 
-                        <Fragment>
-                            <div className="img_lite">
-                                <img /* src={`http://alexisleray.sites.3wa.io:9300/img/${creator[0].url}`} */ />
-                            </div>
-                            <form onSubmit={submit} encType="multipart/form-data">
-                                <label name='avatar'>
-                                    <input type='file' name='avatar'/>
-                                </label>
-                                <label>Courte descrption de votre image 
-                                    <input type="text/"  value={imgDescription}  onChange={(e) => setImgDescription(e.target.value)}  />
-                                    {!inputLength(imgDescription) && 
-                                        <p>Max 255 caractères</p>
-                                    }
-                                </label>
-                                <label>Présentez vous en quelques mots
-                                    <textarea  value={description} onChange={(e) => setDescription(e.target.value)}  />
-                                    {!inputLength(description) && 
-                                        <p>Max 255 caractères</p>
-                                     }
-                                </label>
-                                <input type='submit' value='Submit' />
-                            </form>
-                        </Fragment>
-                    }
+                
+                     {creator[0] ? // ( 
+                        
+                            <Fragment>
+                                <div className="img_lite">
+                                    <img  src={`http://alexisleray.sites.3wa.io:9300/img/${creator[0].url}`}  />
+                                </div>
+                                <form onSubmit={submit} encType="multipart/form-data">
+                                    <label name='avatar'>
+                                        <input type='file' name='avatar'/>
+                                    </label>
+                                    <label>Courte descrption de votre image 
+                                        <input type="text/"  defaultValue={creator[0].imgTxt}  onChange={(e) => setImgDescription(e.target.value)}  maxLength="255"/>
+                                        {!inputLength(imgDescription) && 
+                                            <p>Max 255 caractères</p>
+                                        }    
+                                    </label>
+                                    <label>Présentez vous en quelques mots
+                                        <textarea   defaultValue={creator[0].description}  onChange={(e) => setDescription(e.target.value)}  maxLength="5000"/>
+                                        {!inputLength(description, 5000) && 
+                                            <p>Max 5000 caractères</p>
+                                         }
+                                    </label>
+                                    <input type='submit' value='Submit' />
+                                </form>
+                            </Fragment>
+                      
+                            : 
+                            <Fragment>
+                                <form onSubmit={submit} encType="multipart/form-data">
+                                    <label name='avatar'>
+                                        <input type='file' name='avatar'/>
+                                    </label>
+                                    <label>Courte descrption de votre image 
+                                        <input type="text/"  value={imgDescription}  onChange={(e) => setImgDescription(e.target.value)}  />
+                                        {!inputLength(imgDescription) && 
+                                            <p>Max 255 caractères</p>
+                                        }
+                                    </label>
+                                    <label>Présentez vous en quelques mots
+                                        <textarea  value={description} onChange={(e) => setDescription(e.target.value)} maxLength="5000" />
+                                        {!inputLength(description, 5000) && 
+                                            <p>Max 5000 caractères</p>
+                                         }
+                                    </label>
+                                    <input type='submit' value='Submit' />
+                                </form>
+                            </Fragment >
 
+                        }
+            
                    
                 </Fragment>    
                     

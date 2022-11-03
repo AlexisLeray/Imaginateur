@@ -8,6 +8,7 @@ import {inputLength} from '../components/checkLength.js'
 
 const withoutPictures = (req, res) => {
     let newTxt = 'INSERT INTO  articles (title, content, image_id) VALUES (?,?,?)'
+    if(inputLength(req.body.title, 63) && inputLength(req.body.content, 1500)){
     pool.query(newTxt, [req.body.title, req.body.content, null], (err, txtAdded) => {
         if(err) throw err
         if(txtAdded){
@@ -16,5 +17,8 @@ const withoutPictures = (req, res) => {
             res.json({response: false})
         }
     })
+    }else{
+        res.json({response: false, msg:"Champs trop longs"})
+    }
 }
 export default withoutPictures

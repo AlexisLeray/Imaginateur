@@ -7,23 +7,7 @@
 //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
      <button type="submit" onClick={test}>test</button>
      
-const UserDetail = ({name, username, email, address, address2, city, phone, website, company, onClick}) => {
- 
-  function onEmailClick() {
-      window.open(`mailto:${email}`);
-  }
-
-  return (
-    <>
-      <DetailCard>    
-        ...
-        <Data onClick={onEmailClick}>E-mail:{email}</Data>
-        ...
-      </DetailCard>
-    </>
-  )}
 
 
 
-
-    
+    src={`http://alexisleray.sites.3wa.io:9300/img/${photo.url}`}

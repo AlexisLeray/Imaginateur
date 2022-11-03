@@ -15,7 +15,6 @@ const ShoppingCart =() => {
             axios.get(`${BASE_URL}/panier/${id}`)    
                 .then((res) => {
                     setMyShop(res.data.result)
-                    console.log("ça passe ")
                 })
                 
                 .catch((err) => {
@@ -25,7 +24,6 @@ const ShoppingCart =() => {
         
 const submit =(e, shop_id) => {
     e.preventDefault()
-    console.log("SHOPÏD", shop_id)
     axios.post(`${BASE_URL}/panier/${id}`, {
         shop_id: shop_id
     })
@@ -39,16 +37,8 @@ const submit =(e, shop_id) => {
     
 }
         
-
-        //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("MYSHOP", myShop)
-     }
     return(
         <Fragment>
-        <button type="submit" onClick={test}>test</button>
             <h2>C'est la page du panier</h2>
             {myShop[0] ?   
                <Fragment >

@@ -51,17 +51,9 @@ const Payment = ({update}) => {
                 console.log(err)
             })
     }
-    
-    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        console.log(toBuy)
- 
-         
-     }
+
     return(
         <Fragment>
-        <button type="submit" onClick={test}>test</button>
         {msg &&
             <h2>{msg}</h2>
         }

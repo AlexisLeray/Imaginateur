@@ -12,10 +12,9 @@ const addUserSubmit = (req, res) => {
        let addUser = 'INSERT INTO users (first_name, hash, mail, name, role_id) VALUES (?,?,?,?,?)'
     if(inputLength(req.body.mail) && inputLength(req.body.first_name,63) && inputLength(req.body.name,63) && inputLength(req.body.password)  ) {
     pool.query(checkMail, [req.body.mail], (err, newMail) => {
-     
      if (err) throw err
      if(newMail[0].cnt > 0){
-      res.json({response:false})
+      res.json({response:false, msg:"Email déjà prit"})
      }
      else {
       bcrypt.hash(req.body.password, saltRounds, function(err, hash) {

@@ -11,6 +11,7 @@ const Register = () =>{
     const [first_name, setFirst_name] = React.useState("")
     const [mail, setMail] = React.useState("")
     const [password, setPassword] = React.useState("")
+    const [msg, setMsg] = React.useState("")
     const navigate = useNavigate();
     
   
@@ -28,10 +29,17 @@ const Register = () =>{
                 password
             })
             .then( (res) => {
-                console.log(res)
-                navigate('/connexion')
+                console.log(1)
+                if(res.data.response === true){
+                    navigate('/connexion')
+                }else{
+
+                        window.alert(res.data.msg)
+                }    
+                
             })
             .catch((err) => {
+                console.log(2)
                 console.log(err)
             })
         } 

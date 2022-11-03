@@ -1,5 +1,6 @@
 import express from 'express'
 import fs from 'fs'
+import home from '../controller/home.js'
 import addUserSubmit from '../controller/addUser.js'
 import connexion from '../controller/connexion.js'
 import {getMessage, deleteMsg} from '../controller/adminMessage.js'
@@ -23,6 +24,7 @@ import {updateArticle, getToUpdateArticle} from '../controller/updateArticle.js'
 import {getProfil, updateProfil} from '../controller/modifyProfil.js'
 import showProduct from '../controller/product.js'
 import isLogged from '../controller/isLogged.js'
+import creatorProfil from '../controller/creatorProfil.js'
 const host = "http://alexisleray.sites.3wa.io"
 const port = 9300
 const BASE_URL= `${host}:${port}`
@@ -31,6 +33,8 @@ const router = express.Router()
 
 router.post("/api/register", addUserSubmit) 
 router.post("/api/connexion", connexion) 
+
+router.get("/api/home", home)
 
 router.get("/api/profil/:id", getProfil ) 
 router.post("/api/profil/:id", updateProfil) 
@@ -75,4 +79,6 @@ router.post("/api/deleteArticle", deleteArticle)
 router.post("/api/updateArticle/:id", updateArticle)
 router.get("/api/updateArticle/:id", getToUpdateArticle)
 router.post("/api/isLogged", isLogged);
+
+router.get("/api/creatorProfil/:id", creatorProfil)
 export default router

@@ -2,7 +2,7 @@
  const port = 9300
  const BASE_URL = `${host}:${port}`
  import {pool} from '../config/dataBase.js'
- 
+ import {inputLength} from '../components/checkLength.js'
 
 import formidable from 'formidable';
 import fs from 'fs';
@@ -59,6 +59,7 @@ const getGategory = (req, res) => {
                              if (err) throw err
                                     })            
                         //On lance la pool.query pour l'envoi de l'url et de la description en bdd
+                        if(inputLength(fields.imgDescription) && inputLength(fields.title) && inputLength(fields.price) && inputLength(fields.productDescription)){
                          pool.query(updatePicture, [fields.imgDescription,newFilename, req.params.id], (err, added) => {  
                             if (err) throw err
                                 if (added){
@@ -71,11 +72,15 @@ const getGategory = (req, res) => {
                                     }
                                }) 
                             }   
-                        })    
+                        }) 
+                        }else{
+                            res.json({response: false, msg:"Champs trop longs"})
+                        } 
                     }) 
                 }
             } else {
 // ============================================= UPDATE DU PRODUIT SANS IMAGE================================================
+            if(inputLength(fields.title) && inputLength(fields.price) && inputLength(fields.productDescription)){
             pool.query(updateProduct, [fields.title, fields.price, fields.productDescription, fields.category_id, req.params.id], (err, addProduct) => { 
                 if (err) throw err
                 if(addProduct) {
@@ -84,6 +89,9 @@ const getGategory = (req, res) => {
                     res.json({response:false})
                 }
             })
+            }else{
+                res.json({response: false, msg:"Champs trop longs"})
+            } 
         }
     })
  }

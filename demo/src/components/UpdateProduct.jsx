@@ -2,7 +2,7 @@ import React,{useContext,useEffect, Fragment, useState} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 import {inputLength} from '../utils/utils.js'
 
 const UpdateProduct = () => {
@@ -22,7 +22,8 @@ const UpdateProduct = () => {
     const [category, setCategory] = React.useState("")
     const [category_id, setCategory_id]= React.useState("")
     const [categoryArray, setCategoryArray] = React.useState([])
-    
+    const [img, setImg] = useState("")
+    const navigate = useNavigate();
     
     
         // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
@@ -67,10 +68,8 @@ const UpdateProduct = () => {
         dataFile.append('imgUrl', imgUrl)
         dataFile.append('category_id', category_id)
         
-        // L'image
-        console.log(price)
-        console.log(inputLength(price, 11))
-       
+
+
         if(inputLength(imgDescription) && inputLength(price, 11 ) && inputLength(productDescription) && inputLength(title)){
             if(files[0]){                                                   
                 dataFile.append('files', files[0], files[0].name)
@@ -80,6 +79,7 @@ const UpdateProduct = () => {
                     .then((res)=> {
                         res.data.response && console.log('succesfully upload');
                         setUpdate(!update)
+                        navigate("/NewPiece")
                     })
                     .catch((err) => {
                         console.log(err)
@@ -94,17 +94,10 @@ const UpdateProduct = () => {
     } 
      
 
-    // ===================================TEMPORAIRE JUSTE POUR DESACTIVER LE BOUTON =================================== 
-     const test = (e) => {
-         e.preventDefault()
-            
-         console.log("imgurl", imgUrl )
-     }
     // ========================================================================================================= 
     return (
         <Fragment>
             <h1>Nouveau produit</h1>
-                          <button type="submit" onClick={test}>test</button>
                     <form onSubmit={submit} encType="multipart/form-data">
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
                         <label name='picture'>
@@ -143,7 +136,6 @@ const UpdateProduct = () => {
                             <input type='submit' value='Submit' />
                         
                     </form>
-                <button type="submit" onClick={test}>test</button>
         </Fragment>
     )
 }

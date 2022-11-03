@@ -1,6 +1,6 @@
 // FORMULAIRE D'AJOUT D'UNE NOUVELLE PIECE A DISSOCIER DU RESTE POUR L'APPELER UNIQUEMENT SI BESOIN
 
-import React,{useContext, Fragment, useEffect} from "react"
+import React,{useContext, Fragment, useEffect, useRef} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
@@ -8,6 +8,8 @@ import MyGalery from './MyGalery.jsx'
 import {inputLength} from '../utils/utils.js'
 
 const NewPiece = () => {
+    
+    const inputFile = useRef()
 
     const [state, dispatch] = useContext(ReducerContext)
     
@@ -16,8 +18,9 @@ const NewPiece = () => {
     const [productDescription, setProductDescription] = React.useState("")
     const [title, setTitle] = React.useState("")
     const [update, setUpdate] = React.useState(false)
-    const [category, setCategory] = React.useState()
+    const [category, setCategory] = React.useState("12")
     const [categoryArray, setCategoryArray] = React.useState([])
+    
     
     useEffect(() =>{
             axios.get(`${BASE_URL}/newPiece`)
@@ -54,7 +57,12 @@ const NewPiece = () => {
                     .then((res)=> {
                         res.data.response && console.log('succesfully upload');
                         setUpdate(!update)
-                        
+                        setPrice("")
+                        setProductDescription("")
+                        setTitle("")
+                        setCategory("12")
+                        setImgDescription("")
+                        inputFile.current.value = null
                     })
                     .catch((err) => {
                         console.log(err)
@@ -67,21 +75,17 @@ const NewPiece = () => {
             } else {
                 window.alert("N'oubliez pas la photo pour montrer votre oeuvre")
             }
-        // }else{
-        //     window.alert("Veuillez choisir une catégorie")
-        // }
         }else{
             console.log("champs trops longs")
         }    
     } 
-     
     
     return (
         <Fragment>
             <h1>Nouveau produit</h1>
             <form onSubmit={submit} encType="multipart/form-data">
-                <label name='avatar'>
-                    <input type='file' name='avatar'/>
+                <label name='avatar' >
+                    <input type='file' ref={inputFile} name='avatar'/>
                 </label>
                 <label>Description de l'image
                     <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"/>
@@ -106,13 +110,13 @@ const NewPiece = () => {
                 </label>    
                 <label>Catégorie
                     <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
-                        {/*categoryArray.map((e,i) => {
+                        {categoryArray.map((e,i) => {
                             return(
-                                <option key={i} value={e.id} selected={e[0]}>
+                                <option key={i} value={e.id}>
                                     {e.category}
                                 </option>
                             )
-                        })*/}
+                        })}
                     </select>
                 </label>
                 

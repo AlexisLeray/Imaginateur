@@ -37,16 +37,14 @@ const UpdateArticle = () => {
                 .catch((err)=> {
                     console.log(err)
                 })
-         }, [])
+         }, [update])
    
     useEffect(() =>{
             axios.get(`${BASE_URL}/updateArticle/${id}`)
             .then ((res) => {
-                console.log(2)
                 setArticlesArray(res.data.allCategory)
             })
             .catch((err) => {
-                console.log(3)
                 console.log(err)
             })
     }, [])
@@ -69,8 +67,6 @@ const UpdateArticle = () => {
             }
             axios.post(`${BASE_URL}/updateArticle/${id}`, dataFile)
             .then((res)=> {
-                
-                console.log(res)
                 res.data.response && console.log('succesfully upload');
                 setUpdate(!update)
                 navigate("/galery")
@@ -84,20 +80,11 @@ const UpdateArticle = () => {
             console.log("champs trops longs")
         }
      } 
-     //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        // ces 4 là sont null ce quie fait planter la maj de l'article parce que null ne peut pas se faire toString
-         console.log("imgUrl", imgUrl)
-         console.log("imgDescription", imgDescription)
-         console.log("imgId", imgId)
-         
-    }
+
     // ========================================================================================================= 
     return (
         <Fragment>
             <h1>Modification d'article</h1>
-                <button type="submit" onClick={test}>test</button>          
                     <form onSubmit={submit} encType="multipart/form-data">
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
                         <label name='picture'>
@@ -123,7 +110,7 @@ const UpdateArticle = () => {
                         </label>    
                             <input type='submit' value='Submit' />
                     </form>
-                <button type="submit" onClick={test}>test</button>
+                <button type="submit" onClick={submit}>test</button>
         </Fragment>
     )
 }

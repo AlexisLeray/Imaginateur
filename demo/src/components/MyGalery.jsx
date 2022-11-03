@@ -13,21 +13,17 @@ const [state, dispatch] = useContext(ReducerContext)
     let id = state.creatorId
     
     useEffect(() => {
-        console.log(1)
         axios.get(`${BASE_URL}/myGalery/${id}`)
         .then((res) => {
-            console.log(res.data)
             setAllProducts(res.data.productArray)
         })
         .catch((err) => {
-            console.log(3)
             console.log(err)
         })
     },[update])
   
     const deleteProduct = (e, image) => {
         e.preventDefault()
-        console.log("IMAGE", image)
         axios.post(`${BASE_URL}/deleteProduct`, {
             id:image.id,
             imageId:image.image_id,
@@ -43,18 +39,11 @@ const [state, dispatch] = useContext(ReducerContext)
         })
         console.log("ça marche aussi")
     }
-    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("all products", allProducts)
-     }
-//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
+
    
      return(
-        // APPELER LE COMPOSANT NEWPIECE
+
         <Fragment>   
-        <button type="submit" onClick={test}>test</button>
           <table>
                 <thead>
                     <tr>

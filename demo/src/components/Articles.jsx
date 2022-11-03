@@ -1,4 +1,4 @@
-import React,{useContext, useEffect,Fragment, useState} from "react"
+import React,{useContext, useEffect,Fragment, useState, useRef} from "react"
 import {ReducerContext} from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
@@ -6,6 +6,7 @@ import { useParams, NavLink, useNavigate } from "react-router-dom";
 import {inputLength} from '../utils/utils.js'
 
 const Galery = () => {
+    const inputFile = useRef()
     const [state, dispatch] = useContext(ReducerContext)
     const [title, setTitle] = React.useState("")
     const [content, setContent] = React.useState("")
@@ -37,7 +38,7 @@ const Galery = () => {
         
         
         // L'image
-        if(inputLength(title,63) && inputLength(content) && inputLength(imgDescription,255)){
+        if(inputLength(title,63) && inputLength(content, 1500) && inputLength(imgDescription,255)){
             
             if(files[0]){
             dataFile.append('files', files[0], files[0].name)
@@ -47,6 +48,11 @@ const Galery = () => {
                 
                 res.data.response && console.log('succesfully upload');
                 setUpdate(!update)
+                setTitle("")
+                setContent("")
+                setUrl("")
+                setImgDescription("")
+                inputFile.current.value = null
                 
             })
             .catch((err) => {
@@ -65,6 +71,10 @@ const Galery = () => {
                     
                     res.data.response && console.log('succesfully upload');
                     setUpdate(!update)
+                    setTitle("")
+                    setContent("")
+                    setUrl("")
+                    setImgDescription("")
             })
             .catch((err) => {
                 console.log(err)
@@ -113,6 +123,7 @@ const Galery = () => {
             // article est un paramètre qui équivaut au "e" du bouton il va permettre de choisir quel information du e (donc de toutes les informations de l'article) nous voulons récupérer 
     const test = (e, article) => {
           e.preventDefault()
+          console.log("DESCRIPTION DE L'IMAGE", allArticles)
   
      }
   
@@ -128,7 +139,7 @@ const Galery = () => {
                 <h1>Nouvel article</h1>
                 <form onSubmit={submit} encType="multipart/form-data">
                     <label name='avatar'>
-                        <input type='file' name='avatar'/>
+                        <input type='file' ref={inputFile} name='avatar'/>
                     </label>
                      <label>Description de l'image
                         <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="63"/>
@@ -143,9 +154,9 @@ const Galery = () => {
                             }
                     </label>
                      <label>Contenu
-                        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} maxLength="255" />
-                            {!inputLength(content) && 
-                                <p>Max 255 caractères</p>
+                        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} maxLength="1500" />
+                            {!inputLength(content, 1500) && 
+                                <p>Max 1500 caractères</p>
                             }
                     </label>
                         <input type='submit' value='Submit'/>
@@ -161,7 +172,7 @@ const Galery = () => {
                         <div className=""><p>{e.title}</p></div>
                     {e.url !== null &&(
                         <div>
-                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  className="img_lite"/>
+                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  className="img_lite" alt={e.description} />
                         </div>
                     )}
                         <div>{e.content}</div>

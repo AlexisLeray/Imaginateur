@@ -42,24 +42,22 @@ const Shop =({update}) => {
             })
     }
     
-//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("EXPOSED", submit)
-     }
-//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
     return(
         
     <div className="cards_container">
-    <button type="submit" onClick={test}>test</button>
         {exposed.map((e,i) => (
             <div key={i} className="cards">
-                <div className="productBtn" onClick={() => navigate(`/product/${e.id}`)}>
+                <div className="productBtn">
                     
                         <div className=""><p>{e.title}</p></div>
                         <div>
-                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} />
+                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  onClick={() => navigate(`/product/${e.id}`)}/>
+                        </div>
+                        <div>
+                            Créateur :  
+                            <NavLink to={`/creatorProfil/${e.creator_id}`}>
+                                {e.name} {e.first_name}
+                            </NavLink>
                         </div>
                         <div>{e.content}</div>
                         <div>{e.price}</div>

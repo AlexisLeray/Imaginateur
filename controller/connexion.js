@@ -17,7 +17,7 @@ const connexion = (req, res) => {
     let connexionSQL = 'SELECT  users.hash, users.id, role_id, name, users.mail, first_name FROM users WHERE mail=?'
     let creatorConnexion = 'SELECT creators.id FROM creators WHERE `user_id` = ?'
     
-    if (inputLength(req.body.mail,63) && inputLength(req.body.password,63)){
+    if (inputLength(req.body.mail,63) && inputLength(req.body.password)){
         pool.query(connexionSQL, [req.body.mail], function(err, check ) {
             if (err) throw err; 
             if (check[0] && check[0].mail) {

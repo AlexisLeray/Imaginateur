@@ -22,7 +22,7 @@ const NewCategory = () => {
                 console.log(err)
             })
         }else{
-            console.log("champs trops longs")
+            window.alert("champs trops longs")
         }
     }
  return(

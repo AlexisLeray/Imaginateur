@@ -62,17 +62,10 @@ const ModifyProfil = () => {
         }else{
             window.alert("Nom et prénom limités à 63 charactères, 255 pour le mot de passe ")
         }
-    } //fin fonction submit
-    //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("allProfil", password)
-     }
+    } 
+    
     return (
         <Fragment>
-       
-            <button type="submit" onClick={test}>test</button>
             <h2>pour modifier le profiiiiiileuuuh</h2>
             {allProfil.map((e,i) => {
                 return(
@@ -91,13 +84,13 @@ const ModifyProfil = () => {
                             }
                         </label>
                         <label> Nouveau mot de passe 
-                            <input type="text" value={password}  name="password" onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
+                            <input type="password" value={password}  name="password" onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
                             {!inputLength(password) && 
                                 <p>Max 255 caractères</p>
                             }
                         </label>
                         <label> Confirmer le mot de passe  
-                            <input type="text" value={confirmPassword} name="password" onChange={(e) => setConfirmPassword(e.target.value)}  maxLength="255"/>
+                            <input type="password" value={confirmPassword} name="password" onChange={(e) => setConfirmPassword(e.target.value)}  maxLength="255"/>
                             {!inputLength(confirmPassword) && 
                                 <p>Max 255 caractères</p>
                             }

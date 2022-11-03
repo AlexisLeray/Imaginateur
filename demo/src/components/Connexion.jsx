@@ -51,14 +51,20 @@ const Connexion = () => {
                         name:res.data.name, 
                         id:res.data.id, 
                         creatorId:res.data.id_creator});
-                        navigate("/admin")
+                        if(res.data.admin && res.data.creator){
+                            console.log("test")
+                            navigate("/admin")
+                        }
                     }
                     if(res.data.creator){ 
                     dispatch({type:'creator', 
                     name:res.data.name, 
                     fname:res.data.first_name, 
                     creatorId: res.data.id_creator,}) ; 
-                    navigate("/creator/:id")
+                    if(res.data.creator && !res.data.admin){    
+                        console.log("test")
+                        navigate("/NewPiece")
+                    }
                     }
                     
                 } else {

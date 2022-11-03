@@ -18,10 +18,11 @@ import Payment from '../components/Payment'
 import UpdateArticle from '../components/UpdateArticle'
 import ModifyProfil from '../components/ModifyProfil'
 import Product from '../components/Product'
-
+import CreatorProfil from '../components/CreatorProfil'
+import NotFound from '../components/NotFound'
 // definition des différentes routes avec appel du composant correspondant 
 export const routes = [
-        {path: '/', element:<Home />},
+        {path: '/', element:<Home />  },
         // {path: '/galery', element:<Galery />},
         {path: '/shop', element:<Shop />},
         {path: '/contact', element:<Contact />},
@@ -42,6 +43,8 @@ export const routes = [
         {path: '/updateArticle/:id', element: <UpdateArticle />},
         {path: '/updateProfil/:id', element: <ModifyProfil />},
         {path: '/product/:id', element: <Product /> },
+        {path: '/creatorProfil/:id', element: <CreatorProfil />},
+        {path: '*', element: <NotFound />}
         
     ]
 // route reservée aux personnes connectées

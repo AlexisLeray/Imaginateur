@@ -22,11 +22,11 @@ const Product = () => {
     return(
         <Fragment>
             {product.map((e,i) => (
-                <div>
-                <div>    <h2>{e.title}</h2> </div>
-                <div>    <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} /> </div>
-                <div>    <p>Descriptif : {e.content}</p> </div>
-                <div>    <p>Prix : {e.price}</p> </div>
+                <div key={i}>
+                    <div>    <h2>{e.title}</h2> </div>
+                    <div>    <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} /> </div>
+                    <div>    <p>Descriptif : {e.content}</p> </div>
+                    <div>    <p>Prix : {e.price}</p> </div>
                 </div>    
             ))}
         </Fragment>
