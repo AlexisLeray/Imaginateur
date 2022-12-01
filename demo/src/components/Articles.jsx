@@ -41,24 +41,24 @@ const Galery = () => {
         if(inputLength(title,63) && inputLength(content, 1500) && inputLength(imgDescription,255)){
             
             if(files[0]){
-            dataFile.append('files', files[0], files[0].name)
-            axios.post(`${BASE_URL}/article`, dataFile)
-            .then((res)=> {
-                
-                
-                res.data.response && console.log('succesfully upload');
-                setUpdate(!update)
-                setTitle("")
-                setContent("")
-                setUrl("")
-                setImgDescription("")
-                inputFile.current.value = null
-                
-            })
-            .catch((err) => {
-                console.log(err)
-                
-            })
+                dataFile.append('files', files[0], files[0].name)
+                axios.post(`${BASE_URL}/article`, dataFile)
+                .then((res)=> {
+                    
+                    
+                    res.data.response && console.log('succesfully upload');
+                    setUpdate(!update)
+                    setTitle("")
+                    setContent("")
+                    setUrl("")
+                    setImgDescription("")
+                    inputFile.current.value = null
+                    
+                })
+                .catch((err) => {
+                    console.log(err)
+                    
+                })
             }else {
                 console.log("ça passe dans le else")
                 axios.post(`${BASE_URL}/articleTexte`, {
@@ -75,11 +75,11 @@ const Galery = () => {
                     setContent("")
                     setUrl("")
                     setImgDescription("")
-            })
-            .catch((err) => {
-                console.log(err)
-                
-            })  
+                })
+                .catch((err) => {
+                    console.log(err)
+                    
+                })  
             }
         }else{
             console.log("champs trops longs")
@@ -90,20 +90,20 @@ const Galery = () => {
     const deleteArticle = (e, article) => {
         e.preventDefault()
         if(article.image_id !== null){
-        axios.post(`${BASE_URL}/deleteArticle`, {
-            
-            id: article.id,
-            imageId: article.image_id,
-            image: article.url
-        })
-        .then((res) => {
-            let data = [...allArticles]
-            setAllArticles(data.filter((i) => i.id !== article.id))
-    
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+            axios.post(`${BASE_URL}/deleteArticle`, {
+                
+                id: article.id,
+                imageId: article.image_id,
+                image: article.url
+            })
+            .then((res) => {
+                let data = [...allArticles]
+                setAllArticles(data.filter((i) => i.id !== article.id))
+        
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         }else {
             axios.post(`${BASE_URL}/deleteArticle`, {
                 id: article.id
@@ -121,64 +121,65 @@ const Galery = () => {
   //=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
    
             // article est un paramètre qui équivaut au "e" du bouton il va permettre de choisir quel information du e (donc de toutes les informations de l'article) nous voulons récupérer 
-    const test = (e, article) => {
+    const test = (e, article) => { // TODO DELETE
           e.preventDefault()
           console.log("DESCRIPTION DE L'IMAGE", allArticles)
   
      }
   
     return(
-         
-         
-       <Fragment>
-     <button type="submit" onClick={test}>test</button>
+        <Fragment>
+            
          
             {state.admin &&
-         
-                <div>
-                <h1>Nouvel article</h1>
-                <form onSubmit={submit} encType="multipart/form-data">
-                    <label name='avatar'>
-                        <input type='file' ref={inputFile} name='avatar'/>
-                    </label>
-                     <label>Description de l'image
-                        <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="63"/>
-                            {!inputLength(imgDescription,63) && 
-                                <p>Max 63 caractères</p>
-                            }
-                    </label>
-                    <label>Titre
-                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"/>
-                            {!inputLength(title,63) && 
-                                <p>Max 63 caractères</p>
-                            }
-                    </label>
-                     <label>Contenu
-                        <input type="text" value={content} onChange={(e) => setContent(e.target.value)} maxLength="1500" />
-                            {!inputLength(content, 1500) && 
-                                <p>Max 1500 caractères</p>
-                            }
-                    </label>
-                        <input type='submit' value='Submit'/>
-                </form>
-                </div>
+                <section className="article__admin container">
+                    <div>
+                        <h1>Nouvel article</h1>
+                        <form onSubmit={submit} encType="multipart/form-data" className="article__admin-inputs">
+                            <label name='avatar'>
+                                <input type='file' ref={inputFile} name='avatar'/>
+                            </label>
+                            <label>Description de l'image
+                                <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="63"/>
+                                    {!inputLength(imgDescription,63) && 
+                                        <p>Max 63 caractères</p>
+                                    }
+                            </label>
+                            <label>Titre
+                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"/>
+                                    {!inputLength(title,63) && 
+                                        <p>Max 63 caractères</p>
+                                    }
+                            </label>
+                            <label>Contenu
+                                <input type="text" value={content} onChange={(e) => setContent(e.target.value)} maxLength="1500" />
+                                    {!inputLength(content, 1500) && 
+                                        <p>Max 1500 caractères</p>
+                                    }
+                            </label>
+                            <input type='submit' value='Valider'/>  {/*il y avait une value "submit"*/}
+                        </form>
+                    </div>
+                </section>    
             
             }
             <Fragment>
-            <h2>partie galerie users</h2>
-            
+            <article className="container"> 
+                <header>
+                    <h2>Galerie d'exposition</h2>
+                </header>
                 {allArticles.map((e,i) => (
-                    <div key={i}>
-                        <div className=""><p>{e.title}</p></div>
+                    <div key={i} className="article__content">
+                        <h3>{e.title}</h3>
                     {e.url !== null &&(
                         <div>
                             <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  className="img_lite" alt={e.description} />
                         </div>
                     )}
-                        <div>{e.content}</div>
-                        <div>{e.price}</div>
+                    <p>{e.content}</p>
+                    {/*il y avait price ici je ne sais pourquoi */}
                     {state.admin && 
-                        <div> 
+                        <div className="article__options"> 
                             <NavLink to={`/updateArticle/${e.id}`}>
                                 Modifier
                             </NavLink>
@@ -188,9 +189,8 @@ const Galery = () => {
                     }    
                     </div>
                 ))}
-                
+                </article> 
             </Fragment>
-            
         </Fragment>
         )
 }

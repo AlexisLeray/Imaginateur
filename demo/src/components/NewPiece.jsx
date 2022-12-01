@@ -51,7 +51,7 @@ const NewPiece = () => {
         if(inputLength(title,63) && inputLength(productDescription) && inputLength(price, 11) && inputLength(imgDescription,255)){
         //  if(category ==="")    {
             if(files[0]){
-            dataFile.append('files', files[0], files[0].name)
+                dataFile.append('files', files[0], files[0].name)
                 if(imgDescription && price && productDescription && title ){
                     axios.post(`${BASE_URL}/newPiece`, dataFile)
                     .then((res)=> {

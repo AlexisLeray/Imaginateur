@@ -42,15 +42,17 @@ const Contact =() => {
         <Fragment>
             {state.logged === false ?
                 <Fragment> 
-                    <h2>Connectez-vous pour laisser un message</h2>
-                    <Connexion />
+                    <div className="contact__form container">
+                        <h2>Connectez-vous pour laisser un message</h2>
+                        <Connexion />
+                    </div>    
                 </Fragment>    
             :
-                <form action ="" type="post" onSubmit={submit}>
-                {successMsg !== "" && <p>{successMsg}</p>}
-                    Nom:
+                <form action ="" type="post" onSubmit={submit} className="contact__form container">
+                    {successMsg !== "" && <p>{successMsg}</p>}
+                    <h3>Nom: </h3>
                     <p>{state.name}</p>
-                    Prénom: 
+                    <h3>Prénom:</h3> 
                     <p>{state.first_name}</p>
                     <label>Objet de la demande 
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63" />

@@ -21,7 +21,6 @@ const Admin =() => {
     },[])
     
     return(
-        
         <Fragment>
             <NewCategory />
             <ul>
@@ -42,9 +41,8 @@ const Admin =() => {
                 </li>
             </ul>
             <h2>Nouvelles propositions d'oeuvres à publier</h2>
-        <ToApprouved />    
+            <ToApprouved />    
         </Fragment> 
-        
-            )
+    )
 }
 export default Admin

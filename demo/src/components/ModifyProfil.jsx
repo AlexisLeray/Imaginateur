@@ -66,7 +66,6 @@ const ModifyProfil = () => {
     
     return (
         <Fragment>
-            <h2>pour modifier le profiiiiiileuuuh</h2>
             {allProfil.map((e,i) => {
                 return(
                 <Fragment key={i}>

@@ -48,28 +48,33 @@ const Shop =({update}) => {
         {exposed.map((e,i) => (
             <div key={i} className="cards">
                 <div className="productBtn">
-                    
-                        <div className=""><p>{e.title}</p></div>
+                    <div className="cards__title container">
+                            <h4>{e.title}</h4>
+                            </div>
                         <div>
                             <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  onClick={() => navigate(`/product/${e.id}`)}/>
                         </div>
-                        <div>
+                        <div className="cards__details container">
                             Créateur :  
                             <NavLink to={`/creatorProfil/${e.creator_id}`}>
-                                {e.name} {e.first_name}
+                                 &nbsp;{e.name} {e.first_name}
                             </NavLink>
+                        
+                        <p>{e.content}</p>
+                        <p>{e.price} €</p>
                         </div>
-                        <div>{e.content}</div>
-                        <div>{e.price}</div>
-                
                 </div>     
             {state.logged ?     
+            <div className="container">
                 <button type="submit" onClick={(el) => submit(el, e)}>Ajouter au panier</button>
+            </div>    
             :
+            <div className="container">
                 <p>
-                    <NavLink to="/connexion">connectez vous </NavLink> pour passer commande
+                    <NavLink to="/connexion">Connectez vous </NavLink> pour passer commande
                     
                 </p>
+            </div>
             }
             </div>
         ))}

@@ -84,33 +84,34 @@ const UpdateArticle = () => {
     // ========================================================================================================= 
     return (
         <Fragment>
-            <h1>Modification d'article</h1>
-                    <form onSubmit={submit} encType="multipart/form-data">
+            <section className="update__container container"> 
+                <h1>Modification d'article</h1>
+                    <form onSubmit={submit} encType="multipart/form-data" className="section__update-inputs">
                        {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
-                        <label name='picture'>
-                            <input type='file' name='picture'/>
-                        </label>
-                        <label>Description de l'image
-                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"  />
-                            {(imgDescription && !inputLength(imgDescription)) && 
-                               <p>Max 255 caractères</p>
-                            }
-                        </label>    
-                        <label>Titre de l'oeuvre
-                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"  />
-                            {!inputLength(title, 63) && 
-                               <p>Max 63 caractères</p>
-                            }
-                        </label>
-                        <label>Contenu de l'article
-                            <textarea  value={content} onChange={(e) => setContent(e.target.value)}  maxLength="255" />
-                            {!inputLength(content) &&  
-                               <p>Max 255 caractères</p>
-                            }
-                        </label>    
-                            <input type='submit' value='Submit' />
+                            <label name='picture'>
+                                <input type='file' name='picture'/>
+                            </label>
+                            <label>Description de l'image
+                                <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"  />
+                                {(imgDescription && !inputLength(imgDescription)) && 
+                                   <p>Max 255 caractères</p>
+                                }
+                            </label>    
+                            <label>Titre de l'oeuvre
+                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"  />
+                                {!inputLength(title, 63) && 
+                                   <p>Max 63 caractères</p>
+                                }
+                            </label>
+                            <label>Contenu de l'article
+                                <textarea  value={content} onChange={(e) => setContent(e.target.value)}  maxLength="255" />
+                                {!inputLength(content) &&  
+                                   <p>Max 255 caractères</p>
+                                }
+                            </label>    
+                        <input type='submit' value='Valider' className="section__update-submit" />
                     </form>
-                <button type="submit" onClick={submit}>test</button>
+            </section>    
         </Fragment>
     )
 }

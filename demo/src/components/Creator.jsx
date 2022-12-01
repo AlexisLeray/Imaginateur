@@ -23,11 +23,11 @@ const Creator =() => {
                 .then((res) => {
                     console.log(res.data.creator)
                     if(res.data.creator[0] && res.data.creator[0].url){
-                    setImgUrl(res.data.creator[0].url)
-                    setImgDescription(res.data.creator[0].imgTxt)
-                    setDescription(res.data.creator[0].description)
-                    setImgId(res.data.creator[0].image_id)
-                    setCreator(res.data.creator)
+                        setImgUrl(res.data.creator[0].url)
+                        setImgDescription(res.data.creator[0].imgTxt)
+                        setDescription(res.data.creator[0].description)
+                        setImgId(res.data.creator[0].image_id)
+                        setCreator(res.data.creator)
                     }else{
                       
                         setDescription("")
@@ -57,7 +57,7 @@ const Creator =() => {
                 // L'image
                 if(files[0]){
                     console.log(2)
-                dataFile.append('files', files[0], files[0].name)
+                    dataFile.append('files', files[0], files[0].name)
                 }
             if(inputLength(imgDescription) && inputLength(description, 5000)){    
                 console.log(3)
@@ -89,8 +89,7 @@ const Creator =() => {
 // ========================================================================================
         return(
             <Fragment>
-            
-            <button type="submit" onClick={test}>test</button>
+                <button type="submit" onClick={test}>test</button>
                 {state.creator === false ? 
                     <Fragment>
                         <h2>Espace réservé aux créateurs</h2>

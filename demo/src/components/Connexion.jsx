@@ -46,25 +46,26 @@ const Connexion = () => {
                     // si l'user a le role admin
                     // res.data.admin && dispatch({type:'admin', fname:res.data.first_name, name:res.data.name, id:res.data.id, creatorId:res.data.id_creator});
                     if(res.data.admin){
-                        console.log(3)
-                        dispatch({type:'admin', fname:res.data.first_name, 
-                        name:res.data.name, 
-                        id:res.data.id, 
-                        creatorId:res.data.id_creator});
+                        dispatch({
+                            type:'admin', fname:res.data.first_name, 
+                            name:res.data.name, 
+                            id:res.data.id, 
+                            creatorId:res.data.id_creator
+                        });
                         if(res.data.admin && res.data.creator){
-                            console.log("test")
                             navigate("/admin")
                         }
                     }
                     if(res.data.creator){ 
-                    dispatch({type:'creator', 
-                    name:res.data.name, 
-                    fname:res.data.first_name, 
-                    creatorId: res.data.id_creator,}) ; 
-                    if(res.data.creator && !res.data.admin){    
-                        console.log("test")
-                        navigate("/NewPiece")
-                    }
+                        dispatch({
+                            type:'creator', 
+                            name:res.data.name, 
+                            fname:res.data.first_name, 
+                            creatorId: res.data.id_creator
+                        }); 
+                        if(res.data.creator && !res.data.admin){
+                            navigate("/NewPiece")
+                        }
                     }
                     
                 } else {
@@ -86,50 +87,46 @@ const Connexion = () => {
       console.log(7)
       window.alert("Adresse mail non valide")
   }
-            
-    } //fin de la fonction submit
+} //fin de la fonction submit
 
-//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    const test = (e) => {
-         e.preventDefault()
-        
-         console.log("mail : ", state)
-     }
     return( 
         <Fragment>
-        <button type="submit" onClick={test}>test</button>
-        {state.logged === false ?
-            <form action="" method="post">
-                <label>mail : </label>
-                    <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} maxLength="255"/>
-            {!inputLength(mail) && 
-                <p>Max 63 caractères</p>
+            {state.logged === false ?
+            <section>
+                <form action="" method="post" className="connexion__form container">
+                    <label>
+                        <h4>Mail : </h4>
+                        <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} maxLength="255"/>
+                    {!inputLength(mail) && 
+                        <p>Max 63 caractères</p>
+                    }
+                    </label>
+                    <label>
+                        <h4>Mot de passe : </h4> 
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
+                    {!inputLength(password) && 
+                        <p>Max 63 caractères</p>
+                    }
+                    </label>
+                    <button onClick={submit}>Connexion</button>
+                    {errorBack !== "" && <p>{errorBack}</p>}    
+                </form> 
+            </section>
+            :
+                <Fragment>
+                    <section>
+                        <h2>Bienvenue {state.first_name}</h2>
+                        <p>Nom: {state.name}</p>
+                        <p>Prénom: {state.first_name}</p>
+                        <p>Mail: {state.mail}</p>
+                        <p>Pour modifier votre profil, cliquez sur le lien suivant : </p>
+                        <NavLink to={`/updateProfil/${state.id}`}>Modifier mon profil</NavLink>
+                    </section>
+                </Fragment>
             }
-            <label>mot de passe : </label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
-            {!inputLength(password) && 
-                <p>Max 63 caractères</p>
-            }
-                <button onClick={submit}>Connexion</button>
-                {errorBack !== "" && <p>{errorBack}</p>}    
-            </form> 
-        :
-            <Fragment>
-                <h2>Bienvenue {state.first_name}</h2>
-                <p>Nom: {state.name}</p>
-                <p>Prénom: {state.first_name}</p>
-                <p>Mail: {state.mail}</p>
-                <p>Pour modifier votre profil, cliquez sur le lien suivant : </p>
-                    <NavLink to={`/updateProfil/${state.id}`}>
-                        Modifier mon profil
-                    </NavLink>
-                
-            </Fragment>
             
-        }
-        
+            
         </Fragment>
-        
     )
 }
 

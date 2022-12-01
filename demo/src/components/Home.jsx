@@ -1,5 +1,6 @@
 import React,{useContext, Fragment, useEffect, useState} from "react"
- import {ReducerContext} from "./reducer/reducer.jsx"
+import {ReducerContext} from "./reducer/reducer.jsx"
+import {NavLink} from "react-router-dom"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 
@@ -35,16 +36,29 @@ const Home = () => {
   const prev = () => {
     setCurrentIndex((currentIndex - 1 + photos.length) % photos.length);
   };
-//=================================BOUTON TEST A SUPPRIMER PAR LA SUITE============================
-    // const test = (e) => {
-    //      e.preventDefault()
-        
-    //      console.log("CURRENT TARGET", products)
-    // }
+  
+  // const autoSlide = () {  
+  //   useEffect(() => {
+  //     console.log("testtestestestestes")
+  //     let slide = setInterval(next, 2000)
+  //   },  []), 
+    
+  //   clearInterval(slide)
+  // }
     return(
         <Fragment>
+          <section>
+            <header className="home__header container">
+              <h2>
+                Présentation
+              </h2>
+              <p>
+                Le site des Imaginateurs vous propose des oeuvres uniques d'artistes d'horizons différents.
+              </p>
+            </header>
+            <main className="home__main">
               {/* Render the carousel */}
-              <div className='slider-container'>
+              <div className='slider-container container'>
                 {photos.map((photo) => (
                   <div
                     key={photo.id}
@@ -84,6 +98,21 @@ const Home = () => {
                   ></span>
                 ))}
               </div>
+              </main>
+              <footer className="home__footer">
+          <div className="home__footer-container container">
+            <h3>
+              <NavLink to="/shop">
+                Visitez notre boutique
+              </NavLink>
+            </h3>
+                <p>
+                  pour découvrir les oeuvres de nos créateurs.
+                </p>
+            
+            </div>
+            </footer>
+          </section>
         </Fragment>
         )
 }

@@ -39,36 +39,34 @@ const NewCreator = (e) => {
        <Fragment>    
           <table>
             <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Mail</th>
-                <th>id</th>
-                <th>Créateurs</th>
-            </tr>    
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Mail</th>
+                    <th>id</th>
+                    <th>Créateurs</th>
+                </tr>    
             </thead>
             <tbody>
-            {allUsers.map((e,i) => {
-            const user_id = e.id
-                return(
-        
-                <tr key={i}>
-                    <td>{e.name}</td>
-                    <td>{e.first_name}</td>
-                    <td>{e.mail}</td>
-                    <td>{e.id}</td>
-                    <td>
-                     <form type="post" action="" onSubmit={(e) => submit(e,user_id)}>
-                        <label>
-                        
-                            <button type="submit" value={state.id}>Créateur</button>
-                        </label>
-                    </form>
-                    </td>
-                </tr>    
-                
-                )
-            })}
+                {allUsers.map((e,i) => {
+                    const user_id = e.id
+                    return(
+                        <tr key={i}>
+                            <td>{e.name}</td>
+                            <td>{e.first_name}</td>
+                            <td>{e.mail}</td>
+                            <td>{e.id}</td>
+                            <td>
+                             <form type="post" action="" onSubmit={(e) => submit(e,user_id)}>
+                                <label>
+                                
+                                    <button type="submit" value={state.id}>Créateur</button>
+                                </label>
+                            </form>
+                            </td>
+                        </tr>    
+                    )
+                })}
             </tbody>
             </table>
         </Fragment>  

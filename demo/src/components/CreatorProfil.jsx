@@ -8,8 +8,8 @@ import { useParams } from "react-router-dom";
 const CreatorProfil = () => {
     const {id} = useParams()
     const [profil, setProfil] = useState("")
-   useEffect(()=> {
-    axios.get(`${BASE_URL}/creatorProfil/${id}`)
+    useEffect(()=> {
+        axios.get(`${BASE_URL}/creatorProfil/${id}`)
         .then((res) => {
             setProfil(res.data.result)
         })
@@ -26,7 +26,6 @@ const CreatorProfil = () => {
                     {profil.map((e,i) => (
                         <Fragment key={i} >
                             <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} />
-                           
                             <h2>{e.name} {e.first_name}</h2>
                             <p>Présentation : {e.description}</p>
                         </Fragment>
@@ -34,8 +33,7 @@ const CreatorProfil = () => {
                 </Fragment>    
             }
         </Fragment>
-           
-        )
+    )
 }
 
 export default CreatorProfil
