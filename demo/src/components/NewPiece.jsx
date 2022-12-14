@@ -20,6 +20,7 @@ const NewPiece = () => {
     const [update, setUpdate] = React.useState(false)
     const [category, setCategory] = React.useState("12")
     const [categoryArray, setCategoryArray] = React.useState([])
+    const [backMsg, setBackMsg] = React.useState("")
     
     
     useEffect(() =>{
@@ -55,7 +56,8 @@ const NewPiece = () => {
                 if(imgDescription && price && productDescription && title ){
                     axios.post(`${BASE_URL}/newPiece`, dataFile)
                     .then((res)=> {
-                        res.data.response && console.log('succesfully upload');
+                        res.data.msg && setBackMsg(res.data.msg)
+                        res.data.response && setBackMsg("")
                         setUpdate(!update)
                         setPrice("")
                         setProductDescription("")
@@ -82,48 +84,57 @@ const NewPiece = () => {
     
     return (
         <Fragment>
-            <h1>Nouveau produit</h1>
-            <form onSubmit={submit} encType="multipart/form-data">
-                <label name='avatar' >
-                    <input type='file' ref={inputFile} name='avatar'/>
-                </label>
-                <label>Description de l'image
-                    <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"/>
-                    {!inputLength(imgDescription,255) && 
-                        <p>Max 255 caractères</p>
-                    }
-                </label>
-                 <label>Titre de l'oeuvre
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"/>
-                    {!inputLength(title,63) && 
-                        <p>Max 63 caractères</p>
-                    }
-                </label>    
-                <label>Prix
-                    <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} min="1" max="10000"/>
-                </label>    
-                <label>Description de l'article
-                    <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} maxLength="255"/>
-                    {!inputLength(productDescription,255) && 
-                        <p>Max 255 caractères</p>
-                    }
-                </label>    
-                <label>Catégorie
-                    <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
-                        {categoryArray.map((e,i) => {
-                            return(
-                                <option key={i} value={e.id}>
-                                    {e.category}
-                                </option>
-                            )
-                        })}
-                    </select>
-                </label>
-                
-                    <input type='submit' value='Submit'/>
-                
-            </form>
-            <MyGalery update={update} />
+            <section className="newProduct container">
+                <header>
+                    <h2>Nouveau produit</h2>
+                </header>
+                <main>
+                    <form onSubmit={submit} encType="multipart/form-data" className="newProduct__form">
+                        <label name='avatar' >
+                            <input type='file' ref={inputFile} name='avatar'/>
+                        </label>
+                            <div> 
+                                {backMsg}
+                            </div>
+                        <label>Description de l'image
+                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"/>
+                            {!inputLength(imgDescription,255) && 
+                                <p>Max 255 caractères</p>
+                            }
+                        </label>
+                         <label>Titre de l'oeuvre
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63"/>
+                            {!inputLength(title,63) && 
+                                <p>Max 63 caractères</p>
+                            }
+                        </label>    
+                        <label>Prix
+                            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} min="1" max="10000"/>
+                        </label>    
+                        <label>Description de l'article
+                            <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} maxLength="255"/>
+                            {!inputLength(productDescription,255) && 
+                                <p>Max 255 caractères</p>
+                            }
+                        </label>    
+                        <label>Catégorie
+                            <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                                {categoryArray.map((e,i) => {
+                                    return(
+                                        <option key={i} value={e.id}>
+                                            {e.category}
+                                        </option>
+                                    )
+                                })}
+                            </select>
+                        </label>
+                        
+                            <input type='submit' value='Submit'/>
+                        
+                    </form>
+                </main>
+            </section>
+                <MyGalery update={update} />
         </Fragment>
     )
 }

@@ -35,40 +35,81 @@ const NewCreator = (e) => {
                 console.log(err)                            
             })                                              
     }                                                       
+    // return (
+    //   <Fragment>    
+    //       <table>
+    //         <thead>
+    //             <tr>
+    //                 <th>Nom</th>
+    //                 <th>Prénom</th>
+    //                 <th>Mail</th>
+    //                 <th>id</th>
+    //                 <th>Créateurs</th>
+    //             </tr>    
+    //         </thead>
+    //         <tbody>
+    //             {allUsers.map((e,i) => {
+    //                 const user_id = e.id
+    //                 return(
+    //                     <tr key={i}>
+    //                         <td>{e.name}</td>
+    //                         <td>{e.first_name}</td>
+    //                         <td>{e.mail}</td>
+    //                         <td>{e.id}</td>
+    //                         <td>
+    //                          <form type="post" action="" onSubmit={(e) => submit(e,user_id)}>
+    //                             <label>
+                                
+    //                                 <button type="submit" value={state.id}>Créateur</button>
+    //                             </label>
+    //                         </form>
+    //                         </td>
+    //                     </tr>    
+    //                 )
+    //             })}
+    //         </tbody>
+    //         </table>
+    //     </Fragment>  
+    //     )
     return (
        <Fragment>    
-          <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>Mail</th>
-                    <th>id</th>
-                    <th>Créateurs</th>
-                </tr>    
-            </thead>
-            <tbody>
+            <section className="newCreator container">
+                <h2>Nouveau créateur</h2>
                 {allUsers.map((e,i) => {
                     const user_id = e.id
                     return(
-                        <tr key={i}>
-                            <td>{e.name}</td>
-                            <td>{e.first_name}</td>
-                            <td>{e.mail}</td>
-                            <td>{e.id}</td>
-                            <td>
-                             <form type="post" action="" onSubmit={(e) => submit(e,user_id)}>
-                                <label>
-                                
-                                    <button type="submit" value={state.id}>Créateur</button>
-                                </label>
-                            </form>
-                            </td>
-                        </tr>    
+                    <div key={i} className="newCreator__table-container">
+                        <table  className="newCreator__table table__container">
+                            <tr> 
+                                <th>Nom</th>
+                                <td>{e.name}</td>
+                            </tr>
+                            <tr>
+                                <th>Prénom</th>
+                                <td>{e.first_name}</td>
+                            </tr>
+                            <tr>
+                                <th>Mail</th>
+                                <td>{e.mail}</td>
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <td>{e.id}</td>
+                            </tr>
+                            </table>
+                            <div className="newCreator__table-btn">
+                                 <form type="post" action="" onSubmit={(e) => submit(e,user_id)}>
+                                    <label>
+                                    
+                                        <button type="submit" value={state.id}>Créateur</button>
+                                    </label>
+                                </form>
+                            </div>
+                            
+                    </div>
                     )
                 })}
-            </tbody>
-            </table>
+            </section>
         </Fragment>  
         )
     

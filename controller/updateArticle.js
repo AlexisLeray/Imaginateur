@@ -3,20 +3,20 @@
  const BASE_URL = `${host}:${port}`
  import {pool} from '../config/dataBase.js'
  import {inputLength} from '../components/checkLength.js'
- 
+ import checkAcceptedExtensions from '../components/checkAcceptedExtensions.js'
 
 import formidable from 'formidable';
 import fs from 'fs';
 
 
-const checkAcceptedExtensions = (file) => {
-	const type = file.mimetype.split('/').pop()
-	const accepted = ['jpeg', 'jpg', 'png', 'gif']
-	if (accepted.includes(type)) {
-	    return true
-	}
-	return false
-}
+// const checkAcceptedExtensions = (file) => {
+// 	const type = file.mimetype.split('/').pop()
+// 	const accepted = ['jpeg', 'jpg', 'png', 'gif']
+// 	if (accepted.includes(type)) {
+// 	    return true
+// 	}
+// 	return false
+// }
 // ============================================= AFFICHAGE DE L'ARTICLE EN FRONT ================================================
 const getToUpdateArticle = (req, res) => {
     let getArticle = 'SELECT articles.*, images.url, images.description FROM articles LEFT JOIN images ON images.id = articles.image_id WHERE articles.id= ?'
@@ -32,16 +32,27 @@ const getToUpdateArticle = (req, res) => {
 // ============================================= UPDATE DU PRODUIT AVEC IMAGE================================================
  const updateArticle = (req,res) => {
 
- const form = formidable({keepExtensions: true});
-    form.parse(req, (err, fields, files) => {
+    const form = formidable({keepExtensions: true});
+    const maxSize = 2000000; //On défini la taille maximale des images 
+    const acceptedExtension = ['jpeg','jpg','png','gif'] //On défini les extensions acceptées 
+    
+    form.parse(req, async (err, fields, files) => {
         if (err) throw err;
         if(files.files){    //Si le nom du fichier n'est pas vide 
             let newFilename = files.files.newFilename;  
             let oldPath = files.files.filepath;  //fichier stocké dans le dossier temp 
             let newPath = `public/img/${newFilename}`; //nouveau lieu du fichier stocké 
             const file = files.files
+            const isExtensionValid = await checkAcceptedExtensions(file, acceptedExtension)
             
-                if(checkAcceptedExtensions(file)){   //Si le fichier fait partie des fichier acceptés 
+                if(!isExtensionValid){ 
+                        console.log("extensioninvalid")
+                        res.json({response: false, msg:"format invalide"})
+                    }else {
+                        if(file.size >= maxSize){
+                            console.log("sizeInvalid")
+                            res.json({response: false, msg:"format trop lourd max 2mo"})
+                        }else{
                     fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
                         if (err) throw err;
                          if(fields.imgId !== 'null'){  // si il y a déjà une image 
@@ -83,9 +94,8 @@ const getToUpdateArticle = (req, res) => {
                             res.json({response: false, msg:"Champs trop longs"})
                         }
                     }
-                })
-            }else {
-                            res.json({response:false, message:'image au mauvais format'})
+                }) //fin du copyfile
+            }
             }
         } else { //Changement du contenu de l'article sans image
         if(inputLength(fields.title, 63) && inputLength(fields.content, 1500)){

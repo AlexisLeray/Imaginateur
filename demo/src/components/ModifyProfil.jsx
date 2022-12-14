@@ -69,37 +69,46 @@ const ModifyProfil = () => {
             {allProfil.map((e,i) => {
                 return(
                 <Fragment key={i}>
-                   <form method="post"  >
-                        <label> Nom 
-                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" maxLength="63"/>
-                            {!inputLength(name, 63) && 
-                                <p>Max 63 caractères</p>
-                            }
-                        </label>
-                        <label> Prénom 
-                            <input type="text" value={first_name} onChange={(e) => setFirst_name(e.target.value)} name="first_name" maxLength="63" />
-                            {!inputLength(first_name, 63) && 
-                                <p>Max 63 caractères</p>
-                            }
-                        </label>
-                        <label> Nouveau mot de passe 
-                            <input type="password" value={password}  name="password" onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
-                            {!inputLength(password) && 
-                                <p>Max 255 caractères</p>
-                            }
-                        </label>
-                        <label> Confirmer le mot de passe  
-                            <input type="password" value={confirmPassword} name="password" onChange={(e) => setConfirmPassword(e.target.value)}  maxLength="255"/>
-                            {!inputLength(confirmPassword) && 
-                                <p>Max 255 caractères</p>
-                            }
-                        </label>
-                        <button type="submit" value='Submit' onClick={submit}>Valider</button>
-                    </form>
+                <section className="profil__container container">
+                    <header>
+                        <h3>Modification du mot du profil</h3>
+                    </header>
+                    <main className="profil__main">
+                       <form method="post" className="profil__main-form">
+                            <label> Nom 
+                                <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" maxLength="63"/>
+                                {!inputLength(name, 63) && 
+                                    <p>Max 63 caractères</p>
+                                }
+                            </label>
+                            <label> Prénom 
+                                <input type="text" value={first_name} onChange={(e) => setFirst_name(e.target.value)} name="first_name" maxLength="63" />
+                                {!inputLength(first_name, 63) && 
+                                    <p>Max 63 caractères</p>
+                                }
+                            </label>
+                            <label> Nouveau mot de passe 
+                                <input type="password" value={password}  name="password" onChange={(e) => setPassword(e.target.value)} maxLength="255"/>
+                                {!inputLength(password) && 
+                                    <p>Max 255 caractères</p>
+                                }
+                            </label>
+                            <label> Confirmer le mot de passe  
+                                <input type="password" value={confirmPassword} name="password" onChange={(e) => setConfirmPassword(e.target.value)}  maxLength="255"/>
+                                {!inputLength(confirmPassword) && 
+                                    <p>Max 255 caractères</p>
+                                }
+                            </label>
+                            <button type="submit" value='Submit' onClick={submit}>Valider</button>
+                        </form>
+                    </main>
                     <p>Vous devrez vous reconnecter pour appliquer les changements</p>
+            </section>
                 </Fragment>
                 )
+                
             })}
+            
         </Fragment>
         )
 }

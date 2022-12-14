@@ -4,6 +4,7 @@ const BASE_URL = `${host}:${port}`
 import {pool} from '../config/dataBase.js'
 import bcrypt from 'bcrypt';
 import {inputLength} from '../components/checkLength.js'
+import checkAcceptedExtensions from '../components/checkAcceptedExtensions.js'
 
 
 const getArticle = (req, res) => {
@@ -26,31 +27,41 @@ import formidable from 'formidable';
 import fs from 'fs';
 
 
-const checkAcceptedExtensions = (file) => {
-	const type = file.mimetype.split('/').pop()
-	const accepted = ['jpeg', 'jpg', 'png', 'gif']
-	if (accepted.includes(type)) {
-	    return true
-	}
-	return false
-}
+// const checkAcceptedExtensions = (file) => {
+// 	const type = file.mimetype.split('/').pop()
+// 	const accepted = ['jpeg', 'jpg', 'png', 'gif']
+// 	if (accepted.includes(type)) {
+// 	    return true
+// 	}
+// 	return false
+// }
 
 const addArticle = (req, res) => {
-        const form = formidable({keepExtensions: true});
+    const form = formidable({keepExtensions: true});
+    const maxSize = 2000000; //On défini la taille maximale des images 
+    const acceptedExtension = ['jpeg','jpg','png','gif'] //On défini les extensions acceptées 
     let newImg = 'INSERT INTO images (description, url) VALUES (?,?)'  
     let selectImg = 'SELECT id FROM images ORDER BY id DESC LIMIT 1'
     let newPiece = 'INSERT INTO articles (title, content, image_id) VALUES (?,?,?)'
     
-        form.parse(req, (err, fields, files) => {
+        form.parse(req, async (err, fields, files) => {
             if (err) throw err;
+            const file = files.files
             let newFilename = files.files.newFilename;
             let oldPath = files.files.filepath;
             let newPath = `public/img/${newFilename}`;
+            const isExtensionValid = await checkAcceptedExtensions(file, acceptedExtension)
             
-            const file = files.files
         if(inputLength(fields.imgDescription) && inputLength(fields.title, 63) && inputLength(fields.content, 1500)){
                 if(files.originalFilename !== ''){
-                    if(checkAcceptedExtensions(file)){
+                    if(!isExtensionValid){ 
+                        console.log("extensioninvalid")
+                        res.json({response: false, msg:"format invalide"})
+                    }else {
+                        if(file.size >= maxSize){
+                            console.log("sizeInvalid")
+                            res.json({response: false, msg:"format trop lourd max 2mo"})
+                        }else {
                         fs.copyFile(oldPath, newPath, (err) => {
                             if (err) throw err;
                             // poolquery
@@ -70,8 +81,9 @@ const addArticle = (req, res) => {
                                 res.json({response:false})
                             }
                         })
-                    }) 
-                }
+                    })
+                    }
+                } 
             }
        }else{
         

@@ -31,47 +31,63 @@ const ToApproved = ({}) => {
         })
     }
 
-//========================================================================
-    return(
+return(  
     <Fragment>
-        <table> 
-            <thead>
-                <tr>
-                    <th>Auteur</th>
-                    <th>Mail</th>
-                    <th>Image</th>
-                    <th>Description de l'image</th>
-                    <th>Titre</th>
-                    <th>Contenu</th>
-                    <th>Prix</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {pendingPiece.map((e,i) => {
-                 return(
-        
-                <tr key={i}>
-                    <td>{e.first_name} {e.name}</td>
-                    <td>{e.mail}</td>
-                    <td>
-                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  alt={e.description}/>
-                    </td>
-                    <td>{e.description}</td>
-                    <td>{e.title}</td>
-                    <td>{e.content}</td>
-                    <td>{e.price}</td>
-                    <td>
-                         <button type="submit" onClick={(el) => validate(el, e.id)} > 
-                            Approuvé ! 
-                        </button>
-                    </td>
-                </tr>    
-                 )
-             })}
-                    
-            </tbody>
-        </table>
+        <section className="approved__table-container table__container">
+            {pendingPiece.map((e,i) => { 
+                 return(  
+                    <table key={i} className="approved__container">
+                    <tbody>
+                        <tr className="approved__row">   
+                            <th>Auteur</th>
+                            <td>{e.first_name} {e.name}</td>
+                        </tr>
+                        <tr className="approved__row">
+                            <th>Mail</th>
+                            <td>{e.mail}</td>
+                        </tr>
+                        
+                        <tr className="approved__row">
+                            <th>Image</th>
+                            <td>    
+                                <div className="approved__img-container">
+                                    <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  alt={e.description}/>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr className="approved__row">
+                            <th>Description de l'image</th>
+                            <td>{e.description}</td>
+                        </tr>
+                        
+                        <tr className="approved__row">
+                            <th>Titre</th>
+                            <td>{e.title}</td>
+                        </tr>
+                        <tr className="approved__row">
+                            <th>Contenu</th>
+                            <td>{e.content}</td>
+                        </tr>
+                        <tr className="approved__row">
+                            <th>Prix</th>
+                            <td>{e.price}€</td>
+                        </tr>
+                        <tr className="approved__row last_row">
+                       {/* <th>Actions</th> */}
+                       <th></th>
+                            <td>
+                                 <button type="submit" onClick={(el) => validate(el, e.id)} > 
+                                    Approuvé ! 
+                                </button>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>   
+                 ) 
+             })} 
+             </section>
     </Fragment>
        
         )

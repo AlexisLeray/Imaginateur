@@ -22,26 +22,30 @@ const Admin =() => {
     
     return(
         <Fragment>
+        <section className="admin ">
             <NewCategory />
-            <ul>
-                <li>
-                    <NavLink to="/admin/getMessage">
-                        {counter} nouveaux messages
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/NewPiece">
-                        Mes oeuvres
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/admin/newCreator">
-                        Nouveau Créateur
-                    </NavLink>
-                </li>
-            </ul>
+                <nav className="adminNav container">
+                    <ul className="adminNav__list">
+                        <li>
+                            <NavLink to="/admin/getMessage">
+                                {counter}  messages
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/NewPiece">
+                                Mes oeuvres
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/newCreator">
+                                Nouveau Créateur
+                            </NavLink>
+                        </li>
+                    </ul>
+                </nav>    
             <h2>Nouvelles propositions d'oeuvres à publier</h2>
             <ToApprouved />    
+            </section>
         </Fragment> 
     )
 }

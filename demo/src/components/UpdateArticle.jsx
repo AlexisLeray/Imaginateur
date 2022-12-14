@@ -19,6 +19,7 @@ const UpdateArticle = () => {
     const [update, setUpdate] = React.useState("")
     const [imgDescription, setImgDescription] = React.useState("")
     const [imgId, setImgId] = React.useState("")
+    const [backMsg, setBackMsg] = React.useState("")
     const navigate = useNavigate()
     
         // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
@@ -67,9 +68,10 @@ const UpdateArticle = () => {
             }
             axios.post(`${BASE_URL}/updateArticle/${id}`, dataFile)
             .then((res)=> {
-                res.data.response && console.log('succesfully upload');
+                res.data.msg && setBackMsg(res.data.msg);
+                res.data.response && navigate("/galery")
+                res.data.response && setBackMsg("")
                 setUpdate(!update)
-                navigate("/galery")
                 
             })
             .catch((err) => {
@@ -87,7 +89,14 @@ const UpdateArticle = () => {
             <section className="update__container container"> 
                 <h1>Modification d'article</h1>
                     <form onSubmit={submit} encType="multipart/form-data" className="section__update-inputs">
-                       {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
+                       {imgUrl && 
+                        <div className="update__container-img">
+                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> 
+                        </div>
+                        }
+                        <div className="img-errorBack">
+                            {backMsg}
+                        </div>
                             <label name='picture'>
                                 <input type='file' name='picture'/>
                             </label>
@@ -103,8 +112,8 @@ const UpdateArticle = () => {
                                    <p>Max 63 caractères</p>
                                 }
                             </label>
-                            <label>Contenu de l'article
-                                <textarea  value={content} onChange={(e) => setContent(e.target.value)}  maxLength="255" />
+                            <label className="section__update-area">Contenu de l'article
+                                <textarea  value={content} onChange={(e) => setContent(e.target.value)}  maxLength="255" rows="5" cols="33" />
                                 {!inputLength(content) &&  
                                    <p>Max 255 caractères</p>
                                 }

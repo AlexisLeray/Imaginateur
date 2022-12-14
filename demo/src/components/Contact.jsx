@@ -40,6 +40,7 @@ const Contact =() => {
     
     return(
         <Fragment>
+        <section>
             {state.logged === false ?
                 <Fragment> 
                     <div className="contact__form container">
@@ -50,28 +51,37 @@ const Contact =() => {
             :
                 <form action ="" type="post" onSubmit={submit} className="contact__form container">
                     {successMsg !== "" && <p>{successMsg}</p>}
-                    <h3>Nom: </h3>
-                    <p>{state.name}</p>
-                    <h3>Prénom:</h3> 
-                    <p>{state.first_name}</p>
-                    <label>Objet de la demande 
-                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63" />
-                        {!inputLength(title, 63) && 
-                            <p>Max 63 caractères</p>
-                        }
-                    </label>
-                    <label>Dites nous tout
-                        <textarea value={content} onChange={(e) => setContent(e.target.value)} maxLength="255" rows="10" cols="24"></textarea>
-                     </label>
-                        {!inputLength(content) && 
-                            <p>Max 255 caractères</p>
-                        }
-                        {checkInputs &&
-                            <h2>L'objet doit contenir maximum 63 charactères et 255 pour les détails</h2>
-                        }
-                    <button type="submit">Envoyer</button>
+                    <header>
+                        <div className="contact__form__header-name">
+                            <h3>Nom: </h3>
+                            <p>{state.name}</p>
+                        </div>
+                        <div className="contact__form__header-firstName">
+                            <h3>Prénom:</h3> 
+                            <p>{state.first_name}</p>
+                        </div>
+                    </header>
+                    <main>
+                        <label>Objet de la demande 
+                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} maxLength="63" />
+                            {!inputLength(title, 63) && 
+                                <p>Max 63 caractères</p>
+                            }
+                        </label>
+                        <label>Dites nous tout
+                            <textarea value={content} onChange={(e) => setContent(e.target.value)} maxLength="255" rows="10" cols="24"></textarea>
+                         </label>
+                            {!inputLength(content) && 
+                                <p>Max 255 caractères</p>
+                            }
+                            {checkInputs &&
+                                <h2>L'objet doit contenir maximum 63 charactères et 255 pour les détails</h2>
+                            }
+                        <button type="submit">Envoyer</button>
+                    </main>
                 </form>
             }    
+            </section>
         </Fragment>
         )
 }

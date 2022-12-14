@@ -8,8 +8,8 @@ import BASE_URL from "../config.js"
 
 const Home = () => {
     
-    // const [products, setProducts] = React.useState([])
     const [photos, setPhotos] = React.useState([])
+    const [currentIndex, setCurrentIndex] = useState(0);
     
     useEffect(() => {
         axios.get(`${BASE_URL}/home`)
@@ -23,20 +23,32 @@ const Home = () => {
 // ================================================================================================
 
 // ================================================================================================
- const [currentIndex, setCurrentIndex] = useState(0);
+ 
+ 
 
   // move to the next photo
   // if we are at the end, go to the first photo
   const next = () => {
     setCurrentIndex((currentIndex + 1) % photos.length);
   };
+  
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     // move to the next photo
+  //     // if we are at the end, go to the first photo
+  //     setCurrentIndex((currentIndex + 1) % photos.length);
+  //   }, 3000); // update the current index every 3 seconds
+
+  //   // cleanup the interval when the component unmounts
+  //   return () => clearInterval(interval);
+  // }, [currentIndex]);
 
   // move to the previous photo
   // if we are at the beginning, go to the last photo
   const prev = () => {
     setCurrentIndex((currentIndex - 1 + photos.length) % photos.length);
   };
-  
+
   // const autoSlide = () {  
   //   useEffect(() => {
   //     console.log("testtestestestestes")
@@ -91,7 +103,7 @@ const Home = () => {
                     key={photo.id}
                     // highlight the dot that corresponds to the current photo
                     className={
-                      photos[currentIndex].id === photo.id ? 'dot active' : 'dot'
+                      photos[currentIndex].id === photo.id ? 'dot dotActive' : 'dot'
                     }
                     // when the user clicks on a dot, go to the corresponding photo
                     onClick={() => setCurrentIndex(photos.indexOf(photo))}
@@ -101,13 +113,14 @@ const Home = () => {
               </main>
               <footer className="home__footer">
           <div className="home__footer-container container">
+          
             <h3>
               <NavLink to="/shop">
                 Visitez notre boutique
               </NavLink>
             </h3>
                 <p>
-                  pour découvrir les oeuvres de nos créateurs.
+                  Pour découvrir les oeuvres de nos créateurs.
                 </p>
             
             </div>

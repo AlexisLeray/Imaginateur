@@ -14,6 +14,7 @@ const Galery = () => {
     const [update, setUpdate] = React.useState("")
     const [imgDescription, setImgDescription] = React.useState("")
     const [allArticles, setAllArticles] = useState([])
+    const [msg, setMsg] = React.useState("")
 // ==================================AFFICHAGE DES ARTICLES ============================================
   useEffect(() => {
         axios.get(`${BASE_URL}/article`)
@@ -45,15 +46,15 @@ const Galery = () => {
                 axios.post(`${BASE_URL}/article`, dataFile)
                 .then((res)=> {
                     
-                    
-                    res.data.response && console.log('succesfully upload');
+                    res.data.msg && setMsg(res.data.msg)
+                    res.data.response && setMsg("")
                     setUpdate(!update)
                     setTitle("")
                     setContent("")
                     setUrl("")
                     setImgDescription("")
                     inputFile.current.value = null
-                    
+                    console.log("c'est téléchargé")
                 })
                 .catch((err) => {
                     console.log(err)
@@ -134,7 +135,7 @@ const Galery = () => {
             {state.admin &&
                 <section className="article__admin container">
                     <div>
-                        <h1>Nouvel article</h1>
+                        <h2>Nouvel article</h2>
                         <form onSubmit={submit} encType="multipart/form-data" className="article__admin-inputs">
                             <label name='avatar'>
                                 <input type='file' ref={inputFile} name='avatar'/>
@@ -152,13 +153,16 @@ const Galery = () => {
                                     }
                             </label>
                             <label>Contenu
-                                <input type="text" value={content} onChange={(e) => setContent(e.target.value)} maxLength="1500" />
+                                <textarea value={content} onChange={(e) => setContent(e.target.value)} maxLength="1500" />
                                     {!inputLength(content, 1500) && 
                                         <p>Max 1500 caractères</p>
                                     }
                             </label>
                             <input type='submit' value='Valider'/>  {/*il y avait une value "submit"*/}
                         </form>
+                        <div>
+                            {msg}
+                        </div>
                     </div>
                 </section>    
             
@@ -170,14 +174,18 @@ const Galery = () => {
                 </header>
                 {allArticles.map((e,i) => (
                     <div key={i} className="article__content">
-                        <h3>{e.title}</h3>
+                        <div className="article__content-title"> {/* a voir */}
+                            <h3>{e.title}</h3>
+                        </div>  {/* a voir */}
+                        <div className="article__content-content"> {/* a voir */}
                     {e.url !== null &&(
-                        <div>
+                        <div className="article__content-img">
                             <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  className="img_lite" alt={e.description} />
                         </div>
                     )}
                     <p>{e.content}</p>
                     {/*il y avait price ici je ne sais pourquoi */}
+                    </div> 
                     {state.admin && 
                         <div className="article__options"> 
                             <NavLink to={`/updateArticle/${e.id}`}>
@@ -186,8 +194,11 @@ const Galery = () => {
                              {/*Pour le bouton delete on indique qu'au click on lance la fonction deleteArticle qui prend comme paramètre el l'élément et e l'ensemble des info de l'article en question*/}                                   
                             <button type="submit" onClick={(el) => deleteArticle(el, e)}> Supprimer </button> 
                         </div>
+                    
                     }    
+                    {/* a voir */}
                     </div>
+                    
                 ))}
                 </article> 
             </Fragment>

@@ -48,29 +48,12 @@ const Nav = (props) => {
       })
     }
   },[])
-  
-  useEffect(()=> {
-        axios.get(`${BASE_URL}/payment/${state.id}`)
-        .then((res)=>{
-            res.data.toBuy && dispatch({type:'shop', quantity: res.data.toBuy.length})
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    })
-    // const screenSize  = () => {
-    //     if((window).width > 700) {
-    //         setMobileMenu(true) 
-    //         console.log(window.width)
-    //     }
-    // }
-   useEffect(()=> {
-       console.log(1)
-        if(window.screen.width > 700){
-            console.log(2)
+
+  useEffect((e)=> {
+        if(window.screen.width > 1200){
             setMobileMenu(true)
         }
-   }, [])
+  })
     
     const handleClick = (e) => {
         setMobileMenu(!mobileMenu)
@@ -85,7 +68,7 @@ const Nav = (props) => {
         {mobileMenu &&
         <nav className="container navigation__nav">
             
-                <ul className="navigation__list">
+                <ul className="navigation__list container">
                     <li>
                         <NavLink to="/" className="navigation__link" onClick={linkClicked}>
                             Accueil
@@ -129,7 +112,7 @@ const Nav = (props) => {
                             <NavLink to={`/panier/${state.id}`} className="navigation__link" onClick={linkClicked}>
                                 Panier
                             
-                                {state.quantity}
+                                &nbsp;{state.quantity}
                             
                             </NavLink>
                         </li>

@@ -3,19 +3,20 @@
  const BASE_URL = `${host}:${port}`
  import {pool} from '../config/dataBase.js'
  import {inputLength} from '../components/checkLength.js'
+ import checkAcceptedExtensions from '../components/checkAcceptedExtensions.js'
 
 import formidable from 'formidable';
 import fs from 'fs';
 
 
-const checkAcceptedExtensions = (file) => {
-	const type = file.mimetype.split('/').pop()
-	const accepted = ['jpeg', 'jpg', 'png', 'gif']
-	if (accepted.includes(type)) {
-	    return true
-	}
-	return false
-}
+// const checkAcceptedExtensions = (file) => {
+// 	const type = file.mimetype.split('/').pop()
+// 	const accepted = ['jpeg', 'jpg', 'png', 'gif']
+// 	if (accepted.includes(type)) {
+// 	    return true
+// 	}
+// 	return false
+// }
 // ============================================= AFFICHAGE DE L'ARTICLE EN FRONT ================================================
 const showToUpdate = (req, res) => {
     let getProduct = 'SELECT *, images.url, images.description, categories.id, categories.category FROM products JOIN images ON images.id = products.image_id JOIN categories ON categories.id = products.categorie_id WHERE products.id= ?'
@@ -42,17 +43,31 @@ const getGategory = (req, res) => {
 // ============================================= UPDATE DU PRODUIT AVEC IMAGE================================================
  const update = (req,res) => {
 
- const form = formidable({keepExtensions: true});
+    const form = formidable({keepExtensions: true});
+    const maxSize = 2000000; //On défini la taille maximale des images 
+    const acceptedExtension = ['jpeg','jpg','png','gif'] //On défini les extensions acceptées 
+    
+    
     let updateProduct = 'UPDATE products SET products.title=?, products.price=?, products.content=?, products.categorie_id=? WHERE products.id=?'
     let updatePicture = 'UPDATE images SET description=?, url=? WHERE images.id= (SELECT * FROM (SELECT images.id FROM images INNER JOIN products ON products.image_id = images.id WHERE products.id= ?)sub GROUP BY id)'
-        form.parse(req, (err, fields, files) => {
+    
+        form.parse(req, async (err, fields, files) => {
             if (err) throw err;
             if(files.files){    //Si le nom du fichier n'est pas vide 
                 let newFilename = files.files.newFilename;  
                 let oldPath = files.files.filepath;  //fichier stocké dans le dossier temp 
                 let newPath = `public/img/${newFilename}`; //nouveau lieu du fichier stocké 
                 const file = files.files
-                 if(checkAcceptedExtensions(file)){   //Si le fichier fait partie des fichier acceptés 
+                const isExtensionValid = await checkAcceptedExtensions(file, acceptedExtension)
+                
+                 if(!isExtensionValid){ 
+                        console.log("extensioninvalid")
+                        res.json({response: false, msg:"format invalide"})
+                    }else {
+                        if(file.size >= maxSize){
+                            console.log("sizeInvalid")
+                            res.json({response: false, msg:"format trop lourd max 2mo"})
+                        }else {
                     fs.copyFile(oldPath, newPath, (err) => {   //On copie le fichier dans le dossier     
                         if (err) throw err;
                           fs.unlink('public/img/'+fields.imgUrl, (err) => {  //Suppression de l'ancien fichier du dossier public 
@@ -78,7 +93,8 @@ const getGategory = (req, res) => {
                         } 
                     }) 
                 }
-            } else {
+                    }
+            } else { //Si l'image ne change pas 
 // ============================================= UPDATE DU PRODUIT SANS IMAGE================================================
             if(inputLength(fields.title) && inputLength(fields.price) && inputLength(fields.productDescription)){
             pool.query(updateProduct, [fields.title, fields.price, fields.productDescription, fields.category_id, req.params.id], (err, addProduct) => { 

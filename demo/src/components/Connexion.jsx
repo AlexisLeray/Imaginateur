@@ -114,13 +114,18 @@ const Connexion = () => {
             </section>
             :
                 <Fragment>
-                    <section>
-                        <h2>Bienvenue {state.first_name}</h2>
-                        <p>Nom: {state.name}</p>
-                        <p>Prénom: {state.first_name}</p>
-                        <p>Mail: {state.mail}</p>
-                        <p>Pour modifier votre profil, cliquez sur le lien suivant : </p>
-                        <NavLink to={`/updateProfil/${state.id}`}>Modifier mon profil</NavLink>
+                    <section className="section__account container">
+                        <header className="account__header">
+                            <h2>Bienvenue <span className="account__name-span">{state.first_name}</span></h2>
+                        </header>
+                        <main className="account__main">
+                            <p>Nom: {state.name}</p>
+                            <p>Prénom: {state.first_name}</p>
+                            <p>Mail: {state.mail}</p>
+                            <p>Pour modifier votre profil, cliquez sur le lien suivant : </p>
+                            <NavLink to={`/updateProfil/${state.id}`} className="account__modify-button">Modifier mon profil
+                            </NavLink>
+                        </main>
                     </section>
                 </Fragment>
             }

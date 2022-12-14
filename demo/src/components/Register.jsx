@@ -48,7 +48,8 @@ const Register = () =>{
     
     
     return(
-        <form method="post">
+        <section className="register container">
+        <form method="post" className="register__form">
             
             <label>Nom : 
                 <input type="text" value={name} onChange={(e) => setName(e.target.value)} name="name" maxLength="63"/>
@@ -67,28 +68,49 @@ const Register = () =>{
             {!inputLength(mail) && 
                 <p>Max 255 caractères</p>
             }
-            { !mail.match(mailRegex) && 
-            <p>Veuillez entrer une adresse mail valide</p>
+            
+            {!mail.match(mailRegex) ?
+                <p className="errorActive">Veuillez entrer une adresse mail valide </p>
+            :
+                <div className="errorInactive"> 
+                    <i className="fa-solid fa-circle-check"></i>
+                </div>
             }
             </label>
+            
             <label>Mot de passe : 
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} name="password" maxLength="255" />
             {!inputLength(password) && 
                 <p>Maximum 255 caractères</p>
             }
-            { password.length <= 7  &&
-            <p>Le mot de passe doit contenir au minimum 8 caractères</p>
+            
+            
+            { password.length <= 7 ?
+                <p className="errorActive">
+                    Le mot de passe doit contenir au minimum 8 caractères
+                </p>
+            :
+                <div className="errorInactive"> 
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
             }
-        
-        
-            {!password.match(regex) && 
-            <p>Le mot de passe doit inclure une majuscule, une minuscule, un chiffre et un caractère spécial</p>
+            
+            {!password.match(regex) ?
+                <p className="errorActive"> 
+                    Le mot de passe doit inclure une majuscule, une minuscule, un chiffre et un caracère spécial
+                </p>
+            :
+                <div className="errorInactive">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
             }
-                
+            
+            
             </label>
-            <button onClick={submit}>clique</button>
+            <button onClick={submit}>Valider</button>
                 
         </form>
+        </section>
         )
 }
 

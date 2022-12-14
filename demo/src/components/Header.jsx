@@ -4,8 +4,11 @@ import BASE_URL from "../config.js";
 const Header = () => {
     return(
         <header>
-            <div className="header__background">
+            <div className="header__background ">
                 <div className="header__background-overlay">
+                    <div className="header__img-container">
+                        <img src={`http://alexisleray.sites.3wa.io:9300/img/logo_sansTxt.png`} />
+                    </div>
                     <h1>Les Imaginateurs</h1>
                     <p>Colaboratif d'artistes</p>
                 </div>

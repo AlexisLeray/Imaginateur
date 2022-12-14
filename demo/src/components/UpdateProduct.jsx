@@ -23,6 +23,7 @@ const UpdateProduct = () => {
     const [category_id, setCategory_id]= React.useState("")
     const [categoryArray, setCategoryArray] = React.useState([])
     const [img, setImg] = useState("")
+    const [backMsg, setBackMsg] = React.useState("")
     const navigate = useNavigate();
     
     
@@ -31,6 +32,7 @@ const UpdateProduct = () => {
          useEffect(() => {
              axios.get(`${BASE_URL}/updateProduct/${id}`)
                 .then((res) => {
+                    
                     setImgDescription(res.data.selectedProduct[0].description)
                     setPrice(res.data.selectedProduct[0].price)
                     setProductDescription(res.data.selectedProduct[0].content)
@@ -77,9 +79,11 @@ const UpdateProduct = () => {
                 if(imgDescription && price && productDescription && title ){
                     axios.post(`${BASE_URL}/updateProduct/${id}`, dataFile)
                     .then((res)=> {
-                        res.data.response && console.log('succesfully upload');
+                        res.data.msg && setBackMsg(res.data.msg)
+                        res.data.response && navigate("/NewPiece")
+                        res.data.response && setBackMsg("");
                         setUpdate(!update)
-                        navigate("/NewPiece")
+                        console.log('succesfully upload')
                     })
                     .catch((err) => {
                         console.log(err)
@@ -97,45 +101,56 @@ const UpdateProduct = () => {
     // ========================================================================================================= 
     return (
         <Fragment>
-            <h1>Nouveau produit</h1>
-                    <form onSubmit={submit} encType="multipart/form-data">
-                       {imgUrl && <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> }
-                        <label name='picture'>
-                            <input type='file' name='picture'/>
-                        </label>
-                        <label>Description de l'image
-                            <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"/>
-                            {!inputLength(imgDescription) && 
-                                <p>Max 255 caractères</p>
-                            }
-                        </label>
-                        <label>Titre de l'oeuvre
-                            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}  maxLength="255"/>
-                            {!inputLength(title) && 
-                                <p>Max 255 caractères</p>
-                            }
-                        </label>
-                        <label>Prix
-                            <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} min="1" max="10000"/>
-                        </label>    
-                        <label>Description de l'article
-                            <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} maxLength="255"/>
-                            {!inputLength(productDescription) && 
-                                <p>Max 255 caractères</p>
-                            }
-                        </label>    
-                        <label>Catégorie
-                            <select name="category"  value={category_id} onChange={(e) => setCategory_id(e.target.value)}>
-                                {categoryArray.map((e,i) => {
-                                    return(
-                                        <option key={i} value={e.id} >{e.category}</option>
-                                    )
-                                })}
-                            </select>
-                        </label>    
-                            <input type='submit' value='Submit' />
-                        
-                    </form>
+        <section className="updateProduct">
+            <h2>Modification produit</h2>
+                <form onSubmit={submit} encType="multipart/form-data" className="updateProduct__form container">
+                <div className="updateProduct__img-form">
+                   {imgUrl &&
+                       <div className="updateProduct__form-imgContainer">
+                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  />
+                       </div>
+                   }
+                    <label name='picture'>
+                        <input type='file' name='picture'/>
+                        <div className="img-errorBack">
+                            {backMsg}
+                        </div>
+                    </label>
+                </div>    
+                    <label>Description de l'image
+                        <input type="text" value={imgDescription} onChange={(e) => setImgDescription(e.target.value)} maxLength="255"/>
+                        {!inputLength(imgDescription) && 
+                            <p>Max 255 caractères</p>
+                        }
+                    </label>
+                    <label>Titre de l'oeuvre
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}  maxLength="255"/>
+                        {!inputLength(title) && 
+                            <p>Max 255 caractères</p>
+                        }
+                    </label>
+                    <label>Prix
+                        <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} min="1" max="10000"/>
+                    </label>    
+                    <label>Description de l'article
+                        <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} maxLength="255"/>
+                        {!inputLength(productDescription) && 
+                            <p>Max 255 caractères</p>
+                        }
+                    </label>    
+                    <label>Catégorie
+                        <select name="category"  value={category_id} onChange={(e) => setCategory_id(e.target.value)}>
+                            {categoryArray.map((e,i) => {
+                                return(
+                                    <option key={i} value={e.id} >{e.category}</option>
+                                )
+                            })}
+                        </select>
+                    </label>    
+                        <input type='submit' value='Submit' />
+                    
+                </form>
+            </section>
         </Fragment>
     )
 }

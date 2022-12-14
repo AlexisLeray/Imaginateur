@@ -45,7 +45,7 @@ const shop = (req, res) => {
         pool.query(addToShop, [req.body.user_id, req.body.product_id], (err, added) => {
             if (err) throw err
             if(added){
-                res.json({response:true, msg:"Produit ajouté"})
+                res.json({response:true, msg:"Le produit a été ajouté à votre panier"})
             }else{
                 res.json({response: false})
             }

@@ -20,18 +20,27 @@ const CreatorProfil = () => {
 
     return(
         <Fragment>
-            {profil &&   
-                <Fragment>
-                    <h2>Page spécifique du créateur</h2>
-                    {profil.map((e,i) => (
-                        <Fragment key={i} >
-                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} />
-                            <h2>{e.name} {e.first_name}</h2>
-                            <p>Présentation : {e.description}</p>
-                        </Fragment>
-                    ))}
-                </Fragment>    
-            }
+            <section className="creatorProfil container">
+                {profil &&   
+                    <Fragment>
+                        <h2>Page spécifique du créateur</h2>
+                        {profil.map((e,i) => (
+                            <Fragment key={i}>
+                                <div className="creatorProfil__content">
+                                    <div className="creatorProfil__content-img-container">
+                                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} />
+                                    </div>
+                                        <h3>{e.name} {e.first_name}</h3>
+                                </div>
+                                    <div className="creatorProdil__content-txt">
+                                        <p>Présentation : {e.description}</p>
+                                    </div>
+                                
+                            </Fragment>
+                        ))}
+                    </Fragment>    
+                }
+            </section>
         </Fragment>
     )
 }
