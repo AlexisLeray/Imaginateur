@@ -111,7 +111,7 @@ const NewPiece = () => {
                         <label>Prix
                             <input type="number" value={price} onChange={(e) => setPrice(e.target.value)} min="1" max="10000"/>
                         </label>    
-                        <label>Description de l'article
+                        <label>Description de l'œuvre
                             <textarea  value={productDescription} onChange={(e) => setProductDescription(e.target.value)} maxLength="255"/>
                             {!inputLength(productDescription,255) && 
                                 <p>Max 255 caractères</p>

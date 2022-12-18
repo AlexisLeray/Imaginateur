@@ -1,119 +1,103 @@
-import {useContext, useEffect, Fragment, useState} from "react"
-import {ReducerContext} from "./reducer/reducer.jsx"
+import { useContext, useEffect, Fragment, useState } from "react"
+import { ReducerContext } from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 
 
 
 const Messagerie = () => {
+    // Déclaration des states
     const [state, dispatch] = useContext(ReducerContext)
     const [allComment, setAllComment] = useState([])
     const [count, setCount] = useState()
     const [update, setUpdate] = useState(false)
-    
+
+    // ===========================================
+    //          RECUPERATION DES MESSAGES
+    // ===========================================
+
+    // UseEffect pour la récupération des messages contenus en BDD qui sera mis à jour lors de la fonction deleteMsg avec le state update
     useEffect(() => {
         axios.get(`${BASE_URL}/admin/getMessage`)
-        .then((res) => {
-            setAllComment(res.data.commentArray)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    },[update])
+            .then((res) => {
+                // Lors de la récupération des données et affectation à allComment
+                setAllComment(res.data.commentArray)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [update])
 
-const deleteMsg = (e,id)=> {
-    e.preventDefault()
-    axios.post(`${BASE_URL}/admin/getMessage`, {
-        id: id
-    })
-    .then((res) => {
-        setUpdate(!update)
-        console.log("message supprimé ")
-    })
-    .catch((err) => {
-        console.log(err)
-    })
-}
-// ==================================FONCTION POUR L'ENVOI D'UN MAIL================================
+    // ===========================================
+    //      SUPPRESSION DE MESSAGES
+    // ===========================================
+
+    // Fonction de suppression des messages au click du bouton 
+    const deleteMsg = (e, id) => {
+        e.preventDefault()
+        // Demande de requête SQL avec le axios.post en envoyant l'id du message concerné
+        axios.post(`${BASE_URL}/admin/getMessage`, {
+                id: id
+            })
+            // Lors de la réponse on setUpdate en inversant son état pour relancer le get précédent et actualiser les messages affichés
+            .then((res) => {
+                setUpdate(!update)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+    // ===========================================
+    //      FONCTION POUR L'ENVOI DES MESSAGES
+    // ===========================================
+
+    // Fonction pour l'ouverture d'une fenêtre pour l'envoi des messages 
     function onEmailClick() {
         window.open(`mailto:${allComment[0].mail}`);
     }
-    
-    // return (
-    //     <Fragment>    
-    //         <table>
-    //             <thead>
-    //                 <tr>
-    //                     <th>Titre</th>
-    //                     <th>Content</th>
-    //                     <th>Date</th>
-    //                     <th>Nom</th>
-    //                     <th>Prénom</th>
-    //                     <th>Mail</th>
-    //                     <th></th>
-    //                 </tr>    
-    //             </thead>
-    //             <tbody>
-    //                 {allComment.map((e,i) => {
-    //                     return(
-    //                     <tr key={i}>
-    //                         <td>{e.title}</td>
-    //                         <td>{e.content}</td>
-    //                         <td>{new Date (e.date).toLocaleDateString('fr')}</td>
-    //                         <td>{e.name}</td>
-    //                         <td>{e.first_name}</td>
-    //                         <td><button onClick={onEmailClick} target="_blank">{e.mail}</button></td>
-    //                         <td>
-    //                             <button type="submit" onClick={(el) => deleteMsg(el, e.id)}> supprimer </button>
-    //                         </td>
-    //                     </tr>    
-    //                     )
-    //                 })}
-    //             </tbody>
-    //         </table>
-    //     </Fragment>  
-    // )
-        return (
+
+    return (
         <Fragment>    
-            <section>
+            <section className="message container">
                 <h2>Messages</h2>
+                <div className="testtable">
                 {allComment.map((e,i) => {
                     return(
-                    <div key={i} className="galery__table-container">
-                    <table className="message__table table__container">
-                        <tr>
-                            <th>Titre</th>
-                            <td>{e.title}</td>
-                        </tr>    
-                        <tr>
-                            <th>Contenu</th>
-                            <td>{e.content}</td>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <td>{new Date (e.date).toLocaleDateString('fr')}</td>
-                        </tr>
-                        <tr>
-                            <th>Nom</th>
-                            <td>{e.name}</td>
-                        </tr>
-                        <tr>
-                            <th>Prénom</th>
-                            <td>{e.first_name}</td>
-                        </tr>
-                        </table> 
-                        <div className="message__table-btn">
-                            <button onClick={onEmailClick} target="_blank">{e.mail}</button>
-                            
+                        <div key={i} className="message__table-container">
+                            <table className="message__table table__container">
+                                <tbody>
+                                    <tr>
+                                        <th>Titre</th>
+                                        <td>{e.title}</td>
+                                    </tr>    
+                                    <tr>
+                                        <th>Contenu</th>
+                                        <td>{e.content}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date</th>
+                                        <td>{new Date (e.date).toLocaleDateString('fr')}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <td>{e.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Prénom</th>
+                                        <td>{e.first_name}</td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                            <div className="message__table-btn">
+                                <button onClick={onEmailClick} target="_blank">{e.mail}</button>
                                 <button type="submit" onClick={(el) => deleteMsg(el, e.id)}> supprimer </button>
-                            
+                            </div>
                         </div>
-                       
-                    </div>
                     )
                 })}
+                </div>
             </section>
-        </Fragment>  
+        </Fragment>
     )
 }
 export default Messagerie

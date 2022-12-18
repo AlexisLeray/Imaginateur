@@ -11,9 +11,8 @@ const Middleware = ({children}) => {
     const currentPath = location.pathname
 
     useEffect(() => {
-        
-         if (state.logged === false) {   // Si l'utilisateur n'est pas connecté 
-        
+        // Si l'utilisateur n'est pas connecté 
+        if (state.logged === false) {   
             if(userPath.includes(currentPath)){
                 if(!state.logged){
                     navigate('/')
@@ -24,7 +23,6 @@ const Middleware = ({children}) => {
                     navigate('/')
                 }
             }
-    
             if(adminPath.includes(currentPath)){
                 if(!state.admin){
                     navigate('/')

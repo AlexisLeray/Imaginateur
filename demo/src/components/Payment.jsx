@@ -1,47 +1,64 @@
-import React,{useContext, useEffect,Fragment} from "react"
-import {ReducerContext} from "./reducer/reducer.jsx"
+import React, { useContext, useEffect, Fragment } from "react"
+import { ReducerContext } from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import {NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
-const Payment = ({update}) => {
-    const {id} = useParams()
+const Payment = ({ update }) => {
+    // Récupération de l'id de l'url 
+    const { id } = useParams()
+    // Déclaration des divers states utiles
     const [state, dispatch] = useContext(ReducerContext)
-    
     const [price, setPrice] = React.useState([])
     const [msg, setMsg] = React.useState("")
-    
-    
-    useEffect(()=> {
-        let total = 0 
-            for(let i = 0; i < parseInt(state.quantity); i++){
-                        total += parseInt(state.basketDetails[i].price)
-                        console.log(4)
-             }
-         setPrice(total)
-        
-      }, [state.quantity])
-     
-     
+
+    // ===========================================
+    //          CALCUL DU TOTAL DU PANIER
+    // ==========================================
+    // useEffect se mettant à jour lorsque que le state.quantity change
+    useEffect(() => {
+        // Déclaration de la variable total
+        let total = 0
+        // Pour ce fait tant que i est inférieur au state.quantity on l'incrémente
+        for (let i = 0; i < parseInt(state.quantity); i++) {
+            // On aditionne tous les prix contenus dans le state.basketDetails 
+            total += parseInt(state.basketDetails[i].price)
+        }
+        // Quand la boucle est terminée on stock le résultat dans le price
+        setPrice(total)
+    }, [state.quantity])
+
+    // ===========================================
+    //          VALIDATION DU PAIEMENT
+    // ==========================================
+
     const submit = (e) => {
+        // preventDefault() empêche l'actualisation automatique de la page du navigateur
         e.preventDefault()
+        // Déclaration d'une constante qui est un tableau vide appelé idProduct
         const idProduct = []
+        // Stockage des informations de baskteDetails dans la constante toBuy
         const toBuy = [...state.basketDetails]
+        // map de toBuy avec comme paramètre item
         toBuy.map((item) => {
+            // On ajout au tableau idProduct l'id du produit de l'objet item 
             idProduct.push(item.product_id)
         })
+        // Requête post en utilisant l'id de l'utilisateur pour laquelle on envoi l'id du produit sélectionné
         axios.post(`${BASE_URL}/payment/${id}`, {
-            product_id: idProduct})
+                product_id: idProduct
+            })
+            // Si réponse du back on set son message dans msg et on vide le state du dispatch shop
             .then((res) => {
                 setMsg(res.data.msg)
-                dispatch({type: 'shop', quantity: 0, basketDetails: []});
+                dispatch({ type: 'shop', quantity: 0, basketDetails: [] });
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    return(
+    return (
         <Fragment>
             <section>
                 <header className="payment__header">
@@ -121,7 +138,7 @@ const Payment = ({update}) => {
                     }
             </section>
         </Fragment>
-        )
+    )
 }
 
 export default Payment

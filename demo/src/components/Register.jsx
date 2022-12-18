@@ -1,53 +1,60 @@
 import React from "react"
-import {useContext, useEffect, Fragment} from "react"
+import { useContext, useEffect, Fragment } from "react"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import {inputLength} from '../utils/utils.js'
-import { useNavigate, NavLink, useParams} from "react-router-dom"
+import { inputLength } from '../utils/utils.js'
+import { useNavigate, NavLink, useParams } from "react-router-dom"
 
 
-const Register = () =>{
+const Register = () => {
+    // Déclaration des divers states
     const [name, setName] = React.useState("")
     const [first_name, setFirst_name] = React.useState("")
     const [mail, setMail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [msg, setMsg] = React.useState("")
     const navigate = useNavigate();
-    
-  
-          const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
-          const mailRegex = /^(?=.*[@])(?=.*[.])/
-   
-    const submit = (e) => {
-        e.preventDefault()
 
-      if(password.match(regex) && inputLength(name,63) && inputLength(first_name,63) && mail.match(mailRegex) && inputLength(mail)){
-          axios.post(`${BASE_URL}/register`, {
-                name,
-                first_name,
-                mail,
-                password
-            })
-            .then( (res) => {
-                console.log(1)
-                if(res.data.response === true){
-                    navigate('/connexion')
-                }else{
+    // Création d'un regex pour le mot de pass
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+    //  Création d'un regex pour le mail 
+    const mailRegex = /^(?=.*[@])(?=.*[.])/
+
+    const submit = (e) => {
+        // preventDefault() empêche l'actualisation automatique de la page du navigateur
+        e.preventDefault()
+        // Vérification de la longueur des champs avec la fonction inputLenght
+        if (password.match(regex) && inputLength(name, 63) && inputLength(first_name, 63) && mail.match(mailRegex) && inputLength(mail)) {
+            //   Requête post en envoyant le nom, prénom, mail, mot de passe
+            axios.post(`${BASE_URL}/register`, {
+                    name,
+                    first_name,
+                    mail,
+                    password
+                })
+                // A la réponse du back
+                .then((res) => {
+
+                    // Si elle est true tout s'est bien passé
+                    if (res.data.response === true) {
+                        // Redirection vers la page de connexion 
+                        navigate('/connexion')
+                    }
+                    // Si elle est false envoi du message dans une alerte
+                    else {
 
                         window.alert(res.data.msg)
-                }    
-                
-            })
-            .catch((err) => {
-                console.log(2)
-                console.log(err)
-            })
-        } 
-        
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+
     }
-    
-    
-    return(
+
+
+    return (
         <section className="register container">
         <form method="post" className="register__form">
             
@@ -91,7 +98,7 @@ const Register = () =>{
                 </p>
             :
                 <div className="errorInactive"> 
-                    <i class="fa-solid fa-circle-check"></i>
+                    <i className="fa-solid fa-circle-check"></i>
                 </div>
             }
             
@@ -101,7 +108,7 @@ const Register = () =>{
                 </p>
             :
                 <div className="errorInactive">
-                    <i class="fa-solid fa-circle-check"></i>
+                    <i className="fa-solid fa-circle-check"></i>
                 </div>
             }
             
@@ -111,7 +118,7 @@ const Register = () =>{
                 
         </form>
         </section>
-        )
+    )
 }
 
 export default Register

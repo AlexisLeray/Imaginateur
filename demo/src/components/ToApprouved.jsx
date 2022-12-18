@@ -1,38 +1,53 @@
-import React,{useContext, Fragment, useEffect} from "react"
-import {ReducerContext} from "./reducer/reducer.jsx"
+import React, { useContext, Fragment, useEffect } from "react"
+import { ReducerContext } from "./reducer/reducer.jsx"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 
-//================================= FONCTION POUR AFFICHAGE DES PRODUITS NON VALIDES PAR L'ADMIN ============================
-const ToApproved = ({}) => {
+
+const ToApproved = () => {
+    // Déclaration des divers states
     const [pendingPiece, setPendingPiece] = React.useState([])
     const [update, setUpdate] = React.useState(false)
+
+    /// ===========================================
+    //  RECUPERATION DES ARTICLES POUR PUBLICATION
+    // ==========================================
+    // useEffect se mettant à jour au changement du statut de update
     useEffect(() => {
-             axios.get(`${BASE_URL}/toApproved`)
-                .then((res) => {
-                  setPendingPiece(res.data.newProducts)
-                    
-                })
-                .catch((err)=> {
-                    console.log(err)
-                })
-         }, [update])
-//================================= VALIDATION DE L'ARTICLE PAR L'ADMIN ============================         
+        axios.get(`${BASE_URL}/toApproved`)
+            // Réponse du back
+            .then((res) => {
+                // On affect le résultat du back à pendingPiece
+                setPendingPiece(res.data.newProducts)
+
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [update])
+
+    /// ===========================================
+    //  FONCTION VALIDATION DE L'OEUVRE
+    // ==========================================
+
     const validate = (e, id) => {
-        axios.post(`${BASE_URL}/toApproved`,  {
-         id: id
-     })
-     .then((res) => {
-         setUpdate(!update)
-         })
-        .catch((err) => {
-            console.log(err)
-        })
+        // Requête post en envoyant l'id du produit
+        axios.post(`${BASE_URL}/toApproved`, {
+                id: id
+            })
+            // Réponse du back 
+            .then((res) => {
+                // On change le statut de update pour actualiser l'affichage des oeuvres
+                setUpdate(!update)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
     }
 
-return(  
-    <Fragment>
+    return (
+        <Fragment>
         <section className="approved__table-container table__container">
             {pendingPiece.map((e,i) => { 
                  return(  
@@ -89,8 +104,8 @@ return(
              })} 
              </section>
     </Fragment>
-       
-        )
-        
+
+    )
+
 }
 export default ToApproved

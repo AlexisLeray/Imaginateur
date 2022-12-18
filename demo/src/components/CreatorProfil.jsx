@@ -6,14 +6,23 @@ import { useParams } from "react-router-dom";
 
 
 const CreatorProfil = () => {
+    // Stockage de l'id utilisateur displonible dans le reducer
     const {id} = useParams()
     const [profil, setProfil] = useState("")
+    
+// ===========================================
+//        RECUPERATION DES INFO CREATEUR
+// ==========================================    
+    // useEffect au montage du composant 
     useEffect(()=> {
+        // Requête SQL pour récupérer les informations du profil créateur
         axios.get(`${BASE_URL}/creatorProfil/${id}`)
         .then((res) => {
+            // Si il y a une réponse du la BDD on stock le résultat dans profil
             setProfil(res.data.result)
         })
         .catch((err)=> {
+            // En cas d'erreur console.log de l'errer
             console.log(err)
         })
    }, [])    
@@ -33,7 +42,8 @@ const CreatorProfil = () => {
                                         <h3>{e.name} {e.first_name}</h3>
                                 </div>
                                     <div className="creatorProdil__content-txt">
-                                        <p>Présentation : {e.description}</p>
+                                        <h3>Présentation : </h3>
+                                        <p>{e.description}</p>
                                     </div>
                                 
                             </Fragment>

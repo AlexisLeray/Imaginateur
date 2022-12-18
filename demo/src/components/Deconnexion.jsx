@@ -7,11 +7,15 @@ const Logout = () => {
     const [state, dispatch] = useContext(ReducerContext)
     const navigate = useNavigate();
     
+    // useEffect au montage 
     useEffect(() => {
-        console.log("Déconnecté")
+        // On retire le jason web token du local storage
         localStorage.removeItem('jwtToken')
+        // On supprime "Athorization" d'axios
         delete axios.defaults.headers.common['Authorization']
+        // On vide le reducer des infos qu'il contenait
         dispatch({type:'logout'}) 
+        // Navigation vers la page home 
         navigate("/")
     },[])
 };

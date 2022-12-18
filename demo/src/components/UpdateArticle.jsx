@@ -1,89 +1,109 @@
-import React,{useContext,useEffect, Fragment, useState} from "react"
-import {ReducerContext} from "./reducer/reducer.jsx"
+import React, { useContext, useEffect, Fragment, useState } from "react"
+import { ReducerContext } from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 import { useParams, useNavigate } from "react-router-dom";
-import {inputLength} from '../utils/utils.js'
+import { inputLength } from '../utils/utils.js'
 
 const UpdateArticle = () => {
-     
-   
-   
-    // ===================================POUR UPDATE DU PRODUIT ===================================
 
+
+    // Déclaration des divers states
     const [articlesArray, setArticlesArray] = React.useState([])
     const [state, dispatch] = useContext(ReducerContext)
     const [title, setTitle] = React.useState("")
     const [content, setContent] = React.useState("")
-    const [imgUrl, setImgUrl] = React.useState("")  
+    const [imgUrl, setImgUrl] = React.useState("")
     const [update, setUpdate] = React.useState("")
     const [imgDescription, setImgDescription] = React.useState("")
     const [imgId, setImgId] = React.useState("")
     const [backMsg, setBackMsg] = React.useState("")
+    // Affectation de la fonction useNavigate à la constante navigate
     const navigate = useNavigate()
-    
-        // ===================================POUR AFFICHAGE DE L'ARTICLE AVANT MODIF ===================================
-    const {id} = useParams()
-         useEffect(() => {
-             axios.get(`${BASE_URL}/updateArticle/${id}`)
-                .then((res) => {
-                    setImgDescription(res.data.selectedProduct[0].description)
-                    setContent(res.data.selectedProduct[0].content)
-                    setTitle(res.data.selectedProduct[0].title)
-                    setImgUrl(res.data.selectedProduct[0].url)
-                    setImgId(res.data.selectedProduct[0].image_id)
-                    
-                    
-                })
-                .catch((err)=> {
-                    console.log(err)
-                })
-         }, [update])
-   
-    useEffect(() =>{
-            axios.get(`${BASE_URL}/updateArticle/${id}`)
-            .then ((res) => {
-                setArticlesArray(res.data.allCategory)
+
+    // Récupération de l'id de l'article
+    const { id } = useParams()
+
+    /// ===========================================
+    //          RECUPERATION DES INFOS DE L'ARTICLE
+    // ==========================================
+    // useEffect se mettant à jour selon le statut d'update
+    useEffect(() => {
+        //  Requête get en utilisant l'id du produit
+        axios.get(`${BASE_URL}/updateArticle/${id}`)
+            // Réponse du back
+            .then((res) => {
+                // On affecte le résultat du back au divers élément 
+                setImgDescription(res.data.selectedProduct[0].description)
+                setContent(res.data.selectedProduct[0].content)
+                setTitle(res.data.selectedProduct[0].title)
+                setImgUrl(res.data.selectedProduct[0].url)
+                setImgId(res.data.selectedProduct[0].image_id)
+
+
             })
             .catch((err) => {
                 console.log(err)
             })
-    }, [])
-    
+    }, [update])
+
+    /// ===========================================
+    //        A quoi bon
+    // ==========================================
+
+    // useEffect(() =>{
+    //         axios.get(`${BASE_URL}/updateArticle/${id}`)
+    //         .then ((res) => {
+    //             setArticlesArray(res.data.allCategory)
+    //         })
+    //         .catch((err) => {
+    //             console.log(err)
+    //         })
+    // }, [])
+
     const submit = (e) => {
+        // preventDefault() empêche l'actualisation automatique de la page du navigateur
         e.preventDefault()
-        const dataFile = new FormData();  //crer un nouvel objet vide appelé dataFile
-        const files = {...e.target.picture.files};
-        
-        dataFile.append('imgDescription', imgDescription) //ajout de la clé, valeur dans l'objet dataFile
-        dataFile.append('content', content )
+        // Création d'une nouvelle instance FormData appelée dataFile
+        const dataFile = new FormData();
+        // Création de l'objet en utilisant le spread operator  "..." pour inclure tous les inputs cibles avec le nom "avatar"
+        const files = { ...e.target.picture.files };
+        // Ajout des différents inputs clé/valeur concernant le formulaire dans l'objet dataFile
+        dataFile.append('imgDescription', imgDescription)
+        dataFile.append('content', content)
         dataFile.append('title', title)
         dataFile.append('imgUrl', imgUrl)
         dataFile.append('imgId', imgId)
-        
-        // L'image
-        if(inputLength(title,63) && inputLength(content) && inputLength(imgDescription)){
-            if(files[0]){                                                   
+
+        // Vérification de la longueur de caractère des inputs
+        if (inputLength(title, 63) && inputLength(content) && inputLength(imgDescription)) {
+            //  Vérifie si un fichier à été importé 
+            if (files[0]) {
+                // Si un fichier a été importé, l'ajoute dans dataFile avec le nom clé "files" et donnant le nom du fichier comme nom 
                 dataFile.append('files', files[0], files[0].name)
             }
+            // Méthode post pour l'envoi des informations en utilisant l'id de l'article
             axios.post(`${BASE_URL}/updateArticle/${id}`, dataFile)
-            .then((res)=> {
-                res.data.msg && setBackMsg(res.data.msg);
-                res.data.response && navigate("/galery")
-                res.data.response && setBackMsg("")
-                setUpdate(!update)
-                
-            })
-            .catch((err) => {
-                console.log(err)
-                
-            })
-        }else{
+                .then((res) => {
+                    // S'il y a un message du back on l'affecte à backMsg
+                    res.data.msg && setBackMsg(res.data.msg);
+                    // Si réponse du back on fait une redirection vers la galerie d'exposition
+                    res.data.response && navigate("/galery")
+                    // S'il y a réponse du back pour vide le message
+                    res.data.response && setBackMsg("")
+                    setUpdate(!update)
+
+                })
+                .catch((err) => {
+                    console.log(err)
+
+                })
+        }
+        else {
             console.log("champs trops longs")
         }
-     } 
+    }
 
-    // ========================================================================================================= 
     return (
         <Fragment>
             <section className="update__container container"> 

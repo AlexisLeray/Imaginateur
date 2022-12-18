@@ -2,23 +2,32 @@ import jwt from "jsonwebtoken"
 
 const privateKey = 'eyJlbWFpbCI6InRlc3RAdGVzdC5mciIsInVzZXIiOnRydWUsImFkbWluIjp0cnVlLCJpYXQiOjE2NjY1MjQyNjYsImV4cCI6MTY2NjUyNzg2Nn0'
 
-export const generateToken = async (userData) => {
-    console.log(userData)
+// ===========================================
+//      GENERATION D'UN NOUVEAU JETON D'AUTHENTIFICAITON 
+// ==========================================
+
+export const generateToken = async(userData) => {
+    // console.log(userData)
     const token = await jwt.sign(userData, privateKey)
     return token
 }
 
-export const verifyToken = async (token) => {
+// ===========================================
+//      FONCTION DE VERIFICATION DE JWT 
+// ==========================================
+
+export const verifyToken = async(token) => {
     try {
-        if(token) {
+        if (token) {
             const jwtToken = await jwt.verify(token, privateKey)
             return jwtToken
-    
-        } else {
+
+        }
+        else {
             return undefined
         }
     }
-    catch(err){
+    catch (err) {
         // token invalide
         return undefined
     }

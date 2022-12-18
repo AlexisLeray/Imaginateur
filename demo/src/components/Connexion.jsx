@@ -1,95 +1,110 @@
-import React,{useContext, Fragment,useEffect} from "react"
-import {ReducerContext} from "./reducer/reducer.jsx"
-import { useNavigate, NavLink, useParams} from "react-router-dom"
+import React, { useContext, Fragment, useEffect } from "react"
+import { ReducerContext } from "./reducer/reducer.jsx"
+import { useNavigate, NavLink, useParams } from "react-router-dom"
 import axios from 'axios'
 import BASE_URL from "../config.js"
 // import { LOGIN, ADMIN } from '../config/constante'
 import ModifyProfil from '../components/ModifyProfil'
-import {inputLength} from '../utils/utils.js'
+import { inputLength } from '../utils/utils.js'
 
 
 const Connexion = () => {
-    const {id} = useParams()
+    const { id } = useParams()
     const [mail, setMail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [errorBack, setErrorBack] = React.useState("")
     const [state, dispatch] = useContext(ReducerContext);
     const navigate = useNavigate();
-    
-  const mailRegex = /^(?=.*[@])(?=.*[.])/
-  const submit = (e) => {
-      
-      e.preventDefault()
-        if(mail.match(mailRegex)){
-            console.log(1)
-        if(inputLength(mail) && inputLength(password) ){  
-                axios.post(`${BASE_URL}/connexion`, {
-                  mail, 
-                  password
-              })
-            .then((res) => {
-                console.log(2)
-                if(res.data.response) {
-                    localStorage.setItem('jwtToken', res.data.token)
-                    axios.defaults.headers.common['Authorization'] = 'Bearer '+res.data.token
-                    
-                    res.data.msg && setErrorBack(res.data.msg)
-                    // si la connexion est ok
-                    if(res.data.response){
-                      dispatch({type:'connexion', 
-                      fname:res.data.first_name, 
-                      name:res.data.name, 
-                      id:res.data.id, 
-                      mail:res.data.mail});
-                      navigate("/")  
-                    } 
-                    // si l'user a le role admin
-                    // res.data.admin && dispatch({type:'admin', fname:res.data.first_name, name:res.data.name, id:res.data.id, creatorId:res.data.id_creator});
-                    if(res.data.admin){
-                        dispatch({
-                            type:'admin', fname:res.data.first_name, 
-                            name:res.data.name, 
-                            id:res.data.id, 
-                            creatorId:res.data.id_creator
-                        });
-                        if(res.data.admin && res.data.creator){
-                            navigate("/admin")
-                        }
-                    }
-                    if(res.data.creator){ 
-                        dispatch({
-                            type:'creator', 
-                            name:res.data.name, 
-                            fname:res.data.first_name, 
-                            creatorId: res.data.id_creator
-                        }); 
-                        if(res.data.creator && !res.data.admin){
-                            navigate("/NewPiece")
-                        }
-                    }
-                    
-                } else {
-                    console.log(4)
-                    window.alert("Email ou mot de passe inconnu")
-                }
-            })
-            .catch((err) => {
-                console.log(5)
-                window.alert("Y'a une douille")
-                console.log(err)
-            })
-  
-        }else{
-            console.log(6)
-            console.log("champs trops longs")
-        }
-  }else{
-      console.log(7)
-      window.alert("Adresse mail non valide")
-  }
-} //fin de la fonction submit
 
-    return( 
+    // Regex exigant une @ et un .
+    const mailRegex = /^(?=.*[@])(?=.*[.])/
+
+    // ===========================================
+    //          FONCTION SUBMIT 
+    // ===========================================
+
+    const submit = (e) => {
+        // preventDefault() empêche l'actualisation automatique de la page du navigateur
+        e.preventDefault()
+        // Si l'adresse mail correspond au exigence du mailRegex 
+        if (mail.match(mailRegex)) {
+            // Vérification des nombres de caractères du mail et mot de passe 
+            if (inputLength(mail) && inputLength(password)) {
+                // Si les condition précédentes sont remplie requete post pour la connexion en utilisant le mail et mot de passe 
+                axios.post(`${BASE_URL}/connexion`, {
+                        mail,
+                        password
+                    })
+                    .then((res) => {
+                        // Si il y a une réponse de la BDD
+                        if (res.data.response) {
+                            // Enregistrement du JWT reçu dans le stockage local du navigateur sous la clé "jwtToken"
+                            localStorage.setItem('jwtToken', res.data.token)
+                            // Définit l'entête HTTP "Authorization" de la bibliothèque axios pour des requête axios ultérieur
+                            axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
+
+                            res.data.msg && setErrorBack(res.data.msg)
+                            // si la connexion est ok on envoit les différentes informations dans le reducer 
+                            if (res.data.response) {
+                                dispatch({
+                                    type: 'connexion',
+                                    fname: res.data.first_name,
+                                    name: res.data.name,
+                                    id: res.data.id,
+                                    mail: res.data.mail
+                                });
+                                navigate("/")
+                            }
+                            // si l'utilisateur a le role admin
+                            if (res.data.admin) {
+                                dispatch({
+                                    type: 'admin',
+                                    fname: res.data.first_name,
+                                    name: res.data.name,
+                                    id: res.data.id,
+                                    creatorId: res.data.id_creator
+                                });
+                                if (res.data.admin && res.data.creator) {
+                                    navigate("/admin")
+                                }
+                            }
+                            // Si l'user à le rôle de créateur
+                            if (res.data.creator) {
+                                dispatch({
+                                    type: 'creator',
+                                    name: res.data.name,
+                                    fname: res.data.first_name,
+                                    creatorId: res.data.id_creator
+                                });
+                                if (res.data.creator && !res.data.admin) {
+                                    navigate("/NewPiece")
+                                }
+                            }
+
+                        }
+                        else {
+                            // alerte de mot de passe ou mail inconnu
+                            window.alert("Email ou mot de passe inconnu")
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+
+            }
+            else {
+                console.log("champs trops longs")
+            }
+        }
+        else {
+            window.alert("Adresse mail non valide")
+        }
+    }
+
+
+
+    return (
+
         <Fragment>
             {state.logged === false ?
             <section>
@@ -129,10 +144,8 @@ const Connexion = () => {
                     </section>
                 </Fragment>
             }
-            
-            
         </Fragment>
     )
 }
 
-export default Connexion 
+export default Connexion
