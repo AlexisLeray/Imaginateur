@@ -2,7 +2,7 @@ import React, { useContext, useEffect, Fragment, useState } from "react"
 import { ReducerContext } from "./reducer/reducer.jsx"
 import axios from 'axios'
 import BASE_URL from "../config.js"
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { inputLength } from '../utils/utils.js'
 
 const Product = () => {
@@ -12,7 +12,7 @@ const Product = () => {
     const { id } = useParams()
 
     // ===========================================
-    //          PUBLICATION D'ARTICLES
+    //        AFFICHAGE DU PRODUIT
     // ==========================================
     // useEffect au montage pour récupérer les détails du produit
     useEffect(() => {
@@ -26,25 +26,32 @@ const Product = () => {
                 console.log(err)
             })
     }, [])
-
+console.log(product)
     return (
         <Fragment>
-            {product.map((e,i) => (
-                <div key={i}>
-                    <div>    
-                        <h2>{e.title}</h2> 
-                    </div>
-                    <div>   
-                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} /> 
-                    </div>
-                    <div>
-                        <p>Descriptif : {e.content}</p> 
-                    </div>
-                    <div>  
-                        <p>Prix : {e.price}</p>
-                    </div>
-                </div>    
-            ))}
+            <section className="productPage container"> 
+                {product.map((e,i) => (
+                    <div key={i} className="productPage__content-container">
+                        <div>    
+                            <h2>{e.title}</h2> 
+                        </div>
+                        <div className="productPage__img-container">   
+                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} alt={e.description} /> 
+                        </div>
+                        <div>
+                            <p>Description :</p>
+                            <p>{e.content}</p> 
+                        </div>
+                        <div>
+                            <p>Prix :</p>
+                            <p>{e.price}€</p>
+                        </div>
+                    </div>    
+                ))}
+                <NavLink to="/shop" className="productPage__navlink">
+                    Retour vers la boutique
+                </NavLink>
+            </section>
         </Fragment>
     )
 }

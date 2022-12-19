@@ -15,7 +15,7 @@ const newCategory = (req, res) => {
     pool.query(newCategory, [req.body.category], (err, added) => {
         if (err) throw err
         if (added) {
-            res.json({response: true, msg:"Catégorie ajoutée"} )
+            res.json({response: true, msg:"Nouvelle catégorie ajoutée"} )
         }else {
             res.json({response:false})
         }

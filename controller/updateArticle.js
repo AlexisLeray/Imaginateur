@@ -86,7 +86,6 @@
         else {
          res.json({ response: false, msg: "Champs trop longs" })
         }
-
        }
        else { //Changement de l'image uniquement 
         // Vérification de la longueur des input
@@ -102,7 +101,7 @@
           // Requête pour modifier le titre, contenu, l'id de l'image
           pool.query(articlesQL, paramsarticlesQL, (err, result) => {
            if (err) throw err
-           res.json({ response: true, message: "image envoyer + pas d'image en BDD pour ce createur" })
+           res.json({ response: true, message: "L'article a bien été modifié" })
           })
          })
         }
@@ -120,7 +119,7 @@
      const articleDescriptionParams = [fields.title, fields.content, req.params.id]
      pool.query(articleDescription, articleDescriptionParams, (err, result) => {
       if (err) throw err
-      res.json({ response: true, message: "pas d'image envoyer + update description createur" })
+      res.json({ response: true, message: "L'article a bien été modifié" })
      })
     }
     else {

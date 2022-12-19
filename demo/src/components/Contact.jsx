@@ -55,11 +55,12 @@ const Contact =() => {
     
     return(
         <Fragment>
-            <section>
+            <section className="contact">
+                <h2>Contact</h2>
                 {state.logged === false ?
                     <Fragment> 
                         <div className="contact__form container">
-                            <h2>Connectez-vous pour laisser un message</h2>
+                            <h3>Connectez-vous pour laisser un message</h3>
                             <Connexion />
                         </div>    
                     </Fragment>    
@@ -68,11 +69,11 @@ const Contact =() => {
                         {successMsg !== "" && <p>{successMsg}</p>}
                         <header>
                             <div className="contact__form__header-name">
-                                <h3>Nom: </h3>
+                                <h4>Nom: </h4>
                                 <p>{state.name}</p>
                             </div>
                             <div className="contact__form__header-firstName">
-                                <h3>Prénom:</h3> 
+                                <h4>Prénom:</h4> 
                                 <p>{state.first_name}</p>
                             </div>
                         </header>

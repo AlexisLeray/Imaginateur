@@ -7,10 +7,10 @@ const Header = () => {
             <div className="header__background ">
                 <div className="header__background-overlay">
                     <div className="header__img-container">
-                        <img src={`http://alexisleray.sites.3wa.io:9300/img/logo_sansTxt.png`} />
+                        <img src={`http://alexisleray.sites.3wa.io:9300/img/logo_sansTxt.png`} alt="Logo les Imaginateurs"/>
                     </div>
                     <h1>Les Imaginateurs</h1>
-                    <p>Colaboratif d'artistes</p>
+                    <p>Collaboratif d'artistes</p>
                 </div>
             </div>
         </header>    

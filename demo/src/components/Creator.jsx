@@ -100,7 +100,7 @@ const Creator = () => {
             window.alert("champs trops longs")
         }
     }
-
+    
     return (
         <Fragment>
                 <section className="creator container">
@@ -129,7 +129,7 @@ const Creator = () => {
                             <Fragment>
                                 <main className="creator__main">
                                     <div className="creator__img-container">
-                                        <img  src={`http://alexisleray.sites.3wa.io:9300/img/${creator[0].url}`}  />
+                                        <img  src={`http://alexisleray.sites.3wa.io:9300/img/${creator[0].url}`}  alt={creator[0].imgTxt}/>
                                     </div>
                                     <form onSubmit={submit} encType="multipart/form-data" className="creator__main-form">
                                         <label name='avatar'>

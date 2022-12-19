@@ -111,7 +111,7 @@ const UpdateArticle = () => {
                     <form onSubmit={submit} encType="multipart/form-data" className="section__update-inputs">
                        {imgUrl && 
                         <div className="update__container-img">
-                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  /> 
+                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  alt={imgDescription}/> 
                         </div>
                         }
                         <div className="img-errorBack">

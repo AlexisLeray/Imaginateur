@@ -33,7 +33,7 @@ const deleteArticle = (req,res) => {
                 res.json({response:true, msg:"article sans image supprimé"})
             }
         }else{
-            console.log("IMAGE PAS SUPPRIMEE")
+            res.json({response: false})
         }
     })
 }

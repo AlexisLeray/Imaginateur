@@ -57,7 +57,6 @@ const Payment = ({ update }) => {
                 console.log(err)
             })
     }
-
     return (
         <Fragment>
             <section>
@@ -86,7 +85,7 @@ const Payment = ({ update }) => {
                                         <td>{e.title}</td>
                                         <td>
                                             <div className="payment__img-container">
-                                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} className="img_lite"  />
+                                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} alt={e.img_description} className="img_lite"  />
                                             </div>
                                         </td>
                                 

@@ -37,7 +37,7 @@ const CreatorProfil = () => {
                             <Fragment key={i}>
                                 <div className="creatorProfil__content">
                                     <div className="creatorProfil__content-img-container">
-                                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} />
+                                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} alt={e.img_description} />
                                     </div>
                                         <h3>{e.name} {e.first_name}</h3>
                                 </div>

@@ -85,7 +85,6 @@ const Shop = ({ update }) => {
     }
 
 
-
     return (
         <Fragment>
             <section>
@@ -97,14 +96,14 @@ const Shop = ({ update }) => {
                 <div key={i} className="cards">
                      <div className="cards__content"> 
                         <header className="cards__title container">
-                                <h4>{e.title}</h4>
+                                <h3>{e.title}</h3>
                         </header>
                         <main>
                             <div className="cards__img-container container">
-                                <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`}  onClick={() => navigate(`/product/${e.id}`)}/>
+                                <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} alt={e.img_description} onClick={() => navigate(`/product/${e.id}`)}/>
                             </div>
                             <div className="cards__details container">
-                                Créateur :  
+                                <h4>Créateur :  </h4>
                                 <NavLink to={`/creatorProfil/${e.creator_id}`}>
                                      &nbsp;{e.name} {e.first_name}
                                 </NavLink>

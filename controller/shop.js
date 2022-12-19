@@ -11,7 +11,7 @@ const showShop = (req, res) => {
     // ==========================================
 
 
-    let showProducts = 'SELECT products.id, products.title, products.price, products.content, images.url, creators.id AS creator_id, users.name, users.first_name FROM products JOIN images ON products.image_id = images.id JOIN creators ON creators.id = products.creator_id JOIN users ON creators.user_id = users.id WHERE products.approved = 1'
+    let showProducts = 'SELECT products.id, products.title, products.price, products.content, images.url, images.description AS img_description, creators.id AS creator_id, users.name, users.first_name FROM products JOIN images ON products.image_id = images.id JOIN creators ON creators.id = products.creator_id JOIN users ON creators.user_id = users.id WHERE products.approved = 1'
     // Récupération des tous les produits avec leurs images ainsi que les infos du créateur qui ont été approuvés par l'administrateur
     pool.query(showProducts, [], (err, allProducts) => {
         if (err) throw err

@@ -14,7 +14,6 @@ const home = (req, res) => {
     pool.query(getProducts, [], (err, result) => {
         if (err) throw err
         if (result) {
-            console.log("RESULT", result)
             res.json({ response: true, result })
         }
         else {

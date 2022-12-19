@@ -7,7 +7,6 @@ const privateKey = 'eyJlbWFpbCI6InRlc3RAdGVzdC5mciIsInVzZXIiOnRydWUsImFkbWluIjp0
 // ==========================================
 
 export const generateToken = async(userData) => {
-    // console.log(userData)
     const token = await jwt.sign(userData, privateKey)
     return token
 }

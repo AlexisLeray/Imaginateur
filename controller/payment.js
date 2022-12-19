@@ -11,7 +11,7 @@
  const payment = (req, res) => {
 
      let buyArticles = 'SELECT * FROM shop WHERE user_id=?'
-     let buyProducts = 'SELECT shop.*, products.title, products.price, images.url FROM shop JOIN products ON products.id = shop.product_id JOIN images ON products.image_id = images.id WHERE user_id = ? AND products.approved = 1'
+     let buyProducts = 'SELECT shop.*, products.title, products.price, images.url, images.description AS img_description FROM shop JOIN products ON products.id = shop.product_id JOIN images ON products.image_id = images.id WHERE user_id = ? AND products.approved = 1'
      // On sélectionne tous les produits de la table shop qui ont l'id de l'utilisateur 
      pool.query(buyProducts, [req.params.id], (err, toBuy) => {
          if (err) throw err

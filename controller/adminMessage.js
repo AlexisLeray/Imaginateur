@@ -43,6 +43,5 @@ const deleteMsg = (req, res) => {
             res.json({ response: false })
         }
     })
-    console.log("ça marche")
 }
 export { getMessage, deleteMsg }

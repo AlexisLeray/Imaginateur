@@ -128,7 +128,7 @@ const UpdateProduct = () => {
                 <div className="updateProduct__img-form">
                    {imgUrl &&
                        <div className="updateProduct__form-imgContainer">
-                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  />
+                        <img src={`http://alexisleray.sites.3wa.io:9300/img/${imgUrl}`}  alt={imgDescription}/>
                        </div>
                    }
                     <label name='picture'>

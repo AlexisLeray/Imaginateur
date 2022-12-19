@@ -9,7 +9,7 @@ import { inputLength } from '../components/checkLength.js'
 // ==========================================  
 
 const creatorProfil = (req, res) => {
-    let getProfil = 'SELECT users.name, users.first_name, creators.description, images.url FROM users JOIN creators ON creators.user_id = users.id JOIN images ON creators.image_id = images.id WHERE creators.id = ?'
+    let getProfil = 'SELECT users.name, users.first_name, creators.description, images.url, images.description AS img_description FROM users JOIN creators ON creators.user_id = users.id JOIN images ON creators.image_id = images.id WHERE creators.id = ?'
     // Requête pour récupérer nom, prénom, description, et image d'un créateur en utilisant son id
     pool.query(getProfil, [req.params.id], (err, result) => {
         if (err) throw err

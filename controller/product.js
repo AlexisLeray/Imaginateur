@@ -11,7 +11,7 @@ import { inputLength } from '../components/checkLength.js'
 
 const product = (req, res) => {
 
-    const getProduct = 'SELECT products.title,products.price, products.content, images.url FROM products JOIN images ON products.image_id= images.id WHERE products.id= ?'
+    const getProduct = 'SELECT products.title,products.price, products.content, images.url, images.description FROM products JOIN images ON products.image_id= images.id WHERE products.id= ?'
     // On sélectionne tous les détails du produit selon son id ainsi que son image 
     pool.query(getProduct, [req.params.id], (err, product) => {
         if (err) throw err

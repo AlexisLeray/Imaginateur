@@ -70,7 +70,7 @@ const ShoppingCart = () => {
                 console.log(err);
             });
     }
-
+    
     return (
         <Fragment>
             <section className="basket__container container">
@@ -85,7 +85,7 @@ const ShoppingCart = () => {
                                     <div className="basket__card-content  cards">
                                         <h3>{e.title}</h3>
                                         <div className="basket__card-img container">
-                                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} className="img_lite"/>
+                                            <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} alt={e.description} className="img_lite"/>
                                         </div>
                                         <div>{e.content}</div>
                                         <div>Prix : {e.price}€</div>

@@ -13,7 +13,7 @@ const NewCategory = () => {
     // ===========================================
     //          AJOUT DE CATEGORIE
     // ==========================================
-
+    
     const submit = (e) => {
         // preventDefault() empêche l'actualisation automatique de la page du navigateur
         e.preventDefault()
@@ -25,6 +25,7 @@ const NewCategory = () => {
                 })
                 // Réponse du back récupère le message qui l'accompagne pour le stocker dans msg
                 .then((res) => {
+                    setCategory("")
                     setMsg(res.data.msg)
                 })
                 .catch((err) => {
@@ -37,10 +38,11 @@ const NewCategory = () => {
     }
     return (
         <Fragment> 
-            <h2>Ajouter une nouvelle catégorie</h2>
-            {msg &&
-                <h2>{msg}</h2>
-            }
+            <section>
+                <h2>Ajouter une nouvelle catégorie</h2>
+                {msg &&
+                    <p>{msg}</p>
+                }
                 <form method="post" >
                     <label>Nouvelle catégorie
                         <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} maxLength="255"/>
@@ -50,6 +52,7 @@ const NewCategory = () => {
                     </label>    
                     <button type="submit" onClick={submit}>valider</button>
                 </form>
+            </section>    
         </Fragment>
     )
 }
