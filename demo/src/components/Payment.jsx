@@ -63,7 +63,9 @@ const Payment = ({ update }) => {
                 <header className="payment__header">
                     <h2>Paiement</h2>
                     {msg &&
-                        <h3>{msg}</h3>
+                        <div className="payment__msg">
+                            <h3>{msg}</h3>
+                        </div>
                     }
                 </header>
                     {state.basketDetails[0]  ?  
@@ -120,7 +122,7 @@ const Payment = ({ update }) => {
                                         <input type="number" /> 
                                     </label>
                                 </div>
-                                <button type="submit" onClick={submit}>Ca part !</button>
+                                <button type="submit" onClick={submit}>Valider</button>
                             </form> 
                         </div> 
                     </main>

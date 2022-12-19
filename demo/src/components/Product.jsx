@@ -26,14 +26,14 @@ const Product = () => {
                 console.log(err)
             })
     }, [])
-console.log(product)
+
     return (
         <Fragment>
             <section className="productPage container"> 
                 {product.map((e,i) => (
                     <div key={i} className="productPage__content-container">
                         <div>    
-                            <h2>{e.title}</h2> 
+                            <h3>{e.title}</h3> 
                         </div>
                         <div className="productPage__img-container">   
                             <img src={`http://alexisleray.sites.3wa.io:9300/img/${e.url}`} alt={e.description} /> 

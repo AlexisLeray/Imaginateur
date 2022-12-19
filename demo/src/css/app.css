@@ -115,13 +115,7 @@ a {
   color: var(--title-color);
   font-size: 0.8em;
 }
-.navlink a:hover {
-  border: 2px solid var(--secondary-color);
-  border-radius: 15%;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  transition: all 0.25s;
-  cursor: pointer;
-}
+
 
 
 ul {
@@ -155,14 +149,6 @@ button {
   color: var(--title-color);
 }
 
-button:hover {
-  /*background: linear-gradient(0deg, rgba(255, 255, 255, 1) 60%, rgba(210, 183, 139, 1) 100%);;*/
-  border: 2px solid var(--secondary-color);
-  border-radius: 15%;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  transition: all 0.25s;
-}
-
 label {
   margin-top: .5rem;
 }
@@ -177,13 +163,7 @@ input[type="submit"] {
   text-align: center;
   height: auto;
 }
-input[type="submit"]:hover {
-  border: 2px solid var(--secondary-color);
-  border-radius: 15%;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  transition: all 0.25s;
-  cursor: pointer;
-}
+
 
 select {
   width: 8rem;
@@ -206,9 +186,10 @@ th {
 
 textarea {
   border: 5px solid var(--main-border);
-  width: 20rem;
+  width: 15rem;
   height: 10rem;
   font-family: var(--main-font);
+  font-size: 1rem;
 }
 
 .img-errorBack {
@@ -237,6 +218,30 @@ textarea {
   .table__container {
     max-width: 1170px;
   }
+  textarea {
+    width: 20rem;
+  }
+  .navlink a:hover {
+  border: 2px solid var(--secondary-color);
+  border-radius: 15%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
+button:hover {
+  /*background: linear-gradient(0deg, rgba(255, 255, 255, 1) 60%, rgba(210, 183, 139, 1) 100%);;*/
+  border: 2px solid var(--secondary-color);
+  border-radius: 15%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  transition: all 0.25s;
+}
+input[type="submit"]:hover {
+  border: 2px solid var(--secondary-color);
+  border-radius: 15%;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  transition: all 0.25s;
+  cursor: pointer;
+}
 }
 
 /*============================================================================================*/
@@ -428,6 +433,7 @@ textarea {
 }
 
 .navigation__button {
+  
   position: fixed;
   bottom: 2rem;
   right: 50%;
@@ -443,9 +449,10 @@ textarea {
   border: none;
   background-color: var(--btn-bg);
   padding: 0;
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+ 
 }
+
 
 .navigation__background {
   position: fixed;
@@ -716,7 +723,7 @@ article {
   flex-direction: column;
   justify-content: center;
   align-items: space-evenly;
-  width: 20rem;
+  width: 15rem;
 }
 
 .article__options {
@@ -1119,6 +1126,7 @@ article {
   align-items: center;
   margin-top: 3rem;
   margin-bottom: 3rem;
+  text-align: center;
 }
 
 .account__main {
@@ -1301,7 +1309,9 @@ article {
   padding: 1.5rem 0;
   font-size: 1.2rem;
 }
-
+.payment__msg {
+  margin: 1rem;
+}
 @media only screen and (min-width: 1200px) {
   .payment__table {
     width: 100%;
@@ -1357,10 +1367,7 @@ article {
   padding: .5rem 0.75rem;
   margin: 1rem auto;
 }
-.creator ul li a:hover {
-  padding: 1.5rem 2.5rem;
-  transition: all 0.5s;
-}
+
 .creator__main {
   display: flex;
   justify-content: center;
@@ -1410,7 +1417,10 @@ article {
   .creator__main-form {
     width: 100%;
   }
-
+  .creator ul li a:hover {
+  padding: 1.5rem 2.5rem;
+  transition: all 0.5s;
+}
 }
 
 /*=======================================================================================*/
@@ -1584,13 +1594,16 @@ article {
   box-shadow: var(--third-shadow);
   padding: 1rem;
 }
+.productPage__content-container div {
+  margin: 1rem;
+}
 
-.productPage__content-container div h2 {
+.productPage__content-container div h3 {
   margin: 1rem;
 }
 
 .productPage__img-container {
-  width: 20rem;
+  width: 15rem;
 }
 
 @media only screen and (min-width: 1200px) {
@@ -1626,7 +1639,7 @@ article {
 
 .updateProduct__form-imgContainer {
   margin: auto;
-  width: 20rem;
+  width: 15rem;
   border: 5px solid var(--main-border);
 }
 
@@ -1659,6 +1672,9 @@ article {
     align-items: center;
 
   }
+  .updateProduct__form-imgContainer {
+    width: 20rem;
+  }
 }
 
 /*=======================================================================================*/
@@ -1669,7 +1685,7 @@ article {
 
 .approved__container {
   border: 5px solid var(--main-border);
-  margin: 1rem 1rem;
+  /*margin: 1rem 1rem;*/
   text-align: center;
   margin-top: 2rem;
 }
@@ -1709,9 +1725,12 @@ td div {
     heigth: 100%;
     grid-gap: 2rem
   }
+  .approved__table-container h2 {
+    grid-column: 1/span2
+  }
   .approved__container {
     margin: 2rem auto;
-    /*width: 45%;*/
+    
   }
 }
 
@@ -1728,6 +1747,7 @@ td div {
 .adminNav {
   width: 100%;
   margin: auto;
+  border: 3px solid var(--main-border) ;
 }
 
 .adminNav__list {
@@ -1744,11 +1764,14 @@ td div {
   transition: all 0.5s;
 }
 
+
+@media only screen and (min-width: 1200px) {
 .adminNav__list li:hover {
   background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(212, 175, 55, 1) 100%);
   /*border: 2px solid var(--main-border);*/
   transition: all 0.5s;
   cursor: pointer;
+}  
 }
 
 /*=======================================================================================*/
@@ -1841,12 +1864,16 @@ td div {
     flex-wrap: wrap;
   }
   .newCreator__table-container {
-    width: 30%;
+    width: 45%;
     justify-content: center;
     align-items: center;
   }
 }
-
+@media only screen and (min-width: 1200px){
+  .newCreator__table-container {
+    width: 33%;
+  }
+}
 
 /*============================================================================================*/
 

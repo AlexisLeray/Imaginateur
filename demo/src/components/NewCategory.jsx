@@ -38,7 +38,7 @@ const NewCategory = () => {
     }
     return (
         <Fragment> 
-            <section>
+            <section className="container">
                 <h2>Ajouter une nouvelle catégorie</h2>
                 {msg &&
                     <p>{msg}</p>

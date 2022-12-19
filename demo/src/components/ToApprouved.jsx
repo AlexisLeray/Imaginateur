@@ -48,10 +48,11 @@ const ToApproved = () => {
 
     return (
         <Fragment>
-        <section className="approved__table-container table__container">
+            <h2>Nouvelles propositions d'oeuvres à publier</h2>
+        <section className="approved__table-container container">
             {pendingPiece.map((e,i) => { 
                  return(  
-                    <table key={i} className="approved__container">
+                    <table key={i} className="approved__container table__container">
                     <tbody>
                         <tr className="approved__row">   
                             <th>Auteur</th>

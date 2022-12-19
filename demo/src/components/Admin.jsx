@@ -64,7 +64,7 @@ const Admin = () => {
                             </li>
                         </ul>
                     </nav>    
-                <h2>Nouvelles propositions d'oeuvres à publier</h2>
+                
                 <ToApprouved />    
             </section>
         </Fragment>
